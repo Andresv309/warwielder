@@ -1,0 +1,60 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.adso</groupId>
+	<artifactId>CrudJavaWeb</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<!--	<build>-->
+	<!--		<plugins>-->
+	<!--			<plugin>-->
+	<!--				<artifactId>maven-compiler-plugin</artifactId>-->
+	<!--				<version>3.8.1</version>-->
+	<!--				<configuration>-->
+	<!--					<release>20</release>-->
+	<!--				</configuration>-->
+	<!--			</plugin>-->
+	<!--			<plugin>-->
+	<!--				<artifactId>maven-war-plugin</artifactId>-->
+	<!--				<version>3.2.3</version>-->
+	<!--			</plugin>-->
+	<!--		</plugins>-->
+	<!--	</build>-->
+
+	<properties>
+		<maven.compiler.source>20</maven.compiler.source>
+		<maven.compiler.target>20</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>io.github.cdimascio</groupId>
+			<artifactId>java-dotenv</artifactId>
+			<version>5.2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>6.2.7.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>5.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.33</version>
+		</dependency>
+	</dependencies>
+
+
+</project>
