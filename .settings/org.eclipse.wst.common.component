@@ -9,9 +9,8 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
                 
-        <property name="context-root" value="CrudJavaWeb"/>
-                
         <property name="java-output-path" value="/CrudJavaWeb/build/classes"/>
+        <property name="context-root" value="warwielder"/>
             
     </wb-module>
     
