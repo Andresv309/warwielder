@@ -1,0 +1,58 @@
+@charset "ISO-8859-1";
+
+body{
+	background-image: url(../public/backgroundCardPage.jpg);
+}
+
+.mainContainer {
+	display: flex;
+	flex-direction: column;
+	width: 100vw;
+	height: 100vh;
+	max-width: 1536px;
+	position: relative;
+}
+
+.headerContainer {
+	width: 100%;
+	max-width: 1536px;
+	padding: 1rem 4rem 0 4rem;
+	z-index: 10;
+	position: fixed;
+}
+.contentContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+	gap: 10px;
+}
+
+.backgroundSection {
+	width: 100%;
+}
+
+.bodyContainer {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: antiquewhite;
+	border-radius: 15px;
+	background-image: url(../public/rug.avif);
+	background-size: cover;
+	background-repeat: no-repeat;
+	
+}
+
+.cardsContainer {
+	width: 80%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}

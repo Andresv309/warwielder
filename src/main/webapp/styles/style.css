@@ -14,6 +14,7 @@ html,
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+	font-family: Belwe Bold,Georgia,Times,Times;
 }
 
 .rootContainer {
@@ -29,139 +30,12 @@ html,
 	position: absolute;
 	top: 0;
 	left: 0;
-	background-image: url(../public/shuhang-01.jpg);
 	background-size: cover;
 	background-repeat: no-repeat;
 	z-index: -100;
 }
 
-.mainContainer {
-	display: flex;
-	flex-direction: column;
-	width: 100vw;
-	height: 100vh;
-	max-width: 1536px;
-	overflow: hidden;
-	position: relative;
-}
-
 .headerContainer {
 	padding: 1rem 4rem 0 4rem;
 	z-index: 10;
-}
-
-.header {
-	width: 100%;
-	height: 4.5rem;
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-	backdrop-filter: blur(2px);
-	background-color: rgba(60, 42, 41, 0.8);
-	border-radius: 1rem;
-}
-
-.Logo {
-	display: flex;
-	justify-content: center;
-
-}
-
-.nav ul {
-	display: flex;
-	gap: 2rem;
-}
-
-.nav ul li {
-
-	list-style: none;
-	display: inline;
-}
-
-.nav ul li a {
-	text-decoration: none;
-	color: var(--color-text-Primary);
-	font-size: 1.2rem;
-}
-
-.nav ul li a:hover {
-	color: #fef3c7;
-}
-
-.Btn {
-	width: 120px;
-	height: 40px;
-	border: none;
-	border-radius: 9px;
-	background: linear-gradient(to right, #77530a, #ffd277, #77530a, #77530a, #ffd277, #77530a);
-	background-size: 250%;
-	background-position: left;
-	color: var(--color-text-Primary);
-	position: relative;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	cursor: pointer;
-	transition-duration: 1s;
-	overflow: hidden;
-}
-
-.Btn::before {
-	position: absolute;
-	content: "Iniciar";
-	color: var(--color-text-Primary);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 97%;
-	height: 90%;
-	border-radius: 8px;
-	transition-duration: 1s;
-	background-color: #1c0d02;
-	background-size: 200%;
-}
-
-.Btn:hover {
-	background-position: right;
-	transition-duration: 1s;
-}
-
-.Btn:hover::before {
-	background-position: right;
-	transition-duration: 1s;
-}
-
-.Btn:active {
-	transform: scale(0.95);
-}
-
-.contentContainer{
-	display: flex;
-	justify-content: center;
-	height: 100%;
-	align-items: end;
-	position: relative;
-}
-
-.videoViking{
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: -10;
-	
-}
-
-.contentTitle{
-	font-family: 'MedievalSharp', cursive;
-/*	font-family: 'Pacifico', cursive;*/
-	text-shadow: 
-	9px 9px 0px black;
-	
-	color: white ;
-	font-size: 4rem;
-	font-weight: 900;
-	text-align: center;
-	inline-size: 500px;
-	overflow-wrap: break-word;
-	-webkit-text-stroke: 1px #ffd277;
 }
