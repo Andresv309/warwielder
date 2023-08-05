@@ -1,0 +1,86 @@
+@charset "ISO-8859-1";
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Poppins&display=swap');
+
+.header {
+	width: 100%;
+	height: 4.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	backdrop-filter: blur(2px);
+	background-color: rgba(60, 42, 41, 0.8);
+	border-radius: 1rem;
+}
+
+.Logo {
+	display: flex;
+	justify-content: center;
+}
+
+.nav ul {
+	display: flex;
+	gap: 2rem;
+}
+
+.nav ul li {
+
+	list-style: none;
+	display: inline;
+}
+
+.nav ul li a {
+	text-decoration: none;
+	color: var(--color-text-Primary);
+	font-size: 1rem;
+}
+
+.nav ul li a:hover {
+	color: #fef3c7;
+}
+
+.Btn {
+	width: 120px;
+	height: 40px;
+	border: none;
+	border-radius: 9px;
+	background: linear-gradient(to right, #77530a, #ffd277, #77530a, #77530a, #ffd277, #77530a);
+	background-size: 250%;
+	background-position: left;
+	color: var(--color-text-Primary);
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition-duration: 1s;
+	overflow: hidden;
+}
+
+.Btn::before {
+	position: absolute;
+	content: "Iniciar";
+	color: var(--color-text-Primary);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 97%;
+	height: 90%;
+	border-radius: 8px;
+	transition-duration: 1s;
+	background-color: #1c0d02;
+	background-size: 200%;
+}
+
+.Btn:hover {
+	background-position: right;
+	transition-duration: 1s;
+}
+
+.Btn:hover::before {
+	background-position: right;
+	transition-duration: 1s;
+}
+
+.Btn:active {
+	transform: scale(0.95);
+}
