@@ -36,6 +36,9 @@ html,
 }
 
 .headerContainer {
-	padding: 1rem 4rem 0 4rem;
+	width: 100%;
+	max-width: 1536px;
+	padding: 1rem 4rem 1rem 4rem;
 	z-index: 10;
+	position: fixed;
 }
