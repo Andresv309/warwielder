@@ -22,6 +22,7 @@ html,
 	justify-content: center;
 	align-items: center;
 	position: relative;
+	flex-grow: 1;
 }
 
 .backgroundContainer{
