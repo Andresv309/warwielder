@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="../styles/style.css">
-<link rel="stylesheet" href="../styles/aboutUsStyles.css">
+<link rel="stylesheet" href="styles/style.css">
+<link rel="stylesheet" href="styles/aboutUsStyles.css">
 
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
