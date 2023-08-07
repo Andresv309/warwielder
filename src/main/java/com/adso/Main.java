@@ -1,11 +1,18 @@
 package com.adso;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 
+import com.adso.entities.Card;
+import com.adso.entities.Deck;
+import com.adso.entities.Pet;
 import com.adso.entities.User;
+import com.adso.enums.Rarity;
 import com.adso.persistence.CustomPersistenceUnitInfo;
 //import com.adso.utils.JwtGenerator;
 //import com.adso.utils.JwtValidator;
@@ -20,6 +27,41 @@ public class Main {
 //	private static String token;
 	
 	public static void main(String[] args) {
+//		seedDB();
+
+		Map<String, String> props = new HashMap<>();
+		props.put("hibernate.show_sql", "true");	
+		
+		EntityManagerFactory emf = new HibernatePersistenceProvider()
+		.createContainerEntityManagerFactory(
+				new CustomPersistenceUnitInfo(),
+				props
+		);
+		
+		EntityManager em = emf.createEntityManager();
+		
+		try {
+			em.getTransaction().begin();
+			
+			User user = em.find(User.class, 1);
+			Set<Deck> userDecks = user.getDecks();
+			
+			for (Deck deckItem: userDecks) {
+				Set<Card> deckCards = deckItem.getCards();
+				for (Card cardItem: deckCards) {
+					System.out.println(cardItem);
+				}
+				System.out.println("\n---------------------------\n");
+			}
+		
+			em.getTransaction().commit();
+		} finally {
+			em.close();
+		}
+		
+		
+		
+		
 		
 //		try {
 //			JwtGenerator generator = new JwtGenerator();
@@ -106,4 +148,84 @@ public class Main {
 //		}
 		
 	}
+	
+	private static void seedDB() {
+		Map<String, String> props = new HashMap<>();
+		props.put("hibernate.show_sql", "true");
+		props.put("hibernate.hbm2ddl.auto", "create"); // create, none, update (none -> Default)
+		
+		EntityManagerFactory emf = new HibernatePersistenceProvider()
+		.createContainerEntityManagerFactory(
+				new CustomPersistenceUnitInfo(),
+				props
+		);
+		
+		EntityManager em = emf.createEntityManager();
+		
+		try {
+			em.getTransaction().begin();
+			
+			Pet pet = new Pet("Perro", "Velocidad", 2, Rarity.COMMON);
+			User user = new User("Carl", "123456", pet);
+			Card card1 = new Card(
+					"Charles",
+					"A la victoria",
+					"Porta un martillo",
+					"Warrior",
+					Rarity.RARE,
+					"Golpe Fuerte",
+					85,
+					59,
+					148
+			);
+			Card card2 = new Card(
+					"Merlin",
+					"Books for the win",
+					"Has a Castle",
+					"Mage",
+					Rarity.EPIC,
+					"Frezzing Ice",
+					85,
+					59,
+					148
+			);
+			Card card3 = new Card(
+					"Thor",
+					"Lives in azargth",
+					"Has a Hammer",
+					"Nordic",
+					Rarity.ADVANCED,
+					"Launches Hammer",
+					85,
+					59,
+					148
+			);
+			
+			Set<Card> cards1 = new HashSet<>();
+			cards1.add(card1);
+			cards1.add(card2);
+			
+			Set<Card> cards2 = new HashSet<>();
+			cards2.add(card2);
+			cards2.add(card3);
+			
+			Deck deck1 = new Deck(user,cards1);
+			Deck deck2 = new Deck(user,cards2);
+			
+//			em.persist(pet);
+			em.persist(user);
+//			em.persist(card1);
+//			em.persist(card2);
+			em.persist(deck1);
+			em.persist(deck2);
+		
+			
+			em.getTransaction().commit();
+		} finally {
+			em.close();
+		}
+	}
+	
+	
+	
 }
