@@ -23,7 +23,7 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
 	
 	public CustomPersistenceUnitInfo() {
 		this.dbUser = "root";
-		this.dbPassword = "";
+		this.dbPassword = "Serendipia01016";
 		this.dbName = "tests";
 	}
 	
@@ -85,7 +85,12 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
 	@Override
 	public List<String> getManagedClassNames() {
 		// TODO Auto-generated method stub
-		return List.of("com.adso.entities.User");
+		return List.of(
+				"com.adso.entities.Pet",
+				"com.adso.entities.User",
+				"com.adso.entities.Card",
+				"com.adso.entities.Deck"
+		);
 	}
 
 	@Override
