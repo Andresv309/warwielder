@@ -3,12 +3,11 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	version="4.0">
-
 	<filter>
 		<filter-name>UserAuthMiddlewareFilter</filter-name>
 		<filter-class>com.adso.middlewares.UserAuthMiddlewareFilter</filter-class>
 	</filter>
-
+	
 	<filter-mapping>
 		<filter-name>UserAuthMiddlewareFilter</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -19,30 +18,18 @@
 		<error-code>500</error-code>
 		<location>/pages/500.jsp</location>
 	</error-page>
-	<!-- <error-page> -->
-	<!-- <error-code>404</error-code> -->
-	<!-- <location>/pages/404.jsp</location> -->
-	<!-- </error-page> -->
+
 
 	<servlet>
 		<servlet-name>Home</servlet-name>
 		<jsp-file>/index.jsp</jsp-file>
 	</servlet>
 
+
 	<servlet-mapping>
 		<servlet-name>Home</servlet-name>
 		<url-pattern>/home</url-pattern>
 	</servlet-mapping>
+	
 
-
-	<!-- <servlet> -->
-	<!-- <description></description> -->
-	<!-- <display-name>LoginPrueba</display-name> -->
-	<!-- <servlet-name>LoginPrueba</servlet-name> -->
-	<!-- <servlet-class>com.adso.servlets.LoginPrueba</servlet-class> -->
-	<!-- </servlet> -->
-	<!-- <servlet-mapping> -->
-	<!-- <servlet-name>LoginPrueba</servlet-name> -->
-	<!-- <url-pattern>/LoginPrueba</url-pattern> -->
-	<!-- </servlet-mapping> -->
 </web-app>
