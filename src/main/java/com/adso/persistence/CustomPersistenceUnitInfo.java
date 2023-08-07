@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.persistence.SharedCacheMode;
 import jakarta.persistence.ValidationMode;
 import jakarta.persistence.spi.ClassTransformer;
@@ -23,10 +22,9 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
 	private final String dbName;
 	
 	public CustomPersistenceUnitInfo() {
-		Dotenv dotenv = Dotenv.load();
-		this.dbUser = dotenv.get("DATABASE_USER");
-		this.dbPassword = dotenv.get("DATABASE_PASSWORD");
-		this.dbName = dotenv.get("DATABASE_NAME");
+		this.dbUser = "root";
+		this.dbPassword = "";
+		this.dbName = "tests";
 	}
 	
 	@Override
@@ -52,7 +50,8 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
 		// TODO Auto-generated method stub
 		
 		HikariDataSource datasource = new HikariDataSource();
-		datasource.setJdbcUrl("jdbc:mysql://localhost/" + dbName);
+		datasource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+		datasource.setJdbcUrl("jdbc:mysql://localhost:3306/" + dbName);
 		datasource.setUsername(dbUser);
 		datasource.setPassword(dbPassword);
 		
@@ -86,7 +85,7 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
 	@Override
 	public List<String> getManagedClassNames() {
 		// TODO Auto-generated method stub
-		return List.of("com.adso.entities.Employee");
+		return List.of("com.adso.entities.User");
 	}
 
 	@Override
