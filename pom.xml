@@ -6,21 +6,6 @@
 	<artifactId>CrudJavaWeb</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<!--	<build>-->
-	<!--		<plugins>-->
-	<!--			<plugin>-->
-	<!--				<artifactId>maven-compiler-plugin</artifactId>-->
-	<!--				<version>3.8.1</version>-->
-	<!--				<configuration>-->
-	<!--					<release>20</release>-->
-	<!--				</configuration>-->
-	<!--			</plugin>-->
-	<!--			<plugin>-->
-	<!--				<artifactId>maven-war-plugin</artifactId>-->
-	<!--				<version>3.2.3</version>-->
-	<!--			</plugin>-->
-	<!--		</plugins>-->
-	<!--	</build>-->
 
 	<properties>
 		<maven.compiler.source>20</maven.compiler.source>
@@ -28,8 +13,18 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-
 	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>2.0.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>4.3.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>io.github.cdimascio</groupId>
