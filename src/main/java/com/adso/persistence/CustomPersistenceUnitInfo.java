@@ -23,7 +23,7 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
 	
 	public CustomPersistenceUnitInfo() {
 		this.dbUser = "root";
-		this.dbPassword = "Serendipia01016";
+		this.dbPassword = "123456";
 		this.dbName = "tests";
 	}
 	
