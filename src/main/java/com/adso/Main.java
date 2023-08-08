@@ -2,11 +2,14 @@ package com.adso;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 
+import com.adso.dao.DAOManagerImp;
+import com.adso.dao.interfaces.UserDAO;
 import com.adso.entities.Card;
 import com.adso.entities.Deck;
 import com.adso.entities.Pet;
@@ -16,6 +19,9 @@ import com.adso.persistence.CustomPersistenceUnitInfo;
 //import com.adso.utils.JwtGenerator;
 //import com.adso.utils.JwtValidator;
 //import com.auth0.jwt.interfaces.DecodedJWT;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -27,40 +33,28 @@ public class Main {
 	
 	public static void main(String[] args) {
 //		seedDB();
+//		queryDeckCardByUserId();
+		
+		consultDB();
 
-		Map<String, String> props = new HashMap<>();
-		props.put("hibernate.show_sql", "true");	
-		
-		EntityManagerFactory emf = new HibernatePersistenceProvider()
-		.createContainerEntityManagerFactory(
-				new CustomPersistenceUnitInfo(),
-				props
-		);
-		
-		EntityManager em = emf.createEntityManager();
-		
-		try {
-			em.getTransaction().begin();
-			
-			User user = em.find(User.class, 1);
-			Set<Deck> userDecks = user.getDecks();
-			
-			for (Deck deckItem: userDecks) {
-				Set<Card> deckCards = deckItem.getCards();
-				for (Card cardItem: deckCards) {
-					System.out.println(cardItem);
-				}
-				System.out.println("\n---------------------------\n");
-			}
-		
-			em.getTransaction().commit();
-		} finally {
-			em.close();
-		}
 		
 		
 		
 		
+		
+		
+		
+		
+		
+
+//		DAOManagerImp manager = new DAOManagerImp();
+//		UserDAO userDAO = manager.getUserDAO();
+//    	Pet pet = new Pet("Conejo", "Salto", 1, Rarity.COMMON);
+//        User user = new User("Anna", "123456", pet);
+//		userDAO.save(user);
+		
+//		System.out.println(userDAO.getById(1L));
+
 		
 //		try {
 //			JwtGenerator generator = new JwtGenerator();
@@ -217,6 +211,17 @@ public class Main {
 //			em.persist(card2);
 			em.persist(deck1);
 			em.persist(deck2);
+			
+			Pet pet1 = new Pet("Gato", "Agilidad", 3, Rarity.COMMON);
+			User user1 = new User("Carlos", "123456", pet);
+			
+			Pet pet2 = new Pet("Conejo", "Salto", 1, Rarity.COMMON);
+			User user2 = new User("Anna", "123456", pet);
+			em.persist(pet1);
+			em.persist(user1);
+			em.persist(pet2);
+			em.persist(user2);
+			
 		
 			
 			em.getTransaction().commit();
@@ -224,6 +229,158 @@ public class Main {
 			em.close();
 		}
 	}
+	
+	
+	private static void queryDeckCardByUserId() {
+		Map<String, String> props = new HashMap<>();
+		props.put("hibernate.show_sql", "true");	
+		
+		EntityManagerFactory emf = new HibernatePersistenceProvider()
+		.createContainerEntityManagerFactory(
+				new CustomPersistenceUnitInfo(),
+				props
+		);
+		
+		EntityManager em = emf.createEntityManager();
+		
+		try {
+			em.getTransaction().begin();
+			
+			User user = em.find(User.class, 1);
+			Set<Deck> userDecks = user.getDecks();
+			
+			for (Deck deckItem: userDecks) {
+				Set<Card> deckCards = deckItem.getCards();
+				for (Card cardItem: deckCards) {
+					System.out.println(cardItem);
+				}
+				System.out.println("\n---------------------------\n");
+			}
+		
+			em.getTransaction().commit();
+		} finally {
+			em.close();
+		}
+	}
+	
+	
+	private static void printJson() {
+		Pet pet = new Pet("Perro", "Velocidad", 2, Rarity.COMMON);
+		User user = new User("Carl", "123456", pet);
+		Card card1 = new Card(
+				"Charles",
+				"A la victoria",
+				"Porta un martillo",
+				"Warrior",
+				Rarity.RARE,
+				"Golpe Fuerte",
+				85,
+				59,
+				148
+		);
+		Card card2 = new Card(
+				"Merlin",
+				"Books for the win",
+				"Has a Castle",
+				"Mage",
+				Rarity.EPIC,
+				"Frezzing Ice",
+				85,
+				59,
+				148
+		);
+		
+		Set<Card> cards = new HashSet<>();
+		cards.add(card1);
+		cards.add(card2);
+		
+		Deck deck = new Deck(user,cards);
+		
+		Gson gson = new Gson();
+		String jsonRequest = gson.toJson(deck);
+		
+		System.out.println(jsonRequest);
+	}
+	
+	
+	private static void consultDB() {
+		Map<String, String> props = new HashMap<>();
+		props.put("hibernate.show_sql", "true");	
+		
+		EntityManagerFactory emf = new HibernatePersistenceProvider()
+		.createContainerEntityManagerFactory(
+				new CustomPersistenceUnitInfo(),
+				props
+		);
+		
+		EntityManager em = emf.createEntityManager();
+		
+		try {
+			em.getTransaction().begin();
+
+			
+			User user4 = em.find(User.class, 1);
+			Set<Deck> userDecks = user4.getDecks();
+			Set<Deck> userDecksModified = new HashSet<>();
+			
+			for (Deck deckItem: userDecks) {
+				
+				Set<Card> deckCards = deckItem.getCards();
+				Deck modifiedDeck = new Deck();
+				modifiedDeck.setId(deckItem.getId());
+//				modifiedDeck.setUser(deckItem.getUser());
+				modifiedDeck.setCards(deckCards);
+
+				userDecksModified.add(modifiedDeck);
+			}
+
+			User newUser = new User();
+			newUser.setId(user4.getId());
+			newUser.setUsername(user4.getUsername());
+			newUser.setPet(user4.getPet());
+			newUser.setDecks(userDecksModified);
+
+			
+//			Gson gsonb = new GsonBuilder()
+//					.registerTypeAdapter(User.class)
+//					.excludeFieldsWithoutExposeAnnotation()
+//					.create();
+			
+			Gson gson = new Gson();
+			String jsonRequest = gson.toJson(newUser);			
+			System.out.println(jsonRequest);
+			
+			
+//			String respuesta = "{\"id\":1,\"username\":\"Carl\",\"pet\":{\"id\":1,\"name\":\"Perro\",\"bonus\":\"Velocidad\",\"level\":2,\"rarity\":\"COMMON\"},\"decks\":[{\"deck\":[{\"id\":3,\"name\":\"Thor\",\"phrase\":\"Lives in azargth\",\"description\":\"Has a Hammer\",\"type\":\"Nordic\",\"rarity\":\"ADVANCED\",\"skill\":\"Launches Hammer\",\"health\":85,\"shield\":59,\"attack\":148},{\"id\":2,\"name\":\"Merlin\",\"phrase\":\"Books for the win\",\"description\":\"Has a Castle\",\"type\":\"Mage\",\"rarity\":\"EPIC\",\"skill\":\"Frezzing Ice\",\"health\":85,\"shield\":59,\"attack\":148}]},{\"deck\":[{\"id\":1,\"name\":\"Charles\",\"phrase\":\"A la victoria\",\"description\":\"Porta un martillo\",\"type\":\"Warrior\",\"rarity\":\"RARE\",\"skill\":\"Golpe Fuerte\",\"health\":85,\"shield\":59,\"attack\":148},{\"id\":2,\"name\":\"Merlin\",\"phrase\":\"Books for the win\",\"description\":\"Has a Castle\",\"type\":\"Mage\",\"rarity\":\"EPIC\",\"skill\":\"Frezzing Ice\",\"health\":85,\"shield\":59,\"attack\":148}]}]}";
+			
+			User target = gson.fromJson(jsonRequest, User.class);
+			System.out.println(target);
+//			
+			
+			
+//			TypeToken<List<User>> listType = new TypeToken<List<User>>() {};
+//			User user4 = em.find(User.class, 1);
+//			Gson gson = new Gson();
+//			String jsonRequest = gson.toJson(user4, User.class);			
+//			System.out.println(jsonRequest);
+//			
+			
+			
+			
+			
+			
+			em.getTransaction().commit();
+		} finally {
+			em.close();
+		}
+		
+		
+		
+		
+		
+
+	}
+	
 	
 	
 	
