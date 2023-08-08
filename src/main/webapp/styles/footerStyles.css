@@ -1,0 +1,87 @@
+.imgFooter{
+	position: relative;
+} 
+
+
+
+.imgFooter .imgPieceOfWood{
+	width: 100%;
+	height: 115px;
+}
+
+ .infoFooter {
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+	 flex-direction: column;
+	 width: 100%;
+	 height: 110px;
+	 position: absolute;
+	 top: 0;
+	 left: 0;
+	 gap: 1rem;
+ }
+ 
+ .infoFooter h4{
+	 font-size: 20px;
+	 font-weight: 700;
+	 color: white;
+	 text-align: center;
+ }
+ 
+  .infoFooter .iconsFooter {
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  gap: 0.4rem;
+  }
+ 
+ .iconsFooter svg path {
+	 fill: rgb(252, 209, 68);
+ }
+ 
+  .iconsFooter svg path:hover {
+	 fill: white;
+ }
+ 
+ .copyRightSecion {
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+	 flex-direction: column;
+	 width: 100%;
+	 height: 230px;
+	 gap: 2rem;
+ }
+ 
+ .LogoBlogify {
+	 display: flex;
+	 align-items: center;
+	 flex-direction: column;
+ }
+ 
+ .LogoBlogify h4{
+	 font-size: 10px;
+	 font-weight: 600;
+	 text-align: center;
+	 color: white;
+	 font-family: sans-serif;
+	 
+ }
+ 
+ .spanCopyRight{
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+	 flex-direction: column;
+	 gap: 4px;
+ }
+ 
+  
+  .spanCopyRight span {
+	  font-size: 12px;
+	  font-weight: 600;
+	  font-family: sans-serif;
+	  color: #FFFFFF80;
+  }
+ 
