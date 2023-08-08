@@ -38,8 +38,8 @@
 
 	<div class="copyRightSecion">
 		<div class="LogoBlogify">
-			<img width="150px" height="60px" alt="logoBlogigy"
-				src="public/logo1.png">
+			<a href="index.jsp"><img width="150px" height="60px" alt="logoBlogigy"
+				src="public/logo1.png"></a>
 			<h4>AvC CompanyGames</h4>
 		</div>
 

@@ -33,15 +33,20 @@
 	  display: flex;
 	  justify-content: center;
 	  align-items: center;
-	  gap: 0.4rem;
+	  gap: 1rem;
   }
  
  .iconsFooter svg path {
 	 fill: rgb(252, 209, 68);
+	 transition-delay: 150ms;
+	 transition-property: fill;
+	 
  }
  
   .iconsFooter svg path:hover {
 	 fill: white;
+	 transition-delay: 150ms;
+	 transition-property: fill;
  }
  
  .copyRightSecion {
