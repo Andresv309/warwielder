@@ -38,14 +38,14 @@
  
  .iconsFooter svg path {
 	 fill: rgb(252, 209, 68);
-	 transition-delay: 150ms;
+	 transition-delay: 100ms;
 	 transition-property: fill;
 	 
  }
  
   .iconsFooter svg path:hover {
 	 fill: white;
-	 transition-delay: 150ms;
+	 transition-delay: 100ms;
 	 transition-property: fill;
  }
  
