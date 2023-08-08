@@ -7,8 +7,8 @@
 
 	<nav class="nav">
 		<ul>
-			<li><a href="aboutUsPage.jsp">Como Jugar</a></li>
-			<li><a href="prueba.jsp">Cartas</a></li>
+			<li><a href="aboutUsPage">Como Jugar</a></li>
+			<li><a href="cardsPage">Cartas</a></li>
 			<li><a href="#">Mascotas</a></li>
 			<li><a href="#">Git Hub</a></li>
 		</ul>

@@ -10,9 +10,8 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy"
-	content="script-src 'self';" />
-<title>Insert title here</title>
+<meta http-equiv="Content-Security-Policy" content="script-src 'self';" />
+<title>WarWielder | Todas las cartas</title>
 </head>
 <body>
 
@@ -26,7 +25,7 @@
 	<div class="rootContainer">
 		<div class="backgroundContainer"></div>
 		<div class="mainContainer">
-		
+
 			<div class="contentContainer">
 				<div>
 					<img class="backgroundSection" alt="bang"
@@ -42,21 +41,21 @@
 
 				<div class="bodyContainer">
 					<div class="cardsContainer">
-						<img width="200px" alt="bang" src="public/card.png">
-						<img width="200px" alt="bang" src="public/card.png">
-						<img width="200px" alt="bang" src="public/card.png">
-						<img width="200px" alt="bang" src="public/card.png">
-						<img width="200px" alt="bang" src="public/card.png">
-						<img width="200px" alt="bang" src="public/card.png">
-						<img width="200px" alt="bang" src="public/card.png">
-						<img width="200px" alt="bang" src="public/card.png">
-						<img width="200px" alt="bang" src="public/card.png">
-						<img width="200px" alt="bang" src="public/card.png">
-						<img width="200px" alt="bang" src="public/card.png">
-						<img width="200px" alt="bang" src="public/card.png">
-						<img width="200px" alt="bang" src="public/card.png">
-						<img width="200px" alt="bang" src="public/card.png">
-						<img width="200px" alt="bang" src="public/card.png">
+						<img width="200px" alt="bang" src="public/card.png"> <img
+							width="200px" alt="bang" src="public/card.png"> <img
+							width="200px" alt="bang" src="public/card.png"> <img
+							width="200px" alt="bang" src="public/card.png"> <img
+							width="200px" alt="bang" src="public/card.png"> <img
+							width="200px" alt="bang" src="public/card.png"> <img
+							width="200px" alt="bang" src="public/card.png"> <img
+							width="200px" alt="bang" src="public/card.png"> <img
+							width="200px" alt="bang" src="public/card.png"> <img
+							width="200px" alt="bang" src="public/card.png"> <img
+							width="200px" alt="bang" src="public/card.png"> <img
+							width="200px" alt="bang" src="public/card.png"> <img
+							width="200px" alt="bang" src="public/card.png"> <img
+							width="200px" alt="bang" src="public/card.png"> <img
+							width="200px" alt="bang" src="public/card.png">
 					</div>
 				</div>
 			</div>
@@ -64,8 +63,10 @@
 	</div>
 
 	<footer class="footerContainer">
-		<div class="ImgFooter">
+		<div>
+			<img width="100%" class="" alt="PieceOfWood" src="public/piePage.png">
 		</div>
+		<%@include file="../components/Footer.jsp"%>
 	</footer>
 </body>
 </html>

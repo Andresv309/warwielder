@@ -76,7 +76,7 @@ body {
 	background-image: url(../public/rug.avif);
 	background-size: cover;
 	background-repeat: no-repeat;
-	margin-bottom: 4rem;
+	margin-bottom: 1rem;
 }
 
 .cardsContainer {
@@ -90,11 +90,10 @@ body {
 	margin: 8rem  0 8rem 0;
 }
 
-
-
-
-
-
 .footerContainer {
-	background-color: rebeccapurple;
+	background-color: #171717;
 }
+
+
+ 
+
