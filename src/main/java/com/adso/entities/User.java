@@ -1,12 +1,12 @@
 package com.adso.entities;
 
 import java.io.Serializable;
-import java.util.LinkedList;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,8 +18,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
-	private static final long serialVersionUID = 2L;
-	
+	private static final long serialVersionUID = -3227907185519750931L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -31,11 +31,11 @@ public class User implements Serializable {
 	@Column(name = "password", nullable = false)
 	private String password;
 	
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name="pet_id")
 	private Pet pet;
 	
-	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user", fetch = FetchType.EAGER)
 	private Set<Deck> decks;
 
 	public User() {

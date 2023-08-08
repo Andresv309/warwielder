@@ -6,6 +6,7 @@ import java.util.Set;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,11 +26,11 @@ public class Deck implements Serializable {
 	@Column(name = "id")
 	private Long id;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 	
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name = "deck_cards", 
 	  joinColumns = {
 			  @JoinColumn(name = "deck_id", referencedColumnName = "id")
@@ -37,16 +38,16 @@ public class Deck implements Serializable {
 	  inverseJoinColumns = {
 			  @JoinColumn(name = "card_id", referencedColumnName = "id")
 	  })
-	private Set<Card> cards;
+	private Set<Card> deck;
 
 	public Deck() {
 		super();
 	}
 
-	public Deck(User user, Set<Card> cards) {
+	public Deck(User user, Set<Card> deck) {
 		super();
 		this.user = user;
-		this.cards = cards;
+		this.deck = deck;
 	}
 
 	public Long getId() {
@@ -66,17 +67,19 @@ public class Deck implements Serializable {
 	}
 
 	public Set<Card> getCards() {
-		return cards;
+		return deck;
 	}
 
-	public void setCards(Set<Card> cards) {
-		this.cards = cards;
+	public void setCards(Set<Card> deck) {
+		this.deck = deck;
 	}
 
 	@Override
 	public String toString() {
-		return "Deck [id=" + id + ", user=" + user + ", cards=" + cards + "]";
+		return "Deck [id=" + id + ", user=" + user + ", deck=" + deck + "]";
 	}
+
+	
 	
 }
 
