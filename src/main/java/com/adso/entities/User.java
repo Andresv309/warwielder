@@ -11,6 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -37,12 +39,21 @@ public class User implements Serializable {
 	
 	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user", fetch = FetchType.EAGER)
 	private Set<Deck> decks;
+	
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@JoinTable(name = "users_cards", 
+	  joinColumns = {
+			  @JoinColumn(name = "user_id", referencedColumnName = "id")
+	  },
+	  inverseJoinColumns = {
+			  @JoinColumn(name = "card_id", referencedColumnName = "id")
+	  })
+	private Set<Card> cards;
 
 	public User() {
 		super();
 	}
 
-	
 	public User(String username, String password, Pet pet) {
 		super();
 		this.username = username;
@@ -92,6 +103,16 @@ public class User implements Serializable {
 
 	public void setDecks(Set<Deck> decks) {
 		this.decks = decks;
+	}
+	
+
+	public Set<Card> getCards() {
+		return cards;
+	}
+
+
+	public void setCards(Set<Card> cards) {
+		this.cards = cards;
 	}
 
 
