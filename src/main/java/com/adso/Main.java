@@ -35,9 +35,9 @@ public class Main {
 //		seedDB();
 //		queryDeckCardByUserId();
 		
-		consultDB();
+//		consultDB();
 
-		
+		modifyDeck();
 		
 		
 		
@@ -213,10 +213,10 @@ public class Main {
 			em.persist(deck2);
 			
 			Pet pet1 = new Pet("Gato", "Agilidad", 3, Rarity.COMMON);
-			User user1 = new User("Carlos", "123456", pet);
+			User user1 = new User("Carlos", "123456", pet1);
 			
 			Pet pet2 = new Pet("Conejo", "Salto", 1, Rarity.COMMON);
-			User user2 = new User("Anna", "123456", pet);
+			User user2 = new User("Anna", "123456", pet2);
 			em.persist(pet1);
 			em.persist(user1);
 			em.persist(pet2);
@@ -374,14 +374,95 @@ public class Main {
 			em.close();
 		}
 		
+	
+
+	}
+	
+	private static void modifyDeck() {
+		String userRequest = "{\"id\":1,\"deck\":[{\"id\":2,\"name\":\"Merlin\",\"phrase\":\"Books for the win\",\"description\":\"Has a Castle\",\"type\":\"Mage\",\"rarity\":\"EPIC\",\"skill\":\"Frezzing Ice\",\"health\":85,\"shield\":59,\"attack\":148},{\"id\":1,\"name\":\"Charles\",\"phrase\":\"A la victoria\",\"description\":\"Porta un martillo\",\"type\":\"Warrior\",\"rarity\":\"RARE\",\"skill\":\"Golpe Fuerte\",\"health\":85,\"shield\":59,\"attack\":148}]}";
+		
+		Gson gson = new Gson();			
+		Deck target = gson.fromJson(userRequest, Deck.class);
+		
+		
+		
+		Map<String, String> props = new HashMap<>();
+		props.put("hibernate.show_sql", "true");	
+		
+		EntityManagerFactory emf = new HibernatePersistenceProvider()
+		.createContainerEntityManagerFactory(
+				new CustomPersistenceUnitInfo(),
+				props
+		);
+		
+		EntityManager em = emf.createEntityManager();
+		
+		try {
+			em.getTransaction().begin();
+			
+			User userTargeted = em.find(User.class, 1L);
+			User userModified = new User();
+			userModified.setId(userTargeted.getId());
+		
+			System.out.println(target);
+			
+			
+			
+			
+			
+		
+			em.getTransaction().commit();
+		} finally {
+			em.close();
+		}
+		
 		
 		
 		
 		
 
+		
 	}
 	
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
