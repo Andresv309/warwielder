@@ -1,5 +1,6 @@
 package com.adso.dao;
 
+import com.adso.dao.interfaces.AppDAO;
 import com.adso.dao.interfaces.DAOManager;
 import com.adso.dao.interfaces.DeckDAO;
 import com.adso.dao.interfaces.UserDAO;
@@ -12,6 +13,7 @@ public class DAOManagerImp implements DAOManager {
 	private EntityManagerFactory emf;
 	private DeckDAO deckDao = null;
 	private UserDAO userDao = null;
+	private AppDAO appDao = null;
 	
     public DAOManagerImp () {
     	this.emf = AppEntityManager.getInstance().getEntityManagerFactory();
@@ -31,6 +33,14 @@ public class DAOManagerImp implements DAOManager {
         	userDao = new UserDAOImp(emf);
         }
         return userDao;
+	}
+
+	@Override
+	public AppDAO getAppDAO() {
+        if (appDao == null) {
+        	appDao = new AppDAOImp(emf);
+        }
+        return appDao;
 	}
 
 }

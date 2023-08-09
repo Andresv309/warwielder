@@ -1,7 +1,6 @@
 package com.adso.dao;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import com.adso.dao.interfaces.DeckDAO;
@@ -51,6 +50,7 @@ public class DeckDAOImp extends AbstractDAOTemplate<Deck, Long> implements DeckD
 			newUser.setUsername(userFound.getUsername());
 			newUser.setPet(userFound.getPet());
 			newUser.setDecks(userDecksModified);
+			newUser.setCards(userFound.getCards());
 
 			Gson gson = new Gson();
 			jsonResponse = gson.toJson(newUser);			
