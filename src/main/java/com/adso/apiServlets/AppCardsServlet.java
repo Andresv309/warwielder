@@ -8,40 +8,32 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import com.adso.dao.DAOManagerImp;
-import com.adso.dao.interfaces.UserDAO;
+import com.adso.dao.interfaces.AppDAO;
 
+@WebServlet(name = "appCardsServlet", urlPatterns = "/api/v1/cards") 
+public class AppCardsServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
-@WebServlet(name = "userInfoServlet", urlPatterns = "/api/v1/user/info/*") 
-public class UserInfoServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;     
- 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String url = request.getRequestURL().toString();
-		String userDecks = "{}";
+		String appCards = "{}";
 
 		try {
-			if (url != null && !url.isEmpty()) {
-				String[] parts = url.split("/");
-				String id = parts[parts.length - 1];
+			AppDAO appDao = new DAOManagerImp().getAppDAO();
+			String jsonResponse = appDao.getAppCards();
+			if (jsonResponse != null) {
+				appCards = jsonResponse;
 				
-				UserDAO userDao = new DAOManagerImp().getUserDAO();
-				String jsonResponse = userDao.getUserDecks(Long.parseLong(id));
-				if (jsonResponse != null) {
-					userDecks = jsonResponse;
-				}
-
 			}
 		} catch (NumberFormatException e) {}
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(userDecks);
+        response.getWriter().write(appCards);
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 	}
 
 }
