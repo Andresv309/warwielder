@@ -35,7 +35,7 @@ public abstract class AbstractDAOTemplate<T, U> {
 
 	public void save(T record) {
 	    performTransaction(em -> {
-	        em.persist(record);
+	        em.merge(record);
 	    });
 	};
 	

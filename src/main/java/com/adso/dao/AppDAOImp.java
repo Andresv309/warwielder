@@ -70,6 +70,32 @@ public class AppDAOImp implements AppDAO {
 		
 		return jsonResponse;
 	}
+
+	@Override
+	public String getAppCard(Long id) {
+		EntityManager em = emf.createEntityManager();
+		
+		String jsonResponse = null;
+		
+		try {
+			em.getTransaction().begin();
+
+			Card appCard = em.find(Card.class, id);
+
+			Gson gson = new Gson();
+			jsonResponse = gson.toJson(appCard);			
+			System.out.println(jsonResponse);
+
+			em.getTransaction().commit();
+		} catch (Exception e) {
+
+        } finally {
+			em.close();
+		}
+		
+		
+		return jsonResponse;
+	}
    
     
 }
