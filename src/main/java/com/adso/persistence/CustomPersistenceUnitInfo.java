@@ -91,7 +91,8 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
 				"com.adso.entities.Pet",
 				"com.adso.entities.User",
 				"com.adso.entities.Card",
-				"com.adso.entities.Deck"
+				"com.adso.entities.Deck",
+				"com.adso.entities.DeckCard"
 		);
 	}
 

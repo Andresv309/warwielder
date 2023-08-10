@@ -1,6 +1,7 @@
 package com.adso.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -14,6 +15,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -38,16 +40,25 @@ public class Deck implements Serializable {
 	  inverseJoinColumns = {
 			  @JoinColumn(name = "card_id", referencedColumnName = "id")
 	  })
-	private Set<Card> deck;
-
+	private Set<Card> cards;
+	
+//	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "deck", fetch = FetchType.EAGER)
+//	private Set<DeckCard> deckCards;
+    
+	
 	public Deck() {
 		super();
 	}
 
-	public Deck(User user, Set<Card> deck) {
+//	public Deck(User user, Set<DeckCard> deckCards) {
+//		super();
+//		this.user = user;
+//		this.deckCards = deckCards;
+//	}
+	public Deck(User user, Set<Card> cards) {
 		super();
 		this.user = user;
-		this.deck = deck;
+		this.cards = cards;
 	}
 
 	public Long getId() {
@@ -65,20 +76,38 @@ public class Deck implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+//	public Set<DeckCard> getDeckCards() {
+//		return deckCards;
+//	}
+//
+//	public void setDeckCards(Set<DeckCard> deckCards) {
+//		this.deckCards = deckCards;
+//	}
+	
+	
 
-	public Set<Card> getCards() {
-		return deck;
-	}
+//	@Override
+//	public String toString() {
+//		return "Deck [id=" + id + ", user=" + user + ", deckCards=" + deckCards + "]";
+//	}
 
-	public void setCards(Set<Card> deck) {
-		this.deck = deck;
-	}
+
 
 	@Override
 	public String toString() {
-		return "Deck [id=" + id + ", user=" + user + ", deck=" + deck + "]";
+		return "Deck [id=" + id + ", user=" + user + ", deck=" + cards + "]";
 	}
 
+	public Set<Card> getCards() {
+		return cards;
+	}
+
+	public void setCards(Set<Card> cards) {
+		this.cards = cards;
+	}
+	
+	
 	
 	
 }
