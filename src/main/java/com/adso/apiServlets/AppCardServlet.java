@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import com.adso.dao.DAOManagerImp;
+import com.adso.dao.interfaces.AppDAO;
 import com.adso.dao.interfaces.DeckDAO;
 
 @WebServlet(name = "appCardServlet", urlPatterns = "/api/v1/card/*") 
@@ -23,10 +24,11 @@ public class AppCardServlet extends HttpServlet {
 				String[] parts = url.split("/");
 				String id = parts[parts.length - 1];
 				
-				DeckDAO deckDao = new DAOManagerImp().getDeckDAO();
-				String jsonResponse = deckDao.getDecksForUser(Long.parseLong(id));
+				AppDAO appDao = new DAOManagerImp().getAppDAO();
+				String jsonResponse = appDao.getAppCard(Long.parseLong(id));
 				if (jsonResponse != null) {
 					appCards = jsonResponse;
+					
 				}
 
 			}

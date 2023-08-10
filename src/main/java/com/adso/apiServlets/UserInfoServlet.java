@@ -5,13 +5,22 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+
+import org.hibernate.exception.ConstraintViolationException;
 
 import com.adso.dao.DAOManagerImp;
 import com.adso.dao.interfaces.UserDAO;
+import com.adso.entities.User;
+import com.adso.utils.ExceptionToJsonError;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 
-@WebServlet(name = "userInfoServlet", urlPatterns = "/api/v1/user/info/*") 
+@WebServlet(name = "userInfoServlet", urlPatterns = "/api/v1/users/*")
 public class UserInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;     
  
@@ -26,7 +35,7 @@ public class UserInfoServlet extends HttpServlet {
 				String id = parts[parts.length - 1];
 				
 				UserDAO userDao = new DAOManagerImp().getUserDAO();
-				String jsonResponse = userDao.getUserDecks(Long.parseLong(id));
+				String jsonResponse = userDao.getUserInfo(Long.parseLong(id));
 				if (jsonResponse != null) {
 					userDecks = jsonResponse;
 				}
@@ -41,7 +50,7 @@ public class UserInfoServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 	}
 
 }
