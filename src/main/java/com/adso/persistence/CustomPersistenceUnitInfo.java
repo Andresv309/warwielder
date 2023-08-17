@@ -21,6 +21,8 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
 	private final String dbPassword;
 	private final String dbName;
 	
+	private HikariDataSource datasource;
+	
 	public CustomPersistenceUnitInfo() {
 		this.dbUser = "root";
 		this.dbPassword = "123456";
@@ -49,12 +51,12 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
 	public DataSource getJtaDataSource() {
 		// TODO Auto-generated method stub
 		
-		HikariDataSource datasource = new HikariDataSource();
+		datasource = new HikariDataSource();
 		datasource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		datasource.setJdbcUrl("jdbc:mysql://localhost:3306/" + dbName);
 		datasource.setUsername(dbUser);
 		datasource.setPassword(dbPassword);
-		
+			
 		return datasource;
 	}
 
@@ -89,7 +91,8 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
 				"com.adso.entities.Pet",
 				"com.adso.entities.User",
 				"com.adso.entities.Card",
-				"com.adso.entities.Deck"
+				"com.adso.entities.Deck",
+				"com.adso.entities.DeckCard"
 		);
 	}
 
@@ -139,6 +142,14 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
 	public ClassLoader getNewTempClassLoader() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public boolean isClosed() {
+		return datasource.isClosed();
+	}
+	
+	public void close() {
+		datasource.close();
 	}
 
 }

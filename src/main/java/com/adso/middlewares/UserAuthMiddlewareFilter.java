@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.adso.utils.JwtValidator;
+import com.adso.utils.Utils;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import jakarta.servlet.Filter;
@@ -70,7 +71,7 @@ public class UserAuthMiddlewareFilter implements Filter {
 	
 	
 	private boolean checkIfUserIsAuth(HttpServletRequest httpRequest) {
-		String jwtToken = getJwtTokenFromCookies(httpRequest);
+		String jwtToken = Utils.getJwtTokenFromCookies(httpRequest);
 		boolean isAuth = false;
 		
 		if (jwtToken != null) {
@@ -91,23 +92,4 @@ public class UserAuthMiddlewareFilter implements Filter {
 		return isAuth;
 	}
 	
-	
-	
-	private String getJwtTokenFromCookies(HttpServletRequest httpRequest) {
-		Cookie[] cookies = httpRequest.getCookies();
-		String jwtToken = null;
-		
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("jwt-token")) {
-                    jwtToken = cookie.getValue();
-                    break;
-                }
-            }
-        }
-        
-        return jwtToken;
-	}
-	
-
 }

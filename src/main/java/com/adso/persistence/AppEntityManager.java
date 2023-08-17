@@ -5,40 +5,49 @@ import java.util.Map;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
 public final class AppEntityManager {
 	
 	private static AppEntityManager instance;
-	private static EntityManager entityManager;
+	private static EntityManagerFactory emf;
+	private static CustomPersistenceUnitInfo cpui;
 	
 	public AppEntityManager() {
 		Map<String, String> props = new HashMap<>();
-		props.put("hibernate.show_sql", "true");		
+		props.put("hibernate.show_sql", "true");
 		
-		EntityManagerFactory emf = new HibernatePersistenceProvider()
+		cpui = new CustomPersistenceUnitInfo();
+		
+		emf = new HibernatePersistenceProvider()
 				.createContainerEntityManagerFactory(
-						new CustomPersistenceUnitInfo(),
+						cpui,
 						props
 				);
-		
-		entityManager = emf.createEntityManager();
 	}
 	
 	public static AppEntityManager getInstance() {
         if (instance == null) {
         	instance = new AppEntityManager();
+        	System.out.println("Hibernate Manager Initilized");
         }
         return instance;
 	}
 	
-    public EntityManager getEntityManager() {
-        return entityManager;
+    public EntityManagerFactory getEntityManagerFactory() {
+        return emf;
     }
     
-    public static void closeEntityManager() {
-    	entityManager.close();
+    public static void closeEntityManagerFactory() {
+        if (emf != null && emf.isOpen()) {
+            emf.close();
+            System.out.println("Hibernate Manager Closed!!");
+        }
+        
+        if (cpui != null && !cpui.isClosed()) {
+        	cpui.close();
+        	System.out.println("Hikary Datasource Closed!!");
+        }
     }
 	
 }

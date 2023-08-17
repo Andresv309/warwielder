@@ -4,13 +4,15 @@ import com.adso.entities.User;
 import com.adso.persistence.AppEntityManager;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
 
 public class UserAuthenticationService {
     private EntityManager em = null;
 
     public UserAuthenticationService() {
-    	em = AppEntityManager.getInstance().getEntityManager();	
+    	EntityManagerFactory emf = AppEntityManager.getInstance().getEntityManagerFactory();
+    	em = emf.createEntityManager();
     }
 
     public User validateUser(String username, String password) {
@@ -26,8 +28,12 @@ public class UserAuthenticationService {
             	validUserInfo = user;
             }
         } catch (NoResultException e) {
-
-        }
+        	
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+		}
         
         return validUserInfo;
     }
