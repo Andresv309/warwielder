@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles/navBarStyles.css">
+<link rel="stylesheet" href="styles/NavBarStyles.css">
 
 <header class="header">
 	<div class="Logo">
@@ -9,12 +9,12 @@
 		<ul>
 			<li><a href="aboutUsPage">Como Jugar</a></li>
 			<li><a href="cardsPage">Cartas</a></li>
-			<li><a href="#">Mascotas</a></li>
+			<li><a href="petsPage">Mascotas</a></li>
 			<li><a href="#">Git Hub</a></li>
 		</ul>
 	</nav>
 
 	<div class="">
-		<button class="Btn"></button>
+		<button class="Btn">Iniciar</button>
 	</div>
 </header>

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles/footerStyles.css">
+<link rel="stylesheet" href="styles/FooterStyles.css">
 
 
 <div class="imgFooter">
