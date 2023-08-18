@@ -35,17 +35,23 @@ public class Pet implements Serializable {
 	@Convert(converter = RarityConverter.class)
 	@Column(name = "rarity", nullable = false)
 	private Rarity rarity;
+	
+	@Column(name = "src_path", nullable = false)
+	private String srcPath;
 
 	public Pet() {
 	}
 	
-	public Pet(String name, String bonus, int level, Rarity rarity) {
+	
+	public Pet(String name, String bonus, int level, Rarity rarity, String srcPath) {
 		super();
 		this.name = name;
 		this.bonus = bonus;
 		this.level = level;
 		this.rarity = rarity;
+		this.srcPath = srcPath;
 	}
+
 
 	public Long getId() {
 		return id;
@@ -87,11 +93,23 @@ public class Pet implements Serializable {
 		this.rarity = rarity;
 	}
 
+	public String getSrcPath() {
+		return srcPath;
+	}
+
+
+	public void setSrcPath(String srcPath) {
+		this.srcPath = srcPath;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Pet [id=" + id + ", name=" + name + ", bonus=" + bonus + ", level=" + level + ", rarity=" + rarity
-				+ "]";
+				+ ", srcPath=" + srcPath + "]";
 	}
+
+	
 	
 }
 

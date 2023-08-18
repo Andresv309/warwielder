@@ -50,13 +50,16 @@ public class Card implements Serializable {
 	
 	@Column(name = "attack", nullable = false)
 	private int attack;
+	
+	@Column(name = "src_path", nullable = false)
+	private String srcPath;
 
 	public Card() {
 		super();
 	}
 
 	public Card(String name, String phrase, String description, String type, Rarity rarity, String skill, int health,
-			int shield, int attack) {
+			int shield, int attack, String srcPath) {
 		super();
 		this.name = name;
 		this.phrase = phrase;
@@ -67,7 +70,9 @@ public class Card implements Serializable {
 		this.health = health;
 		this.shield = shield;
 		this.attack = attack;
+		this.srcPath = srcPath;
 	}
+
 
 	public Long getId() {
 		return id;
@@ -149,12 +154,24 @@ public class Card implements Serializable {
 		this.attack = attack;
 	}
 
+	public String getSrcPath() {
+		return srcPath;
+	}
+
+	public void setSrcPath(String srcPath) {
+		this.srcPath = srcPath;
+	}
+
 	@Override
 	public String toString() {
 		return "Card [id=" + id + ", name=" + name + ", phrase=" + phrase + ", description=" + description + ", type="
 				+ type + ", rarity=" + rarity + ", skill=" + skill + ", health=" + health + ", shield=" + shield
-				+ ", attack=" + attack + "]";
+				+ ", attack=" + attack + ", srcPath=" + srcPath + "]";
 	}
+	
+	
+	
+
 	
 }
 
