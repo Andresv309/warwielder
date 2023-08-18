@@ -33,8 +33,12 @@ public class Main {
 //	private static String token;
 	
 	public static void main(String[] args) {
-		createDB();
-		seedDB();
+//		createDB();
+//		seedDB();
+//		createDeckCards();
+//		createUserCards();
+		
+		
 //		queryDeckCardByUserId();
 		
 //		consultDB();
@@ -276,7 +280,7 @@ public class Main {
 	private static void seedDB() {
 		Map<String, String> props = new HashMap<>();
 		props.put("hibernate.show_sql", "true");
-		props.put("hibernate.hbm2ddl.auto", "create"); // create, none, update (none -> Default)
+//		props.put("hibernate.hbm2ddl.auto", "create"); // create, none, update (none -> Default)
 		
 		EntityManagerFactory emf = new HibernatePersistenceProvider()
 				.createContainerEntityManagerFactory(
@@ -289,7 +293,7 @@ public class Main {
 		try {
 			em.getTransaction().begin();
 			
-			Pet pet = new Pet("Perro", "Velocidad", 2, Rarity.COMMON);
+			Pet pet = new Pet("Perro", "Velocidad", 2, Rarity.COMMON, "");
 			User user = new User("Carl", "123456", pet);
 			Card card1 = new Card(
 					"Charles",
@@ -300,7 +304,8 @@ public class Main {
 					"Golpe Fuerte",
 					85,
 					59,
-					148
+					148,
+					""
 					);
 			Card card2 = new Card(
 					"Merlin",
@@ -311,7 +316,8 @@ public class Main {
 					"Frezzing Ice",
 					85,
 					59,
-					148
+					148,
+					""
 					);
 			Card card3 = new Card(
 					"Thor",
@@ -322,44 +328,136 @@ public class Main {
 					"Launches Hammer",
 					85,
 					59,
-					148
+					148,
+					""
 					);
 			
-			Set<Card> cards1 = new HashSet<>();
-			cards1.add(card1);
-			cards1.add(card2);
 			
-			Set<Card> cards2 = new HashSet<>();
-			cards2.add(card2);
-			cards2.add(card3);
+			em.persist(card1);
+			em.persist(card2);
+			em.persist(card3);
 			
-			Deck deck1 = new Deck(user,cards1);
-			Deck deck2 = new Deck(user,cards2);
+//			Set<Card> cards1 = new HashSet<>();
+//			cards1.add(card1);
+//			cards1.add(card2);
+			
+//			Set<Card> cards2 = new HashSet<>();
+//			cards2.add(card2);
+//			cards2.add(card3);
+			
+//			Deck deck1 = new Deck(user);
+//			Deck deck2 = new Deck(user);
 			
 //			em.persist(pet);
+			em.persist(pet);
 			em.persist(user);
 //			em.persist(card1);
 //			em.persist(card2);
-			em.persist(deck1);
-			em.persist(deck2);
+//			em.persist(deck1);
+//			em.persist(deck2);
 			
-			Pet pet1 = new Pet("Gato", "Agilidad", 3, Rarity.COMMON);
+			Pet pet1 = new Pet("Gato", "Agilidad", 3, Rarity.COMMON, "");
 			User user1 = new User("Carlos", "123456", pet1);
 			
-			Pet pet2 = new Pet("Conejo", "Salto", 1, Rarity.COMMON);
+			Pet pet2 = new Pet("Conejo", "Salto", 1, Rarity.COMMON, "");
 			User user2 = new User("Anna", "123456", pet2);
 			em.persist(pet1);
 			em.persist(user1);
 			em.persist(pet2);
 			em.persist(user2);
-			
-			
+
 			
 			em.getTransaction().commit();
 		} finally {
 			em.close();
 		}
 	}
+	
+	private static void createDeckCards() {
+		Map<String, String> props = new HashMap<>();
+		props.put("hibernate.show_sql", "true");
+//		props.put("hibernate.hbm2ddl.auto", "create"); // create, none, update (none -> Default)
+		
+		EntityManagerFactory emf = new HibernatePersistenceProvider()
+				.createContainerEntityManagerFactory(
+						new CustomPersistenceUnitInfo(),
+						props
+						);
+		
+		EntityManager em = emf.createEntityManager();
+		
+		try {
+			em.getTransaction().begin();
+			
+			Deck deck1 = em.find(Deck.class, 1);
+			Deck deck2 = em.find(Deck.class, 2);
+			
+			Card card1 = em.find(Card.class, 1);
+			Card card2 = em.find(Card.class, 2);
+			Card card3 = em.find(Card.class, 3);
+			
+			DeckCard deckCard1 = new DeckCard(deck1, card1, 1);
+			DeckCard deckCard2 = new DeckCard(deck1, card2, 2);
+			DeckCard deckCard3 = new DeckCard(deck1, card3, 6);
+			DeckCard deckCard4 = new DeckCard(deck2, card3, 1);
+			DeckCard deckCard5 = new DeckCard(deck2, card1, 4);
+			
+			em.persist(deckCard1);
+			em.persist(deckCard2);
+			em.persist(deckCard3);
+			em.persist(deckCard4);
+			em.persist(deckCard5);
+			
+
+			em.getTransaction().commit();
+		} finally {
+			em.close();
+		}
+	}
+	
+	private static void createUserCards() {
+		Map<String, String> props = new HashMap<>();
+		props.put("hibernate.show_sql", "true");
+//		props.put("hibernate.hbm2ddl.auto", "create"); // create, none, update (none -> Default)
+		
+		EntityManagerFactory emf = new HibernatePersistenceProvider()
+				.createContainerEntityManagerFactory(
+						new CustomPersistenceUnitInfo(),
+						props
+						);
+		
+		EntityManager em = emf.createEntityManager();
+		
+		try {
+			em.getTransaction().begin();
+			
+			User user = em.find(User.class, 1);
+			
+			Card card1 = em.find(Card.class, 1);
+			Card card2 = em.find(Card.class, 2);
+			Card card3 = em.find(Card.class, 3);
+			
+			Set<Card> cards = new HashSet<>();
+			cards.add(card1);
+			cards.add(card2);
+			cards.add(card3);
+			
+			user.setCards(cards);
+			
+			
+			em.persist(user);
+	
+	
+			
+
+			em.getTransaction().commit();
+		} finally {
+			em.close();
+		}
+	}
+	
+	
+	
 	
 	
 	private static void queryDeckCardByUserId() {
@@ -396,7 +494,7 @@ public class Main {
 	
 	
 	private static void printJson() {
-		Pet pet = new Pet("Perro", "Velocidad", 2, Rarity.COMMON);
+		Pet pet = new Pet("Perro", "Velocidad", 2, Rarity.COMMON, "");
 		User user = new User("Carl", "123456", pet);
 		Card card1 = new Card(
 				"Charles",
@@ -407,7 +505,8 @@ public class Main {
 				"Golpe Fuerte",
 				85,
 				59,
-				148
+				148,
+				""
 		);
 		Card card2 = new Card(
 				"Merlin",
@@ -418,7 +517,8 @@ public class Main {
 				"Frezzing Ice",
 				85,
 				59,
-				148
+				148,
+				""
 		);
 		
 		Set<Card> cards = new HashSet<>();
