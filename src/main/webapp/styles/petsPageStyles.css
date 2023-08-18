@@ -1,0 +1,125 @@
+body {
+	width: 100vw;
+	height: 100vh;
+	overflow-x: hidden;
+}
+
+.root {	
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
+.backgroundContainer{
+	background-image: url(../public/backgroundPetPage.png);
+	background-color: #071425;
+	background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.mainContainer {
+	display: flex;
+	flex-direction: column;
+	width: 100vw;
+	height: 100%;
+	max-width: 1536px;
+	overflow: hidden;
+	position: relative;
+}
+
+
+.contentContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+	gap: 3rem;
+}
+
+.containerBackgroundSection {
+	width: 100%;
+	height: 350px;
+	overflow: hidden;
+}
+
+.backgroundSection {
+	width: 100%;
+	overflow: hidden;
+}
+
+.title{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.title .petIcon {
+	width: 8rem;
+}
+
+.bodyContainer {
+	width: 90%;
+	height: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+.cardsContainer {
+	width: 85%;
+	height: auto;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 2rem;
+	margin: 5rem  0 8rem 0;
+}
+
+.petContainer{
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 240px;
+}
+
+.petFrame{
+	position: absolute;
+}
+
+.petContainerImage{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	overflow: hidden;
+	width: 200px;
+	height: 300px;
+/*	filter: drop-shadow(0px 4px 30px #fea444); -legendario*/ 
+/*	filter: drop-shadow(0px 4px 30px #ff0534); -Avanzado*/
+/*	filter: drop-shadow(0px 4px 30px #ee4cdB) -Epico;*/
+/*	filter: drop-shadow(0px 4px 30px #01c4e7); -Raro */
+/*	filter: drop-shadow(0px 4px 30px #2ef8a0) -Comun;*/
+	filter: drop-shadow(0px 4px 30px #ee4cdB);
+	z-index: -10;
+	border-radius: 100%;
+}
+
+.petImage{
+	object-fit: cover;
+	background-repeat: no-repeat;
+}
+
+.footerContainer {
+	background-color: #171717;
+}
+
+
+
+
+ 
+

@@ -1,0 +1,29 @@
+.wrapped-header {
+    color: #fff;
+	align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 120rem;
+}
+
+.wrapped-header:after, .wrapped-header:before {
+    content: "";
+    flex: 1 1;
+    height: 2px;
+    width: 30rem;
+    margin: 1rem;
+    
+}
+
+.wrapped-header::before{
+    background: linear-gradient(270deg,#85784a 60%,transparent);
+    margin-left: 0;
+    margin-right: 2rem;
+}
+
+.wrapped-header::after {
+	background: linear-gradient(90deg,#85784a 60%,transparent);
+    margin-left: 2rem;
+    margin-right: 0;
+}
