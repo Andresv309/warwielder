@@ -29,7 +29,7 @@
 			<div class="contentContainer">
 				<div>
 					<img class="backgroundSection" alt="bang"
-						src="public/backgroundCardPage2.jpg">
+						src="public/headerCardPage.jpg">
 				</div>
 
 				<div class="title">
