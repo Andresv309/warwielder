@@ -1,5 +1,7 @@
 package com.adso.entities;
 
+import java.io.Serializable;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +15,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "deck_cards")
-public class DeckCard {
+public class DeckCard implements Serializable {
+	private static final long serialVersionUID = -7465841831545686614L;
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -27,15 +31,16 @@ public class DeckCard {
     @JoinColumn(name = "card_id")
     private Card card;
     
-    @Column(name = "position", nullable = false)
+    @Column(name = "position")
     private int position;
 
 	public DeckCard() {
 		super();
 	}
 
-	public DeckCard(Card card, int position) {
+	public DeckCard(Deck deck, Card card, int position) {
 		super();
+		this.deck = deck;
 		this.card = card;
 		this.position = position;
 	}
