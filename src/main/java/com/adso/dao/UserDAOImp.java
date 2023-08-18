@@ -1,7 +1,10 @@
 package com.adso.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -10,6 +13,7 @@ import com.adso.dao.interfaces.UserDAO;
 import com.adso.dao.template.AbstractDAOTemplate;
 import com.adso.entities.Card;
 import com.adso.entities.Deck;
+import com.adso.entities.DeckCard;
 import com.adso.entities.Pet;
 import com.adso.entities.User;
 import com.adso.persistence.AppEntityManager;
@@ -138,6 +142,74 @@ public class UserDAOImp extends AbstractDAOTemplate<User, Long> implements UserD
 		
 		return jsonResponse;
 	}
+	
+	@Override
+	public String getUserDecksCards(Long id) {
+		EntityManager em = emf.createEntityManager();
+		
+		String jsonResponse = null;
+		
+		try {
+			em.getTransaction().begin();
+			List<Deck> userDecks = em.createQuery("SELECT d FROM Deck d WHERE d.user.id = :userId", Deck.class)
+	                .setParameter("userId", id)
+	                .getResultList();			
+			
+			List<Map<String, Object>> responseList = new ArrayList<>();
+			
+			for (Deck userDeck : userDecks) {
+				System.out.println("3");
+				List<DeckCard> userDeckCards = em.createQuery("SELECT dc FROM DeckCard dc WHERE dc.deck.id = :deckId", DeckCard.class)
+		                .setParameter("deckId", userDeck.getId())
+		                .getResultList();
+				
+				System.out.println("4");
+				
+				List<Map<String, Object>> cardsList = new ArrayList<>();
+	            for (DeckCard deckCard : userDeckCards) {
+	                Card card = deckCard.getCard();
+	                Map<String, Object> cardMap = new HashMap<>();
+	                cardMap.put("id", card.getId());
+	                cardMap.put("name", card.getName());
+	                cardMap.put("description", card.getDescription());
+	                cardMap.put("phrase", card.getPhrase());
+	                cardMap.put("skill", card.getSkill());
+	                cardMap.put("rarity", card.getRarity());
+	                cardMap.put("type", card.getType());
+	                cardMap.put("health", card.getHealth());
+	                cardMap.put("shield", card.getShield());
+	                cardMap.put("attack", card.getAttack());
+	                cardMap.put("srcPath", card.getSrcPath());
+	                cardMap.put("position", deckCard.getPosition());
+	                
+	                cardsList.add(cardMap);
+	            }
+	            
+	            Map<String, Object> deckMap = new HashMap<>();
+	            deckMap.put("id", userDeck.getId());
+	            deckMap.put("deck", cardsList);
+	            responseList.add(deckMap);
+			}
+			
+			
+			
+			
+			Gson gson = new Gson();
+			jsonResponse = gson.toJson(responseList);			
+			System.out.println(jsonResponse);
+
+			em.getTransaction().commit();
+		} catch (Exception e) {
+
+        } finally {
+			em.close();
+		}
+		
+		
+		return jsonResponse;
+	}
+	
+	
 
 	@Override
 	public User addNewUser(String newUserJson) throws ConstraintViolationException {
@@ -191,10 +263,74 @@ public class UserDAOImp extends AbstractDAOTemplate<User, Long> implements UserD
 	}
 
 	@Override
-	public String updateDeck(Long deckId) {
-		// TODO Auto-generated method stub
-		return null;
+	public String updateDeck(String updateDeckCardJson) {
+		String jsonResponse = null;
+		
+        // Parse the JSON data using Gson
+        JsonObject jsonObject = JsonParser.parseString(updateDeckCardJson).getAsJsonObject();               
+       
+        System.out.println("Evaluando Json");
+        
+        if (!jsonObject.has("position") || !jsonObject.has("deckId")) {
+            // Create a response JSON indicating missing fields
+            JsonObject responseJson = new JsonObject();
+            responseJson.addProperty("error", "Missing required fields: position and/or deckId");
+            
+            jsonResponse = responseJson.toString();
+            return jsonResponse;
+        }
+        
+        
+        Long deckId = jsonObject.get("deckId").getAsLong();
+        Integer position = jsonObject.get("position").getAsInt();
+        
+		System.out.println("Json Correcto");
+		
+		EntityManager em = emf.createEntityManager();
+		
+		try {
+			System.out.println("Comenzando transaccion");
+			em.getTransaction().begin();
+			DeckCard deckCard = new DeckCard();
+			
+	        Long cardId = null;
+	        Card card = null;
+	        if (jsonObject.has("cardId")) {
+	        	cardId = jsonObject.get("cardId").getAsLong();
+//	        	card = em.find(Card.class, cardId);  
+	        	card = new Card();
+	        	card.setId(cardId);
+	        	deckCard.setCard(card);
+	        }
+			
+//	        Deck deck = em.find(Deck.class, deckId);	
+        	Deck deck = new Deck();
+        	deck.setId(deckId);
+			
+	        Long id = null;
+	        if (jsonObject.has("id")) {
+	            id = jsonObject.get("id").getAsLong();
+	            deckCard.setId(id);
+	        }
+			
+			deckCard.setDeck(deck);
+			deckCard.setPosition(position);
+
+			em.merge(deckCard);
+			
+			Gson gson = new Gson();
+			jsonResponse = gson.toJson(deckCard);	
+			
+			em.getTransaction().commit();
+        } finally {
+			em.close();
+		}
+			
+		System.out.println(jsonResponse);
+		return jsonResponse;
 	}
+
+	
 
 
 
