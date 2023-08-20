@@ -7,9 +7,6 @@
 <link rel="stylesheet" href="styles/style.css">
 <link rel="stylesheet" href="styles/indexStyles.css">
 
-
-<script src="https://cdn.tailwindcss.com"></script>
-
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,7 +36,7 @@
 						width="450px" height="70px" class="card2" alt="bang"
 						src="public/homepage_cardbacks_row_02.avif">
 					<h2>Te damos la bienvenida a WarWielder</h2>
-					<img class="w-[500px] h-[80px] mb-10" alt="bang"
+					<img class="bang" alt="bang"
 						src="public/bang.avif">
 				</div>
 			</div>
