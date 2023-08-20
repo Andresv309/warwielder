@@ -31,9 +31,4 @@ public class AppCardsServlet extends HttpServlet {
         response.getWriter().write(appCards);
 	}
 
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	}
-
 }

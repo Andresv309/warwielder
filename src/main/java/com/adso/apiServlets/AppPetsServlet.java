@@ -31,9 +31,4 @@ public class AppPetsServlet extends HttpServlet {
         response.getWriter().write(appPets);
 	}
 
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	}
-
 }

@@ -9,9 +9,8 @@ import java.io.IOException;
 
 import com.adso.dao.DAOManagerImp;
 import com.adso.dao.interfaces.AppDAO;
-import com.adso.dao.interfaces.DeckDAO;
 
-@WebServlet(name = "appCardServlet", urlPatterns = "/api/v1/card/*") 
+@WebServlet(name = "appCardServlet", urlPatterns = "/api/v1/cards/*") 
 public class AppCardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -37,11 +36,6 @@ public class AppCardServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(appCards);
-	}
-
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 	}
 
 }
