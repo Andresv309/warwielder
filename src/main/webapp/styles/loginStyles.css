@@ -1,0 +1,173 @@
+.backgroundContainer{
+	background-image: url(../public/backgroundLogin.avif);
+}
+
+.mainContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	height: 100vh;
+	max-width: 1536px;
+	overflow: hidden;
+	position: relative;
+}
+
+.contentContainer{
+	width: 90%;
+	display: flex;
+	justify-content: center;
+	height: auto;
+	align-items: center;
+}
+
+@media (min-width: 1536px){
+    .contentContainer {
+        width: 100%; 
+        height: 100%;
+    }
+}
+
+.leftContainer{
+	width: 60%;
+	color: black;
+}
+
+.leftContainer img {
+	max-width: 100%;
+}
+
+.rightContainer {
+	width: 40%;
+}
+
+.frameForm{
+	background-image: url(../public/frame/right_top_1.webp), url(../public/frame/right_bottom_1.webp), url(../public/frame/left_bottom_2.webp), url(../public/frame/left_top_2.webp), url(../public/frame/TopBorder.webp), url(../public/frame/rightBorder.webp), url(../public/frame/bottomBorder.webp), url(../public/frame/leftBorder.webp), url(../public/backgroundCardPage.jpg);
+    background-repeat: no-repeat,no-repeat,no-repeat,no-repeat,repeat-x,repeat-y,repeat-x,repeat-y,repeat;
+    background-position: top right,bottom right,bottom left,top left,top,right,bottom,left,top left;
+    border-radius: 0;
+    padding: 32px 24px 24px 24px;
+    background-color: #ebdec2;
+    padding: 4rem;
+}
+
+.formContent {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+@media (min-width: 1536px){
+    .formContent {
+        gap: 4rem;
+    }
+}
+
+.formContent .logoContainer{
+	display: flex;
+	align-items: center;
+
+}
+
+.formContent div {
+	display: flex;
+	flex-direction: column;
+	
+}
+
+.inputContainer{
+	gap: 0.5rem;
+}
+
+.inputContainer label {
+	font-size: 1.2rem;
+}
+
+.inputContainer input {
+	height: 40px;
+	border: none;
+	color:  rgb(97, 67, 38);
+	background-color: transparent;
+	border-bottom: 2px solid rgb(97, 67, 38);
+	outline: none; 
+	font-size: 100%; 
+}
+
+.inputContainer input::placeholder {
+	color: #52413347;
+}
+
+
+.btnaddContainer{
+	margin-top: 2rem;
+}
+
+@media (min-width: 1536px){
+    .btnaddContainer {
+        margin-top: 1rem;
+    }
+}
+
+.BtnAdd {
+	width: 100%;
+	height: 60px;
+	border: none;
+	border-radius: 9px;
+	background: linear-gradient(to right, #77530a, #ffd277, #77530a, #77530a, #ffd277, #77530a);
+	background-size: 250%;
+	background-position: left;
+	color: var(--color-text-Primary);
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition-duration: 1s;
+	overflow: hidden;
+}
+
+.BtnAdd::before {
+	position: absolute;
+	content: "Iniciar Sesion";
+	color: var(--color-text-Primary);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 98%;
+	height: 82%;
+	border-radius: 8px;
+	transition-duration: 1s;
+	background-color: #1c0d02;
+	background-size: 200%;
+	font-size: 1rem;
+}	
+
+.BtnAdd:hover {
+	background-position: right;
+	transition-duration: 1s;
+}
+
+.BtnAdd:hover::before {
+	background-position: right;
+	transition-duration: 1s;
+}
+
+.BtnAdd:active {
+	transform: scale(0.95);
+} 
+
+.registerInfo {
+	display: flex;
+	align-items: center;
+	padding-top: 1rem;
+}
+
+.registerInfo a{
+	padding-left: 0.3rem;
+	color:brown; 
+	text-decoration: none;
+}
+
+
+
