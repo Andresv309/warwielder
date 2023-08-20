@@ -12,7 +12,7 @@
 	</div>
 
 	<div>
-		<img width="500px" alt="" src="public/addskin.avif">
+		<img width="500px" alt="addskin" src="public/addskin.avif">
 	</div>
 
 </div>
