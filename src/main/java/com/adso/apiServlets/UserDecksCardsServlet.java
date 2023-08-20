@@ -61,7 +61,7 @@ public class UserDecksCardsServlet extends HttpServlet {
 				
 				
 				UserDAO userDao = new DAOManagerImp().getUserDAO();
-				String jsonResponse = userDao.updateDeck(jsonBody);
+				String jsonResponse = userDao.updateDeck(jsonBody, userId);
 				if (jsonResponse != null) {
 					userUnlockedCards = jsonResponse;
 				}
