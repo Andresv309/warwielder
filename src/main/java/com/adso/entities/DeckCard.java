@@ -12,9 +12,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "deck_cards")
+@Table(name = "deck_cards", uniqueConstraints = {
+		@UniqueConstraint(columnNames = {"card_id", "deck_id"})
+})
 public class DeckCard implements Serializable {
 	private static final long serialVersionUID = -7465841831545686614L;
 
@@ -31,7 +34,7 @@ public class DeckCard implements Serializable {
     @JoinColumn(name = "card_id")
     private Card card;
     
-    @Column(name = "position")
+    @Column(name = "position", nullable = false)
     private int position;
 
 	public DeckCard() {
