@@ -15,6 +15,6 @@
 	</nav>
 
 	<div class="">
-		<button class="Btn">Iniciar</button>
+		<a href="login"><button class="Btn">Iniciar</button></a>
 	</div>
 </header>
