@@ -1,11 +1,14 @@
 package com.adso.dao;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.hibernate.exception.ConstraintViolationException;
 
@@ -264,13 +267,23 @@ public class UserDAOImp extends AbstractDAOTemplate<User, Long> implements UserD
 
 	@Override
 	public String updateDeck(String updateDeckCardJson, Long userId) {
+		System.out.println("userId: " + userId);
+		
 		String jsonResponse = null;
+		DeckCard deckCard = new DeckCard();
+		EntityManager em = emf.createEntityManager();
 		
         // Parse the JSON data using Gson
-        JsonObject jsonObject = JsonParser.parseString(updateDeckCardJson).getAsJsonObject();               
-       
-        System.out.println("Evaluando Json");
+        JsonObject jsonObject = JsonParser.parseString(updateDeckCardJson).getAsJsonObject();
         
+        // Required parameters
+        Long deckId = null;
+        Integer position = null;
+        
+        // Optional parameters
+        Long id = null;
+        Long cardId = null;
+          
         if (!jsonObject.has("position") || !jsonObject.has("deckId")) {
             // Create a response JSON indicating missing fields
             JsonObject responseJson = new JsonObject();
@@ -278,44 +291,80 @@ public class UserDAOImp extends AbstractDAOTemplate<User, Long> implements UserD
             
             jsonResponse = responseJson.toString();
             return jsonResponse;
+            
         }
         
+        // Set required parameters
+        deckId = jsonObject.get("deckId").getAsLong();
+        position = jsonObject.get("position").getAsInt();
         
-        Long deckId = jsonObject.get("deckId").getAsLong();
-        Integer position = jsonObject.get("position").getAsInt();
         
-		System.out.println("Json Correcto");
+    	if (!(1 <= position && position <=8)) {
+            // Create a response JSON indicating missing fields
+            JsonObject responseJson = new JsonObject();
+            responseJson.addProperty("error", "Invalid card position");
+            
+            jsonResponse = responseJson.toString();
+            return jsonResponse;
+    	}
+        
+    	Deck deck = new Deck();
+    	deck.setId(deckId);
+    	
+    	deckCard.setDeck(deck);
+    	deckCard.setPosition(position);
+ 
+   
+        
+		// Verify the user is authorized to make the change
+		Deck askedDeck = em.find(Deck.class, deckId);
+		Long askedUserId = askedDeck.getUser().getId();
+		if (askedUserId != userId) {
+            // Create a response JSON indicating user not authorized
+            JsonObject responseJson = new JsonObject();
+            responseJson.addProperty("error", "User is not authorized for this operation");
+            
+            jsonResponse = responseJson.toString();
+            return jsonResponse;
+		}
+
+		// Verify the user owns the card if passed
+		Set<Card> userCards = askedDeck.getUser().getCards();
+		if (jsonObject.has("cardId")) {
+		    cardId = jsonObject.get("cardId").getAsLong();
+		    boolean userOwnsCard = false;
+		    
+		    for (Card userCard : userCards) {
+		        if (userCard.getId().equals(cardId)) {
+		            userOwnsCard = true;
+		            break;
+		        }
+		    }
+		    
+		    if (!userOwnsCard) {
+		        // Create a response JSON indicating user doesn't own the card
+		        JsonObject responseJson = new JsonObject();
+		        responseJson.addProperty("error", "User does not own the specified card");
+		        
+		        jsonResponse = responseJson.toString();
+		        return jsonResponse;
+		    } else {
+	            Card card = new Card();
+	            card.setId(cardId);
+	            deckCard.setCard(card);
+		    }
+		}
 		
-		EntityManager em = emf.createEntityManager();
+
+		// Set optional parameter if passed
+        if (jsonObject.has("id")) {
+            id = jsonObject.get("id").getAsLong();
+            deckCard.setId(id);
+        }
+        
 		
 		try {
-			System.out.println("Comenzando transaccion");
 			em.getTransaction().begin();
-	
-			DeckCard deckCard = new DeckCard();
-			
-	        Long cardId = null;
-	        Card card = null;
-	        if (jsonObject.has("cardId")) {
-	        	cardId = jsonObject.get("cardId").getAsLong();
-//	        	card = em.find(Card.class, cardId);  
-	        	card = new Card();
-	        	card.setId(cardId);
-	        	deckCard.setCard(card);
-	        }
-			
-//	        Deck deck = em.find(Deck.class, deckId);	
-        	Deck deck = new Deck();
-        	deck.setId(deckId);
-        	deckCard.setDeck(deck);
-			
-	        Long id = null;
-	        if (jsonObject.has("id")) {
-	            id = jsonObject.get("id").getAsLong();
-	            deckCard.setId(id);
-	        }
-			
-			deckCard.setPosition(position);
 
 			em.merge(deckCard);
 			
@@ -323,12 +372,59 @@ public class UserDAOImp extends AbstractDAOTemplate<User, Long> implements UserD
 			jsonResponse = gson.toJson(deckCard);	
 			
 			em.getTransaction().commit();
+        
+        } catch (Exception e) {
+        	
+//        	int errorCode = e.getErrorCode();
+//        	System.out.println(errorCode);
+        	
+//        	if (errorCode == 1062 || errorCode == 23000) {
+		        // Create a response JSON indicating card trying to assign is not valid
+		        JsonObject responseJson = new JsonObject();
+		        responseJson.addProperty("error", "Card already exist in the deck");
+		        
+		        jsonResponse = responseJson.toString();
+		        return jsonResponse;
+//        	}
+        	
+        	
+        	
+        	
         } finally {
+  
 			em.close();
 		}
 			
 		System.out.println(jsonResponse);
 		return jsonResponse;
+	}
+
+
+	@Override
+	public String redeemCardCode(String redeemCodeJson, Long userId) {
+		String jsonResponse = null;
+		DeckCard deckCard = new DeckCard();
+		EntityManager em = emf.createEntityManager();
+		
+		
+		try {
+			em.getTransaction().begin();
+
+			em.merge(deckCard);
+			
+			Gson gson = new Gson();
+			jsonResponse = gson.toJson(deckCard);	
+			
+			em.getTransaction().commit();
+	    } finally {
+	    	  
+			em.close();
+		}
+			
+		System.out.println(jsonResponse);
+		return jsonResponse;
+		
+		
 	}
 
 

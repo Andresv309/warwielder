@@ -9,4 +9,5 @@ public interface UserDAO extends DAO<User, Long> {
 	String updateDeck(String updateDeckCardJson, Long userId);
 	User addNewUser(String newUserJson);
 	String getUserDecksCards(Long id);
+	String redeemCardCode(String redeemCodeJson, Long userId);
 }
