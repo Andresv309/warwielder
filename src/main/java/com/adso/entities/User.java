@@ -49,6 +49,9 @@ public class User implements Serializable {
 			  @JoinColumn(name = "card_id", referencedColumnName = "id")
 	  })
 	private Set<Card> cards;
+	
+	@Column(name = "coins")
+	private int coins;
 
 	public User() {
 		super();
@@ -115,11 +118,18 @@ public class User implements Serializable {
 		this.cards = cards;
 	}
 
+	public int getCoins() {
+		return coins;
+	}
+
+	public void setCoins(int coins) {
+		this.coins = coins;
+	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", pet=" + pet + ", decks="
-				+ decks + "]";
+				+ decks + ", cards=" + cards + ", coins=" + coins + "]";
 	}
 	
 }
