@@ -14,6 +14,7 @@ import com.adso.entities.Card;
 import com.adso.entities.Deck;
 import com.adso.entities.DeckCard;
 import com.adso.entities.Pet;
+import com.adso.entities.RedemptionCode;
 import com.adso.entities.User;
 import com.adso.enums.Rarity;
 import com.adso.persistence.CustomPersistenceUnitInfo;
@@ -34,10 +35,11 @@ public class Main {
 	
 	public static void main(String[] args) {
 //		createDB();
-//		seedDB();
-//		createDeckCards();
-//		createUserCards();
-		
+//		
+		seedDB();
+		createDeckCards();
+		createUserCards();
+//		
 		
 //		queryDeckCardByUserId();
 		
@@ -365,8 +367,22 @@ public class Main {
 			em.persist(user1);
 			em.persist(pet2);
 			em.persist(user2);
-
 			
+			
+			
+			
+			RedemptionCode redemptionCode1 = new RedemptionCode("12");
+			RedemptionCode redemptionCode2 = new RedemptionCode("34");
+			RedemptionCode redemptionCode3 = new RedemptionCode("56");
+			RedemptionCode redemptionCode4 = new RedemptionCode("78");
+			RedemptionCode redemptionCode5 = new RedemptionCode("90");
+
+			em.persist(redemptionCode1);
+			em.persist(redemptionCode2);
+			em.persist(redemptionCode3);
+			em.persist(redemptionCode4);
+			em.persist(redemptionCode5);
+
 			em.getTransaction().commit();
 		} finally {
 			em.close();
