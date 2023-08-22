@@ -16,7 +16,8 @@ import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "deck_cards", uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"card_id", "deck_id"})
+		@UniqueConstraint(columnNames = {"card_id", "deck_id"}),
+		@UniqueConstraint(columnNames = {"position", "deck_id"})
 })
 public class DeckCard implements Serializable {
 	private static final long serialVersionUID = -7465841831545686614L;
