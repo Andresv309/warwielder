@@ -1,68 +1,80 @@
 package com.adso.apiServlets;
 
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Map;
+
+import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
 
 import com.adso.utils.JsonResponseBuilder;
 import com.adso.utils.Utils;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.adso.entities.Card;
+import com.adso.dao.DAOManagerImp;
+import com.adso.dao.interfaces.AppDAO;
+import com.adso.exceptions.auth.NotFoundAuthToken;
+import com.adso.exceptions.auth.NotValidAuthToken;
 import com.adso.exceptions.codeRedemption.CodeAlreadyRedeemedException;
 import com.adso.exceptions.codeRedemption.InvalidCodeException;
 import com.adso.exceptions.codeRedemption.NoCardsAvailableException;
+import com.adso.exceptions.codeRedemption.NotValidCodeRedemptionParams;
 import com.adso.exceptions.user.UserNotFoundException;
 import com.adso.services.CodeRedemptionService;
 
 @WebServlet(name = "userRedeemCodeServlet", urlPatterns = "/api/v1/user/redeem") 
 public class UserRedeemCodeServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1903741107061643427L;
+	private CodeRedemptionService codeRedemptionService;
+
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		this.codeRedemptionService = new CodeRedemptionService();
+		super.init(config);
+	}
+	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Long userId = Utils.getUserIdFromCookies(request);
+		Long userId;
 		JsonResponseBuilder jsonBuilder  = JsonResponseBuilder.create();
 
 		try {
-	        // Read JSON data from the request body
-	        BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream()));
-	        StringBuilder jsonBodyBuilder = new StringBuilder();
-	        String line;
-
-	        while ((line = reader.readLine()) != null) {
-	            jsonBodyBuilder.append(line);
-	        }
-
-	        String jsonBody = jsonBodyBuilder.toString();
+			userId = Utils.getUserIdFromCookies(request);
+	        String jsonBody = Utils.stringifyJsonBody(request);
 	        
 	        // Parse the JSON data using Gson
 	        JsonObject jsonObject = JsonParser.parseString(jsonBody).getAsJsonObject();
-
-	        if (jsonObject.has("code")) {
-	        	String code = jsonObject.get("code").getAsString();
-	        	
-	        	CodeRedemptionService CodeRedemptionService = new CodeRedemptionService();
-				String cardRedemptionJson = CodeRedemptionService.redeemCardFromCode(code, userId);
-				
-				JsonObject cardRedemptionJsonObj = JsonParser.parseString(cardRedemptionJson).getAsJsonObject();
-				jsonBuilder.addField("data", cardRedemptionJsonObj);
+	        
+	        if (!jsonObject.has("code")) {
+	        	throw new NotValidCodeRedemptionParams();
 	        }
+
+        	String code = jsonObject.get("code").getAsString();
+        	
+        	Map<String, Object> cardRedemptionInfo = codeRedemptionService.redeemCardFromCode(code, userId);
+        	
+
+			jsonBuilder.addField("data", cardRedemptionInfo.get("unlockedCard"));
+			jsonBuilder.addField("messages", cardRedemptionInfo.get("messages"));
+
 
         } catch (
 			InvalidCodeException |
-			CodeAlreadyRedeemedException |
-			NoCardsAvailableException |
-			UserNotFoundException
+			UserNotFoundException |
+			NotFoundAuthToken |
+			NotValidAuthToken |
+			NotValidCodeRedemptionParams
 			e
 		) {
 			jsonBuilder.addField("error", e.getMessage());
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        } catch (NoCardsAvailableException | CodeAlreadyRedeemedException e) {
+        	jsonBuilder.addField("error", e.getMessage());
+        	response.setStatus(HttpServletResponse.SC_CONFLICT);
         }
 
         response.setContentType("application/json");

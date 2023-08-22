@@ -37,14 +37,14 @@ public class LoginPrueba extends HttpServlet {
 			request.setAttribute("error", "Hay campos faltantes");
 			doGet(request, response);
 		} else {
-			
+    		try {
 			UserAuthenticationService userAuthenticationService = new UserAuthenticationService();
 			User validatedUser = userAuthenticationService.validateUser(username, password);
 			
 	        if (validatedUser != null) {
 	            System.out.println("Valid user!");
 	            
-	    		try {
+
 //					JwtGenerator generator = new JwtGenerator();
 //					
 //					Map<String, String> claims = new HashMap<>();
@@ -66,9 +66,7 @@ public class LoginPrueba extends HttpServlet {
 	    			
 		            response.addCookie(cookie);
 					response.sendRedirect(request.getContextPath() + "/account");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+
 	            
 	            
 	        } else {
@@ -76,6 +74,9 @@ public class LoginPrueba extends HttpServlet {
 	            request.setAttribute("error", "Usuario o contraseña incorrectos");
 	            doGet(request, response);
 	        }
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 		}
 		
