@@ -5,8 +5,7 @@ import java.util.List;
 import com.adso.dao.interfaces.AppDAO;
 import com.adso.entities.Card;
 import com.adso.entities.Pet;
-
-import com.google.gson.Gson;
+import com.adso.exceptions.cards.NotFoundCardException;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -20,81 +19,33 @@ public class AppDAOImp implements AppDAO {
     }
 
 	@Override
-	public String getAppCards() {
-		EntityManager em = emf.createEntityManager();
-		
-		String jsonResponse = null;
-		
-		try {
-			em.getTransaction().begin();
+	public List<Card> getAppCards() {
+		EntityManager em = emf.createEntityManager();		
+		List<Card> appCards = em.createQuery("FROM Card", Card.class).getResultList();
+		em.close();
 
-			List<Card> appCards = em.createQuery("FROM Card", Card.class).getResultList();
-
-			Gson gson = new Gson();
-			jsonResponse = gson.toJson(appCards);			
-			System.out.println(jsonResponse);
-
-			em.getTransaction().commit();
-		} catch (Exception e) {
-
-        } finally {
-			em.close();
-		}
-		
-		
-		return jsonResponse;
+		return appCards;
 	}
 
 	@Override
-	public String getAppPets() {
-		EntityManager em = emf.createEntityManager();
-		
-		String jsonResponse = null;
-		
-		try {
-			em.getTransaction().begin();
+	public List<Pet> getAppPets() {
+		EntityManager em = emf.createEntityManager();		
+		List<Pet> appPets = em.createQuery("FROM Pet", Pet.class).getResultList();
+		em.close();
 
-			List<Pet> appCards = em.createQuery("FROM Pet", Pet.class).getResultList();
-
-			Gson gson = new Gson();
-			jsonResponse = gson.toJson(appCards);			
-			System.out.println(jsonResponse);
-
-			em.getTransaction().commit();
-		} catch (Exception e) {
-
-        } finally {
-			em.close();
-		}
-		
-		
-		return jsonResponse;
+		return appPets;	
 	}
 
 	@Override
-	public String getAppCard(Long id) {
+	public Card getAppCard(Long id) throws NotFoundCardException {
 		EntityManager em = emf.createEntityManager();
+		Card appCard = em.find(Card.class, id);
+		em.close();
 		
-		String jsonResponse = null;
-		
-		try {
-			em.getTransaction().begin();
-
-			Card appCard = em.find(Card.class, id);
-
-			Gson gson = new Gson();
-			jsonResponse = gson.toJson(appCard);			
-			System.out.println(jsonResponse);
-
-			em.getTransaction().commit();
-		} catch (Exception e) {
-
-        } finally {
-			em.close();
+		if (appCard == null) {
+			throw new NotFoundCardException(id);
 		}
-		
-		
-		return jsonResponse;
+		return appCard;
 	}
    
     
