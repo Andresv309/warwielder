@@ -37,10 +37,10 @@ public class User implements Serializable {
 	@JoinColumn(name="pet_id")
 	private Pet pet;
 	
-	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user")
 	private Set<Deck> decks;
 	
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "users_cards", 
 	  joinColumns = {
 			  @JoinColumn(name = "user_id", referencedColumnName = "id")
