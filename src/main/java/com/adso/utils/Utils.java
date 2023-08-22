@@ -49,7 +49,6 @@ public class Utils {
 		return userId;
 	}
 	
-
     public static String extractPathInfoFromRequest(HttpServletRequest request) {
     	// Remove the leading "/"
     	String pathInfo = request.getPathInfo().substring(1);
@@ -77,6 +76,6 @@ public class Utils {
         return jsonBodyBuilder.toString();
     }
     
-    
-    
+ 
 }
+

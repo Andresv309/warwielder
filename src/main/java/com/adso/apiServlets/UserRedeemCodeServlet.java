@@ -15,8 +15,6 @@ import com.google.gson.JsonObject;
 
 import com.adso.utils.JsonResponseBuilder;
 import com.adso.utils.Utils;
-import com.adso.dao.DAOManagerImp;
-import com.adso.dao.interfaces.AppDAO;
 import com.adso.exceptions.auth.NotFoundAuthToken;
 import com.adso.exceptions.auth.NotValidAuthToken;
 import com.adso.exceptions.codeRedemption.CodeAlreadyRedeemedException;
@@ -83,3 +81,4 @@ public class UserRedeemCodeServlet extends HttpServlet {
 	}
 
 }
+

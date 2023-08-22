@@ -7,13 +7,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.adso.entities.User;
 import com.adso.services.UserAuthenticationService;
 import com.adso.utils.AuthCookieGenerator;
-import com.adso.utils.JwtGenerator;
+;
 
 @WebServlet(name = "logintest", urlPatterns = "/logintest")
 public class LoginPrueba extends HttpServlet {     
@@ -44,23 +42,6 @@ public class LoginPrueba extends HttpServlet {
 	        if (validatedUser != null) {
 	            System.out.println("Valid user!");
 	            
-
-//					JwtGenerator generator = new JwtGenerator();
-//					
-//					Map<String, String> claims = new HashMap<>();
-//					
-//					claims.put("id", validatedUser.getId().toString());
-//					claims.put("username", validatedUser.getUsername());
-//					claims.put("role", "USER");
-//					
-//					String token = generator.generateJwt(claims);
-//					System.out.println(token);
-					
-//		            Cookie cookie = new Cookie("jwt-token", token);
-//		            cookie.setHttpOnly(true);
-//		            cookie.setPath("/warwielder");
-//		  
-//		            cookie.setMaxAge(60 * 60 * 24);
 		            
 	    			Cookie cookie = new AuthCookieGenerator().generateAuthCookie(validatedUser);
 	    			

@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.Set;
 
 import com.adso.dao.DAOManagerImp;
-import com.adso.dao.interfaces.AppDAO;
 import com.adso.dao.interfaces.UserDAO;
 import com.adso.entities.Card;
 import com.adso.exceptions.auth.NotFoundAuthToken;
@@ -50,3 +49,4 @@ public class UserUnlockedCardsServlet extends HttpServlet {
 		
 	}
 }
+

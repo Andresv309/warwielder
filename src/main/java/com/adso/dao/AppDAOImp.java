@@ -48,5 +48,5 @@ public class AppDAOImp implements AppDAO {
 		return appCard;
 	}
    
-    
 }
+

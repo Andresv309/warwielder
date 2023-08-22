@@ -79,3 +79,4 @@ public class RedemptionCode implements Serializable {
 	}
 	
 }
+

@@ -70,10 +70,5 @@ public class Deck implements Serializable {
 		return "Deck [id=" + id + ", user=" + user + ", deckCards=" + deckCards + "]";
 	}
 
-
 }
-
-
-
-
 

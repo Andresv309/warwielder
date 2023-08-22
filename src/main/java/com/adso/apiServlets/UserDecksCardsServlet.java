@@ -18,7 +18,6 @@ import com.adso.entities.Card;
 import com.adso.entities.Deck;
 import com.adso.entities.DeckCard;
 import com.adso.exceptions.auth.NotFoundAuthToken;
-import com.adso.exceptions.auth.NotValidAuthParams;
 import com.adso.exceptions.auth.NotValidAuthToken;
 import com.adso.exceptions.decks.CardAlreadyInDeckException;
 import com.adso.exceptions.decks.NotValidDeckUpdateParams;
@@ -123,33 +122,7 @@ public class UserDecksCardsServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonBuilder.build());
 	}
-	
-	
-//	@Override
-//	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		JsonResponseBuilder jsonBuilder  = JsonResponseBuilder.create();
-//		
-//		try {
-//			Long userId = Utils.getUserIdFromCookies(request);
-//			String jsonBody = Utils.stringifyJsonBody(request);
-//			
-//			String jsonResponse = userDao.updateDeck(jsonBody, userId);
-//			
-//			if (jsonResponse != null) {
-//				JsonObject jsonResponseObj = JsonParser.parseString(jsonResponse).getAsJsonObject();
-//				jsonBuilder.addField("data", jsonResponseObj);
-//			}
-//			
-//		} catch (NotFoundAuthToken | NotValidAuthToken e) {
-//			jsonBuilder.addField("error", e.getMessage());
-//			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//		}
-//		
-//		response.setContentType("application/json");
-//		response.setCharacterEncoding("UTF-8");
-//		response.getWriter().write(jsonBuilder.build());
-//	}
-	
-	
 
 }
+
+
