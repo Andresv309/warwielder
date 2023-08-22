@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 
 import com.adso.exceptions.auth.NotFoundAuthToken;
 import com.adso.exceptions.auth.NotValidAuthToken;
+import com.adso.exceptions.validations.NotValidPathPatternException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
@@ -49,9 +50,18 @@ public class Utils {
 		return userId;
 	}
 	
-    public static String extractPathInfoFromRequest(HttpServletRequest request) {
+    public static String extractPathInfoFromRequest(HttpServletRequest request) throws NotValidPathPatternException {
     	// Remove the leading "/"
     	String pathInfo = request.getPathInfo().substring(1);
+    	
+    	// Define a regular expression for valid pathInfo
+    	String validPathPattern = "^[a-zA-Z0-9_/.-]+$";
+
+    	// Validate the pathInfo using the regular expression
+    	if (!pathInfo.matches(validPathPattern)) {
+    	    throw new NotValidPathPatternException();
+    	}
+    	
     	return pathInfo;
     }
 	
