@@ -1,6 +1,7 @@
 package com.adso.entities;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -11,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,6 +28,9 @@ public class Deck implements Serializable {
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
+	
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "deck")
+	private Set<DeckCard> deckCards;
 	
 	public Deck() {
 		super();
@@ -52,15 +57,18 @@ public class Deck implements Serializable {
 		this.user = user;
 	}
 
+	public Set<DeckCard> getDeckCards() {
+		return deckCards;
+	}
+
+	public void setDeckCards(Set<DeckCard> deckCards) {
+		this.deckCards = deckCards;
+	}
+
 	@Override
 	public String toString() {
-		return "Deck [id=" + id + ", user=" + user + "]";
+		return "Deck [id=" + id + ", user=" + user + ", deckCards=" + deckCards + "]";
 	}
-	
-	
+
 }
-
-
-
-
 

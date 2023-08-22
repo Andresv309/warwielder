@@ -37,10 +37,10 @@ public class User implements Serializable {
 	@JoinColumn(name="pet_id")
 	private Pet pet;
 	
-	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user")
 	private Set<Deck> decks;
 	
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "users_cards", 
 	  joinColumns = {
 			  @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -49,6 +49,9 @@ public class User implements Serializable {
 			  @JoinColumn(name = "card_id", referencedColumnName = "id")
 	  })
 	private Set<Card> cards;
+	
+	@Column(name = "coins")
+	private int coins;
 
 	public User() {
 		super();
@@ -115,11 +118,19 @@ public class User implements Serializable {
 		this.cards = cards;
 	}
 
+	public int getCoins() {
+		return coins;
+	}
+
+	public void setCoins(int coins) {
+		this.coins = coins;
+	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", pet=" + pet + ", decks="
-				+ decks + "]";
+				+ decks + ", cards=" + cards + ", coins=" + coins + "]";
 	}
 	
 }
+

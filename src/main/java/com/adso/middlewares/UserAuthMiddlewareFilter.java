@@ -5,6 +5,7 @@ import java.security.InvalidParameterException;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.adso.exceptions.auth.NotFoundAuthToken;
 import com.adso.utils.JwtValidator;
 import com.adso.utils.Utils;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -15,7 +16,6 @@ import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -71,24 +71,26 @@ public class UserAuthMiddlewareFilter implements Filter {
 	
 	
 	private boolean checkIfUserIsAuth(HttpServletRequest httpRequest) {
-		String jwtToken = Utils.getJwtTokenFromCookies(httpRequest);
+		String jwtToken;
 		boolean isAuth = false;
 		
-		if (jwtToken != null) {
-			try {
-				final JwtValidator validator = new JwtValidator();
-				
-				DecodedJWT decodedToken = validator.validate(jwtToken);
-				System.out.println("Jwt is valid");
-				System.out.println(decodedToken);
-				isAuth = true;
-				
-			} catch (InvalidParameterException e) {
-				System.out.println("Jwt is invalid");
-				e.printStackTrace();
-			}
+		try {
+			jwtToken = Utils.getJwtTokenFromCookies(httpRequest);
+			final JwtValidator validator = new JwtValidator();
+			
+			DecodedJWT decodedToken = validator.validate(jwtToken);
+			System.out.println("Jwt is valid");
+			System.out.println(decodedToken);
+			isAuth = true;
+			
+		} catch (NotFoundAuthToken e) {
+			System.out.println(e.getMessage());
+		} catch (InvalidParameterException e) {
+			System.out.println("Jwt is invalid");
+			e.printStackTrace();
 		}
 		
+	
 		return isAuth;
 	}
 	

@@ -109,14 +109,5 @@ public class Pet implements Serializable {
 				+ ", srcPath=" + srcPath + "]";
 	}
 
-	
-	
 }
-
-
-
-
-
-
-
 

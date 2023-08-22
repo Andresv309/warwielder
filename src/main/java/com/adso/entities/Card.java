@@ -168,21 +168,6 @@ public class Card implements Serializable {
 				+ type + ", rarity=" + rarity + ", skill=" + skill + ", health=" + health + ", shield=" + shield
 				+ ", attack=" + attack + ", srcPath=" + srcPath + "]";
 	}
-	
-	
-	
 
-	
 }
-
-
-
-
-
-
-
-
-
-
-
 
