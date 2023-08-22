@@ -12,6 +12,7 @@ import com.adso.dao.DAOManagerImp;
 import com.adso.dao.interfaces.AppDAO;
 import com.adso.entities.Card;
 import com.adso.exceptions.cards.NotFoundCardException;
+import com.adso.exceptions.validations.NotValidPathPatternException;
 import com.adso.utils.JsonResponseBuilder;
 import com.adso.utils.Utils;
 
@@ -27,10 +28,10 @@ public class AppCardServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String pathInfo = Utils.extractPathInfoFromRequest(request);
 		JsonResponseBuilder jsonBuilder  = JsonResponseBuilder.create();
 
 		try {			
+			String pathInfo = Utils.extractPathInfoFromRequest(request);
 			Long cardId = Long.parseLong(pathInfo);
 			Card cardFound = appDao.getAppCard(cardId);
 			
@@ -42,6 +43,9 @@ public class AppCardServlet extends HttpServlet {
 		} catch (NotFoundCardException e) {
 			jsonBuilder.addField("error", e.getMessage());
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		} catch (NotValidPathPatternException e) {
+			jsonBuilder.addField("error", e.getMessage());
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 
         response.setContentType("application/json");

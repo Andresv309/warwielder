@@ -37,11 +37,10 @@ public class UserRedeemCodeServlet extends HttpServlet {
 	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Long userId;
 		JsonResponseBuilder jsonBuilder  = JsonResponseBuilder.create();
 
 		try {
-			userId = Utils.getUserIdFromCookies(request);
+			Long userId = Utils.getUserIdFromCookies(request);
 	        String jsonBody = Utils.stringifyJsonBody(request);
 	        
 	        // Parse the JSON data using Gson
