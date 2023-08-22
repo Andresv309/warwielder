@@ -1,11 +1,10 @@
 package com.adso.services;
 
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import com.adso.attributeConverters.RarityConverter;
 import com.adso.entities.Card;
 import com.adso.entities.RedemptionCode;
 import com.adso.entities.User;
@@ -15,7 +14,6 @@ import com.adso.exceptions.codeRedemption.InvalidCodeException;
 import com.adso.exceptions.codeRedemption.NoCardsAvailableException;
 import com.adso.exceptions.user.UserNotFoundException;
 import com.adso.persistence.AppEntityManager;
-import com.adso.utils.JsonResponseBuilder;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -47,14 +45,16 @@ public class CodeRedemptionService {
     }
     
 
-    public String redeemCardFromCode(String code, Long userId)
+    public Map<String, Object> redeemCardFromCode(String code, Long userId)
     	throws
     	InvalidCodeException,
     	CodeAlreadyRedeemedException,
     	NoCardsAvailableException,
     	UserNotFoundException
     {
-    	JsonResponseBuilder jsonBuilder  = JsonResponseBuilder.create();
+    	Map<String, Object> redeemCardInfo = new HashMap<>();
+    	Map<String, Object> redeemCardMessages = new HashMap<>();
+    	
     	
     	if (hasBeenAlreadyRedeem(code)) {
     		throw new CodeAlreadyRedeemedException(code);
@@ -78,27 +78,29 @@ public class CodeRedemptionService {
         	    	.setParameter("code", code)
         	    	.getSingleResult();
             
+            
             redemptionCode.setIsRedeemed(true);
             redemptionCode.setUser(user);
+            
             
             if (isCardAlreadyUnlocked) {
             	int redeemValue = pickRedeemValueForRarity(randomRarity);
             	user.setCoins(redeemValue + user.getCoins());
             	
-            	jsonBuilder.addField("redemptionStatus", "Card already unlocked.");
+            	redeemCardMessages.put("redemptionStatus", "Card already unlocked.");
             	
             } else {    
             	Set<Card> cards = user.getCards();
             	cards.add(redeemCard);
             	user.setCards(cards);
-//                user.setCards(Collections.singleton(redeemCard));
                 
-                jsonBuilder.addField("redemptionStatus", "New card unlocked.");
+            	redeemCardMessages.put("redemptionStatus", "New card unlocked.");
             }
             
-            jsonBuilder.addField("cardUnlocked", redeemCard);
-
-	        em.getTransaction().commit();
+            redeemCardInfo.put("unlockedCard", redeemCard);
+            redeemCardInfo.put("messages", redeemCardMessages);
+ 
+            em.getTransaction().commit();
 	    } catch (NoResultException e) {
 	    	throw new InvalidCodeException(code);
 	    } finally {
@@ -106,8 +108,71 @@ public class CodeRedemptionService {
 	    }
     	
 
-    	return jsonBuilder.build();
+    	return redeemCardInfo;
     }
+    
+    
+//    public String redeemCardFromCode(String code, Long userId)
+//    		throws
+//    		InvalidCodeException,
+//    		CodeAlreadyRedeemedException,
+//    		NoCardsAvailableException,
+//    		UserNotFoundException
+//    {
+//    	JsonResponseBuilder jsonBuilder  = JsonResponseBuilder.create();
+//    	
+//    	
+//    	if (hasBeenAlreadyRedeem(code)) {
+//    		throw new CodeAlreadyRedeemedException(code);
+//    	}
+//    	
+//    	Rarity randomRarity = pickRandomRarity();
+//    	Card redeemCard = getRandomCardBasedOnRarity(randomRarity);
+//    	
+//    	User user = em.find(User.class, userId);
+//    	
+//    	if (user == null) {
+//    		throw new UserNotFoundException();
+//    	}
+//    	
+//    	boolean isCardAlreadyUnlocked = isCardAlreadyUnlocked(redeemCard, user.getCards());
+//    	
+//    	try {
+//    		em.getTransaction().begin();
+//    		
+//    		RedemptionCode redemptionCode = em.createQuery("FROM RedemptionCode WHERE code = :code", RedemptionCode.class)
+//    				.setParameter("code", code)
+//    				.getSingleResult();
+//    		
+//    		redemptionCode.setIsRedeemed(true);
+//    		redemptionCode.setUser(user);
+//    		
+//    		if (isCardAlreadyUnlocked) {
+//    			int redeemValue = pickRedeemValueForRarity(randomRarity);
+//    			user.setCoins(redeemValue + user.getCoins());
+//    			
+//    			jsonBuilder.addField("redemptionStatus", "Card already unlocked.");
+//    			
+//    		} else {    
+//    			Set<Card> cards = user.getCards();
+//    			cards.add(redeemCard);
+//    			user.setCards(cards);
+//    			
+//    			jsonBuilder.addField("redemptionStatus", "New card unlocked.");
+//    		}
+//    		
+//    		jsonBuilder.addField("cardUnlocked", redeemCard);
+//    		
+//    		em.getTransaction().commit();
+//    	} catch (NoResultException e) {
+//    		throw new InvalidCodeException(code);
+//    	} finally {
+//    		em.close();
+//    	}
+//    	
+//    	
+//    	return jsonBuilder.build();
+//    }
     
 
   private Card getRandomCardBasedOnRarity(Rarity randomRarity) throws NoCardsAvailableException {   	
