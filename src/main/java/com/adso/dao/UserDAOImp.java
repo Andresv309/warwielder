@@ -12,11 +12,15 @@ import com.adso.dao.interfaces.UserDAO;
 import com.adso.entities.Card;
 import com.adso.entities.Deck;
 import com.adso.entities.DeckCard;
+import com.adso.entities.Pet;
 import com.adso.entities.User;
 import com.adso.exceptions.decks.CardAlreadyInDeckException;
 import com.adso.exceptions.decks.NotValidPositionValue;
+import com.adso.exceptions.pets.NotFoundPetException;
 import com.adso.exceptions.user.UserAlreadyExistsException;
+import com.adso.exceptions.user.UserNotFoundException;
 import com.adso.exceptions.user.UserUnauthorizedForOperationException;
+import com.adso.utils.PasswordHashing;
 
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
@@ -31,12 +35,40 @@ public class UserDAOImp implements UserDAO {
     public UserDAOImp(EntityManagerFactory emf) {
     	this.emf = emf;
     }
+    
+	@Override
+	public User updateUserInfo(Pet pet, Long userId) throws UserNotFoundException, NotFoundPetException {
+		EntityManager em = emf.createEntityManager();
+		Long petId = pet.getId();
+		
+		em.getTransaction().begin();
+		
+		Pet petFound = em.find(Pet.class, petId);
+		User user = em.find(User.class, userId);
+		
+		if (petFound == null) {
+			throw new NotFoundPetException(petId);
+		}
+		
+		if (user == null) {
+			throw new UserNotFoundException();
+		}
+		
+		user.setPet(petFound);
+		
+		User userUpdated = em.merge(user);
+		em.getTransaction().commit();
+		em.close();
+		
+		return userUpdated;
+	}
+
 
 	@Override
-	public Set<Card> getUserUnlockedCards(Long id) {
+	public Set<Card> getUserUnlockedCards(Long userId) {
 		EntityManager em = emf.createEntityManager();
 
-		User user = em.find(User.class, id);
+		User user = em.find(User.class, userId);
 		Set<Card> unlockedCards = user.getCards();
 
 		return unlockedCards;
@@ -76,10 +108,12 @@ public class UserDAOImp implements UserDAO {
 		
 	@Override
 	public User addNewUser(String username, String password) throws UserAlreadyExistsException {
- 
+		
+		String hashedPassword = PasswordHashing.hashPassword(password);
+		
 		User newUser = new User();
 		newUser.setUsername(username);
-		newUser.setPassword(password);
+		newUser.setPassword(hashedPassword);
 		
 		EntityManager em = emf.createEntityManager();
 		
@@ -90,14 +124,13 @@ public class UserDAOImp implements UserDAO {
 			
 			em.getTransaction().commit();
 			
-			return newUser;
-
         } catch (EntityExistsException | ConstraintViolationException e) {
         	throw new UserAlreadyExistsException(username);
         } finally {
 			em.close();
 		}
 		 
+		return newUser;
 	}
 
 	@Override
@@ -163,14 +196,12 @@ public class UserDAOImp implements UserDAO {
 			em.getTransaction().begin();
 			DeckCard deckCardUpdated = em.merge(deckCard);
 			em.getTransaction().commit();
+			em.close();
 			return deckCardUpdated;
 			
 		} catch (ConstraintViolationException e) {
 			// If trying to add an already existing card in the deck.
 			throw new CardAlreadyInDeckException();
-			
-		} finally {
-			em.close();
 		}
 	
 	}
