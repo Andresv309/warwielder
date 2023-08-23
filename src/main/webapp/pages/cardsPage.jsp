@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="styles/style.css">
 <link rel="stylesheet" href="styles/cardsPageStyles.css">
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/cardsPage.js" defer></script>
+
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,7 +42,7 @@
 				</div>
 
 				<div class="bodyContainer">
-					<div class="cardsContainer">
+					<div id="cardsContainer" class="cardsContainer">
 						<img width="200px" alt="bang" src="public/card.png"> <img
 							width="200px" alt="bang" src="public/card.png"> <img
 							width="200px" alt="bang" src="public/card.png"> <img
