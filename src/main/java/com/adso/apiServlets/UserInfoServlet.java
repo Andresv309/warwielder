@@ -1,10 +1,6 @@
 package com.adso.apiServlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.adso.dao.DAOManagerImp;
 import com.adso.dao.interfaces.UserDAO;
@@ -15,6 +11,7 @@ import com.adso.exceptions.auth.NotValidAuthToken;
 import com.adso.exceptions.pets.NotFoundPetException;
 import com.adso.exceptions.user.NotValidUserParamsException;
 import com.adso.exceptions.user.UserNotFoundException;
+import com.adso.exceptions.user.UsesNotOwnPetException;
 import com.adso.utils.JsonResponseBuilder;
 import com.adso.utils.Utils;
 import com.google.gson.JsonObject;
@@ -58,7 +55,7 @@ public class UserInfoServlet extends HttpServlet {
         	
         	User userUpdated = userDao.updateUserInfo(pet, userId);
         	User userToSend = new User();
-        	userToSend.setPet(userUpdated.getPet());
+        	userToSend.setSelectedPet(userUpdated.getSelectedPet());
         	userToSend.setCoins(userUpdated.getCoins());
         	userToSend.setId(userUpdated.getId());
         	userToSend.setUsername(userUpdated.getUsername());
@@ -70,7 +67,8 @@ public class UserInfoServlet extends HttpServlet {
 			NotFoundAuthToken |
 			NotValidAuthToken |
 			NotValidUserParamsException |
-			NotFoundPetException
+			NotFoundPetException |
+			UsesNotOwnPetException
 			e
 		) {
 			jsonBuilder.addField("error", e.getMessage());

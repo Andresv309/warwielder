@@ -13,11 +13,12 @@ import com.adso.exceptions.pets.NotFoundPetException;
 import com.adso.exceptions.user.UserAlreadyExistsException;
 import com.adso.exceptions.user.UserNotFoundException;
 import com.adso.exceptions.user.UserUnauthorizedForOperationException;
+import com.adso.exceptions.user.UsesNotOwnPetException;
 
 public interface UserDAO {
 	Set<Card> getUserUnlockedCards(Long id);
 	DeckCard updateDeck(DeckCard updateDeckCard, Long userId) throws NotValidPositionValue, UserUnauthorizedForOperationException, CardAlreadyInDeckException;
 	User addNewUser(String username, String password) throws UserAlreadyExistsException;
 	List<Object> getUserDecksCards(Long userId);
-	User updateUserInfo(Pet pet, Long userId) throws UserNotFoundException, NotFoundPetException ;
+	User updateUserInfo(Pet pet, Long userId) throws UserNotFoundException, NotFoundPetException, UsesNotOwnPetException;
 }

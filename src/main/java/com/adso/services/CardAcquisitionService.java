@@ -7,6 +7,7 @@ import com.adso.entities.Card;
 import com.adso.entities.User;
 import com.adso.enums.Rarity;
 import com.adso.exceptions.cards.NotFoundCardException;
+import com.adso.exceptions.purchases.AlreadyUnlockedCardException;
 import com.adso.exceptions.purchases.NotEnoughCoinsException;
 import com.adso.exceptions.user.UserNotFoundException;
 import com.adso.persistence.AppEntityManager;
@@ -22,7 +23,7 @@ public class CardAcquisitionService {
 
     }
     
-    public Card purchaseCard (Card cardToAcquire, Long userId) throws NotFoundCardException, UserNotFoundException, NotEnoughCoinsException {
+    public Card purchaseCard (Card cardToAcquire, Long userId) throws NotFoundCardException, UserNotFoundException, NotEnoughCoinsException, AlreadyUnlockedCardException {
     	EntityManager em = emf.createEntityManager();
     	Long cardId = cardToAcquire.getId();
     	
@@ -47,11 +48,18 @@ public class CardAcquisitionService {
     	if (!(userCoins >= cardPrice)) {
     		throw new NotEnoughCoinsException("Card");
     	}
+    	
+    	// Check if user already owns the card
+    	if (userCards.contains(card)) {
+    		throw new AlreadyUnlockedCardException();
+    	}
     	    	
     	try {
     		em.getTransaction().begin();    
     		
-    		userCards.add(card);    		
+    		userCards.add(card);    
+    		user.setCards(userCards);
+    		user.setCoins(user.getCoins() - cardPrice);
     		em.merge(user);
     		
     		em.getTransaction().commit();
