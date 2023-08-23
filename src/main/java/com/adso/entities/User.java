@@ -34,8 +34,18 @@ public class User implements Serializable {
 	private String password;
 	
 	@ManyToOne(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
-	@JoinColumn(name="pet_id")
-	private Pet pet;
+	@JoinColumn(name="selectedPet_id")
+	private Pet selectedPet;
+	
+	@ManyToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@JoinTable(name = "user_pets", 
+	  joinColumns = {
+			  @JoinColumn(name = "user_id", referencedColumnName = "id")
+	  },
+	  inverseJoinColumns = {
+			  @JoinColumn(name = "pet_id", referencedColumnName = "id")
+	  })
+	private Set<Pet> pets;
 	
 	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user")
 	private Set<Deck> decks;
@@ -57,11 +67,10 @@ public class User implements Serializable {
 		super();
 	}
 
-	public User(String username, String password, Pet pet) {
+	public User(String username, String password) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.pet = pet;
 	}
 
 	public Long getId() {
@@ -87,17 +96,6 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-
-	public Pet getPet() {
-		return pet;
-	}
-
-
-	public void setPet(Pet pet) {
-		this.pet = pet;
-	}
-
 	
 	public Set<Deck> getDecks() {
 		return decks;
@@ -126,10 +124,26 @@ public class User implements Serializable {
 		this.coins = coins;
 	}
 
+	public Pet getSelectedPet() {
+		return selectedPet;
+	}
+
+	public void setSelectedPet(Pet selectedPet) {
+		this.selectedPet = selectedPet;
+	}
+
+	public Set<Pet> getPets() {
+		return pets;
+	}
+
+	public void setPets(Set<Pet> pets) {
+		this.pets = pets;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", pet=" + pet + ", decks="
-				+ decks + ", cards=" + cards + ", coins=" + coins + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", selectedPet=" + selectedPet
+				+ ", pets=" + pets + ", decks=" + decks + ", cards=" + cards + ", coins=" + coins + "]";
 	}
 	
 }

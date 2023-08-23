@@ -3,33 +3,33 @@ package com.adso.services;
 import java.util.Set;
 
 import com.adso.constants.AppItemsPrices;
-import com.adso.entities.Card;
+import com.adso.entities.Pet;
 import com.adso.entities.User;
 import com.adso.enums.Rarity;
-import com.adso.exceptions.app.NotFoundException;
 import com.adso.exceptions.app.AlreadyUnlockedItemException;
+import com.adso.exceptions.app.NotFoundException;
 import com.adso.exceptions.app.NotEnoughCoinsException;
 import com.adso.persistence.AppEntityManager;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
-public class CardAcquisitionService {
+public class PetsAcquisitionService {
     private EntityManagerFactory emf = null;
 
-    public CardAcquisitionService() {
+    public PetsAcquisitionService() {
     	this.emf = AppEntityManager.getInstance().getEntityManagerFactory();
 
     }
     
-    public Card purchaseCard (Card cardToAcquire, Long userId) throws NotEnoughCoinsException, NotFoundException, AlreadyUnlockedItemException {
+    public Pet purchasePet (Pet petToAcquire, Long userId) throws NotEnoughCoinsException, NotFoundException, AlreadyUnlockedItemException {
     	EntityManager em = emf.createEntityManager();
-    	Long cardId = cardToAcquire.getId();
+    	Long petId = petToAcquire.getId();
     	
-    	Card card = em.find(Card.class, cardId);
+    	Pet pet = em.find(Pet.class, petId);
     	
-    	if (card == null) {
-    		throw new NotFoundException("Card with the id: " + cardId);
+    	if (pet == null) {
+    		throw new NotFoundException("Pet with the id: " + petId);
     	}
     	
     	User user = em.find(User.class, userId);
@@ -38,27 +38,27 @@ public class CardAcquisitionService {
     		throw new NotFoundException("User with the id: " + userId);
     	}
     	
-    	Set<Card> userCards = user.getCards();
-    	Rarity cardRarity = card.getRarity();
-    	Integer cardPrice = AppItemsPrices.getCardPriceFromRarity(cardRarity);
+    	Set<Pet> userPets = user.getPets();
+    	Rarity petRarity = pet.getRarity();
+    	Integer petPrice = AppItemsPrices.getPetPriceFromRarity(petRarity);
     	Integer userCoins = user.getCoins();
     	
     	// Check if user own enough coins for purchase
-    	if (!(userCoins >= cardPrice)) {
-    		throw new NotEnoughCoinsException("Buying card.");
+    	if (!(userCoins >= petPrice)) {
+    		throw new NotEnoughCoinsException("Buying pet.");
     	}
     	
     	// Check if user already owns the card
-    	if (userCards.contains(card)) {
-    		throw new AlreadyUnlockedItemException("Card.");
+    	if (userPets.contains(pet)) {
+    		throw new AlreadyUnlockedItemException("Pet.");
     	}
     	    	
     	try {
     		em.getTransaction().begin();    
     		
-    		userCards.add(card);    
-    		user.setCards(userCards);
-    		user.setCoins(user.getCoins() - cardPrice);
+    		userPets.add(pet);    
+    		user.setPets(userPets);
+    		user.setCoins(user.getCoins() - petPrice);
     		em.merge(user);
     		
     		em.getTransaction().commit();
@@ -66,9 +66,7 @@ public class CardAcquisitionService {
 	        em.close();
 	    }
     	
-    	return card;
+    	return pet;
 
     }
-    
 }
-

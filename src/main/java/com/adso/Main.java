@@ -15,6 +15,7 @@ import com.adso.entities.RedemptionCode;
 import com.adso.entities.User;
 import com.adso.enums.Rarity;
 import com.adso.persistence.CustomPersistenceUnitInfo;
+import com.adso.utils.PasswordHashing;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -60,10 +61,12 @@ public class Main {
 		EntityManager em = emf.createEntityManager();
 		
 		try {
-			em.getTransaction().begin();
-			
+			em.getTransaction().begin();		
 			Pet pet = new Pet("Perro", "Velocidad", 2, Rarity.COMMON, "");
-			User user = new User("Carl", "123456", pet);
+			
+			
+			User user = new User("Carl", PasswordHashing.hashPassword("123456"));
+			user.setSelectedPet(pet);
 			Card card1 = new Card(
 					"Charles",
 					"A la victoria",
@@ -111,10 +114,12 @@ public class Main {
 
 			
 			Pet pet1 = new Pet("Gato", "Agilidad", 3, Rarity.COMMON, "");
-			User user1 = new User("Carlos", "123456", pet1);
+			User user1 = new User("Carlos", PasswordHashing.hashPassword("123456"));
+			user1.setSelectedPet(pet1);
 			
 			Pet pet2 = new Pet("Conejo", "Salto", 1, Rarity.COMMON, "");
-			User user2 = new User("Anna", "123456", pet2);
+			User user2 = new User("Anna", PasswordHashing.hashPassword("123456"));
+			user2.setSelectedPet(pet2);
 			em.persist(pet1);
 			em.persist(user1);
 			em.persist(pet2);

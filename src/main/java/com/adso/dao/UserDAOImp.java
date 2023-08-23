@@ -20,6 +20,7 @@ import com.adso.exceptions.pets.NotFoundPetException;
 import com.adso.exceptions.user.UserAlreadyExistsException;
 import com.adso.exceptions.user.UserNotFoundException;
 import com.adso.exceptions.user.UserUnauthorizedForOperationException;
+import com.adso.exceptions.user.UsesNotOwnPetException;
 import com.adso.utils.PasswordHashing;
 
 import jakarta.persistence.EntityExistsException;
@@ -37,7 +38,7 @@ public class UserDAOImp implements UserDAO {
     }
     
 	@Override
-	public User updateUserInfo(Pet pet, Long userId) throws UserNotFoundException, NotFoundPetException {
+	public User updateUserInfo(Pet pet, Long userId) throws UserNotFoundException, NotFoundPetException, UsesNotOwnPetException {
 		EntityManager em = emf.createEntityManager();
 		Long petId = pet.getId();
 		
@@ -54,7 +55,13 @@ public class UserDAOImp implements UserDAO {
 			throw new UserNotFoundException();
 		}
 		
-		user.setPet(petFound);
+		Set<Pet> userPets = user.getPets();
+		
+		if (!userPets.contains(petFound)) {
+			throw new UsesNotOwnPetException();
+		}
+		
+		user.setSelectedPet(petFound);
 		
 		User userUpdated = em.merge(user);
 		em.getTransaction().commit();
