@@ -42,7 +42,7 @@
 				</div>
 
 				<div class="bodyContainer">
-					<div id="cardsContainer" class="cardsContainer">
+					<div id="cardsContainer" class="cardsContainer"> 
 						<img width="200px" alt="bang" src="public/card.png"> <img
 							width="200px" alt="bang" src="public/card.png"> <img
 							width="200px" alt="bang" src="public/card.png"> <img
