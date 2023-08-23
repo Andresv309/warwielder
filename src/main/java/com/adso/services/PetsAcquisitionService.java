@@ -2,15 +2,13 @@ package com.adso.services;
 
 import java.util.Set;
 
-import com.adso.constants.CardRarityPriceMapping;
-import com.adso.entities.Card;
+import com.adso.constants.AppItemsPrices;
 import com.adso.entities.Pet;
 import com.adso.entities.User;
 import com.adso.enums.Rarity;
-import com.adso.exceptions.cards.NotFoundCardException;
-import com.adso.exceptions.purchases.AlreadyUnlockedCardException;
-import com.adso.exceptions.purchases.NotEnoughCoinsException;
-import com.adso.exceptions.user.UserNotFoundException;
+import com.adso.exceptions.app.AlreadyUnlockedItemException;
+import com.adso.exceptions.app.NotFoundException;
+import com.adso.exceptions.app.NotEnoughCoinsException;
 import com.adso.persistence.AppEntityManager;
 
 import jakarta.persistence.EntityManager;
@@ -24,35 +22,35 @@ public class PetsAcquisitionService {
 
     }
     
-    public Pet purchasePet (Pet petToAcquire, Long userId) throws NotFoundCardException, UserNotFoundException, NotEnoughCoinsException, AlreadyUnlockedCardException {
+    public Pet purchasePet (Pet petToAcquire, Long userId) throws NotEnoughCoinsException, NotFoundException, AlreadyUnlockedItemException {
     	EntityManager em = emf.createEntityManager();
     	Long petId = petToAcquire.getId();
     	
     	Pet pet = em.find(Pet.class, petId);
     	
     	if (pet == null) {
-    		throw new NotFoundCardException(petId);
+    		throw new NotFoundException("Pet with the id: " + petId);
     	}
     	
     	User user = em.find(User.class, userId);
     	
     	if (user == null) {
-    		throw new UserNotFoundException();
+    		throw new NotFoundException("User with the id: " + userId);
     	}
     	
     	Set<Pet> userPets = user.getPets();
-    	Rarity cardRarity = pet.getRarity();
-    	Integer petPrice = CardRarityPriceMapping.getPriceForRarity(cardRarity);
+    	Rarity petRarity = pet.getRarity();
+    	Integer petPrice = AppItemsPrices.getPetPriceFromRarity(petRarity);
     	Integer userCoins = user.getCoins();
     	
     	// Check if user own enough coins for purchase
     	if (!(userCoins >= petPrice)) {
-    		throw new NotEnoughCoinsException("Pet");
+    		throw new NotEnoughCoinsException("Buying pet.");
     	}
     	
     	// Check if user already owns the card
     	if (userPets.contains(pet)) {
-    		throw new AlreadyUnlockedCardException();
+    		throw new AlreadyUnlockedItemException("Pet.");
     	}
     	    	
     	try {

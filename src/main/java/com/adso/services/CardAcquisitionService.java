@@ -2,14 +2,13 @@ package com.adso.services;
 
 import java.util.Set;
 
-import com.adso.constants.CardRarityPriceMapping;
+import com.adso.constants.AppItemsPrices;
 import com.adso.entities.Card;
 import com.adso.entities.User;
 import com.adso.enums.Rarity;
-import com.adso.exceptions.cards.NotFoundCardException;
-import com.adso.exceptions.purchases.AlreadyUnlockedCardException;
-import com.adso.exceptions.purchases.NotEnoughCoinsException;
-import com.adso.exceptions.user.UserNotFoundException;
+import com.adso.exceptions.app.NotFoundException;
+import com.adso.exceptions.app.AlreadyUnlockedItemException;
+import com.adso.exceptions.app.NotEnoughCoinsException;
 import com.adso.persistence.AppEntityManager;
 
 import jakarta.persistence.EntityManager;
@@ -23,35 +22,35 @@ public class CardAcquisitionService {
 
     }
     
-    public Card purchaseCard (Card cardToAcquire, Long userId) throws NotFoundCardException, UserNotFoundException, NotEnoughCoinsException, AlreadyUnlockedCardException {
+    public Card purchaseCard (Card cardToAcquire, Long userId) throws NotEnoughCoinsException, NotFoundException, AlreadyUnlockedItemException {
     	EntityManager em = emf.createEntityManager();
     	Long cardId = cardToAcquire.getId();
     	
     	Card card = em.find(Card.class, cardId);
     	
     	if (card == null) {
-    		throw new NotFoundCardException(cardId);
+    		throw new NotFoundException("Card with the id: " + cardId);
     	}
     	
     	User user = em.find(User.class, userId);
     	
     	if (user == null) {
-    		throw new UserNotFoundException();
+    		throw new NotFoundException("User with the id: " + userId);
     	}
     	
     	Set<Card> userCards = user.getCards();
     	Rarity cardRarity = card.getRarity();
-    	Integer cardPrice = CardRarityPriceMapping.getPriceForRarity(cardRarity);
+    	Integer cardPrice = AppItemsPrices.getCardPriceFromRarity(cardRarity);
     	Integer userCoins = user.getCoins();
     	
     	// Check if user own enough coins for purchase
     	if (!(userCoins >= cardPrice)) {
-    		throw new NotEnoughCoinsException("Card");
+    		throw new NotEnoughCoinsException("Buying card.");
     	}
     	
     	// Check if user already owns the card
     	if (userCards.contains(card)) {
-    		throw new AlreadyUnlockedCardException();
+    		throw new AlreadyUnlockedItemException("Card.");
     	}
     	    	
     	try {
