@@ -24,7 +24,7 @@
 		<div class="mainContainer">
 			<div class="contentContainer">
 				<div class="leftContainer">
-					<img id="skin"   alt="addskin" src="public/addskin.avif">
+					<img id="skin"   alt="addskin" src="public/addskin.avif"> 
 				</div>
 				<div class="rightContainer">
 					<div class="frameForm">
@@ -49,7 +49,7 @@
 							</div>
 							
 							<div class="registerInfo">
-								<span>¿No tienes una cuenta?<a href="#">¡Regístrate aquí!</a></span>
+								<span>¿No tienes una cuenta?<a href="register">¡Regístrate aquí!</a></span>
 							</div>
 						</form>
 					</div>
