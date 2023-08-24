@@ -31,7 +31,17 @@
 .leftContainer{
 	width: 60%;
 	color: black;
+	animation: floatAnimation 1.7s infinite alternate ease-in-out;
 	
+}
+
+@keyframes floatAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
 }
 
 .leftContainer img {
