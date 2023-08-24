@@ -8,14 +8,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet(name = "login", urlPatterns = "/login")
-public class Login extends HttpServlet {     
+@WebServlet(name = "register", urlPatterns = "/register")
+public class Register extends HttpServlet {     
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Estoy en el loginPage\n");
+		System.out.println("Estoy en el RegisterPage\n");
 
-		getServletContext().getRequestDispatcher("/pages/login.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/pages/register.jsp").forward(request, response);
 	}
 
 }

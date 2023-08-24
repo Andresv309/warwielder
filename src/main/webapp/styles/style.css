@@ -3,6 +3,7 @@
 
 :root {
 	--color-text-Primary: #ffd277;
+	--btn-height: 60px;
 }
 
 ::-webkit-scrollbar{
@@ -57,3 +58,51 @@ html,
 	z-index: 10;
 	position: fixed;
 }
+
+.BtnComponent {
+	width: 100%;
+	height: 60px;
+	border: none;
+	border-radius: 9px;
+	background: linear-gradient(to right, #77530a, #ffd277, #77530a, #77530a, #ffd277, #77530a);
+	background-size: 250%;
+	background-position: left;
+	color: var(--color-text-Primary);
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition-duration: 1s;
+	overflow: hidden;
+}
+
+.BtnComponent::before {
+	position: absolute;
+	content: attr(data-text);
+	color: var(--color-text-Primary);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 98%;
+	height: 82%;
+	border-radius: 8px;
+	transition-duration: 1s;
+	background-color: #1c0d02;
+	background-size: 200%;
+	font-size: 1rem;
+}	
+
+.BtnComponent:hover {
+	background-position: right;
+	transition-duration: 1s;
+}
+
+.BtnComponent:hover::before {
+	background-position: right;
+	transition-duration: 1s;
+}
+
+.BtnComponent:active {
+	transform: scale(0.95);
+} 

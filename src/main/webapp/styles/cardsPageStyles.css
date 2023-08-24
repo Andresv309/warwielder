@@ -71,12 +71,22 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: antiquewhite;
 	border-radius: 2.5rem;
-	background-image: url(../public/rug.avif);
-	background-size: cover;
-	background-repeat: no-repeat;
+	background-image: 
+		url(../public/carpet/carpet_top.jpg), 
+		url(../public/carpet/carpet_bottom.jpg);
+	background-repeat: 
+		no-repeat, 
+		no-repeat;
+	background-position: 
+		bottom, 
+		top;
+	background-size: 
+		contain, 
+		contain;
+	background-color: #541415;
 	margin-bottom: 1rem;
+	border:7px solid rgb(137 53 39); 
 }
 
 .cardsContainer {
