@@ -1,7 +1,12 @@
 package com.adso;
 
+import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,6 +21,8 @@ import com.adso.entities.User;
 import com.adso.enums.Rarity;
 import com.adso.persistence.CustomPersistenceUnitInfo;
 import com.adso.utils.PasswordHashing;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -26,9 +33,10 @@ public class Main {
 	public static void main(String[] args) {
 //		createDB();
 		
-		seedDB();
-		createDeckCards();
-		createUserCards();
+		generateCards();
+//		seedDB();
+//		createDeckCards();
+//		createUserCards();
 
 	}
 	
@@ -67,47 +75,47 @@ public class Main {
 			
 			User user = new User("Carl", PasswordHashing.hashPassword("123456"));
 			user.setSelectedPet(pet);
-			Card card1 = new Card(
-					"Charles",
-					"A la victoria",
-					"Porta un martillo",
-					"Warrior",
-					Rarity.RARE,
-					"Golpe Fuerte",
-					85,
-					59,
-					148,
-					""
-					);
-			Card card2 = new Card(
-					"Merlin",
-					"Books for the win",
-					"Has a Castle",
-					"Mage",
-					Rarity.EPIC,
-					"Frezzing Ice",
-					85,
-					59,
-					148,
-					""
-					);
-			Card card3 = new Card(
-					"Thor",
-					"Lives in azargth",
-					"Has a Hammer",
-					"Nordic",
-					Rarity.ADVANCED,
-					"Launches Hammer",
-					85,
-					59,
-					148,
-					""
-					);
+//			Card card1 = new Card(
+//					"Charles",
+//					"A la victoria",
+//					"Porta un martillo",
+//					"Warrior",
+//					Rarity.RARE,
+//					"Golpe Fuerte",
+//					85,
+//					59,
+//					148,
+//					""
+//					);
+//			Card card2 = new Card(
+//					"Merlin",
+//					"Books for the win",
+//					"Has a Castle",
+//					"Mage",
+//					Rarity.EPIC,
+//					"Frezzing Ice",
+//					85,
+//					59,
+//					148,
+//					""
+//					);
+//			Card card3 = new Card(
+//					"Thor",
+//					"Lives in azargth",
+//					"Has a Hammer",
+//					"Nordic",
+//					Rarity.ADVANCED,
+//					"Launches Hammer",
+//					85,
+//					59,
+//					148,
+//					""
+//					);
 			
-			
-			em.persist(card1);
-			em.persist(card2);
-			em.persist(card3);
+//			
+//			em.persist(card1);
+//			em.persist(card2);
+//			em.persist(card3);
 			
 			em.persist(pet);
 			em.persist(user);
@@ -224,6 +232,64 @@ public class Main {
 			em.close();
 		}
 	}
+	
+	private static void generateCards () {
+		Map<String, String> props = new HashMap<>();
+		props.put("hibernate.show_sql", "true");
+		
+		EntityManagerFactory emf = new HibernatePersistenceProvider()
+				.createContainerEntityManagerFactory(
+						new CustomPersistenceUnitInfo(),
+						props
+						);
+		
+		 try (EntityManager em = emf.createEntityManager()) {
+	            // Read JSON data and parse into Card objects using Gson
+	            Gson gson = new Gson();
+	            InputStream jsonStream = Main.class.getResourceAsStream("/com/adso/appCards.json");
+	            Reader reader = new InputStreamReader(jsonStream);
+	            List<Card> cards = gson.fromJson(reader, new TypeToken<List<Card>>() {}.getType());
+
+	            // Save cards using Hibernate
+	            try {
+	            	em.getTransaction().begin();
+	    
+	                for (Card card : cards) {
+	                	
+	                	Card newCard = new Card(
+	                			card.getCode(),
+	                			card.getName(),
+	                			card.getDescription(),
+	                			card.getRarity(),
+	                			card.getRace(),
+	                			card.getHealth(),
+	                			card.getCost(),
+	                			card.getAttack(),
+	                			card.getImg()
+            			);
+	                	
+	                	
+	                    em.persist(newCard);
+	                }
+	                
+	                em.getTransaction().commit();
+	                
+	                
+	            } catch (Exception e) {
+	            	em.getTransaction().rollback();
+	                e.printStackTrace();
+	            } finally {
+	    			em.close();
+	    		}
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	}
+	
+	
+	
+	
+	
 	
 }
 

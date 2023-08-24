@@ -11,18 +11,18 @@ public class RarityConverter implements AttributeConverter<Rarity, Integer> {
 	@Override
 	public Integer convertToDatabaseColumn(Rarity attribute) {
         if (attribute == null)
-            return 1;
+            return null;
         
         switch (attribute) {
+	        case FREE:
+	        	return 1;
+	        	
 	        case COMMON:
-	            return 1;
+	            return 2;
 	 
 	        case RARE:
-	            return 2;
+	            return 3;
 	            
-	        case ADVANCED:
-	        	return 3;
-	        	
 	        case EPIC:
 	        	return 4;
 	        	
@@ -38,18 +38,18 @@ public class RarityConverter implements AttributeConverter<Rarity, Integer> {
 	@Override
 	public Rarity convertToEntityAttribute(Integer dbData) {
         if (dbData == null)
-        	return Rarity.COMMON;
+        	return null;
         
         switch (dbData) {
 	        case 1:
+	        	return Rarity.FREE;
+	        	
+	        case 2:
 	            return Rarity.COMMON;
 	 
-	        case 2:
+	        case 3:
 	        	return Rarity.RARE;
 	            
-	        case 3:
-	        	return Rarity.ADVANCED;
-	        	
 	        case 4:
 	        	return Rarity.EPIC;
 	        	
