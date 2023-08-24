@@ -143,11 +143,11 @@ public class CodeRedemptionService {
     
     private int pickRedeemValueForRarity(Rarity randomRarity) {
     	switch (randomRarity) {
-		case COMMON:
+		case FREE:
 			return 25;
-		case RARE:
+		case COMMON:
 			return 50;
-		case ADVANCED:
+		case RARE:
 			return 100;
 		case EPIC:
 			return 200;
@@ -164,11 +164,11 @@ public class CodeRedemptionService {
         int randomNumber = random.nextInt(100); // Generate a random number between 0 and 99
         
         if (randomNumber < 30) {
-            return Rarity.COMMON;				// 30% Probability
+            return Rarity.FREE;				// 30% Probability
         } else if (randomNumber < 55) {
-            return Rarity.RARE;					// 25% Probability
+            return Rarity.COMMON;					// 25% Probability
         } else if (randomNumber < 75) {
-        	return Rarity.ADVANCED;				// 20% Probability
+        	return Rarity.RARE;				// 20% Probability
         } else if (randomNumber < 90) {
         	return Rarity.EPIC;					// 15% Probability
         } else {

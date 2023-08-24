@@ -9,9 +9,9 @@ public class CardRarityPriceMapping {
     private static final Map<Rarity, Integer> rarityPriceMap = new HashMap<>();
 
     static {
-        rarityPriceMap.put(Rarity.COMMON, 1000);
-        rarityPriceMap.put(Rarity.RARE, 5000);
-        rarityPriceMap.put(Rarity.ADVANCED, 10000);
+        rarityPriceMap.put(Rarity.FREE, 1000);
+        rarityPriceMap.put(Rarity.COMMON, 5000);
+        rarityPriceMap.put(Rarity.RARE, 10000);
         rarityPriceMap.put(Rarity.EPIC, 20000);
         rarityPriceMap.put(Rarity.LEGENDARY, 50000);
     }
