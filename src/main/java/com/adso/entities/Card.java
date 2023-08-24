@@ -2,7 +2,9 @@ package com.adso.entities;
 
 import java.io.Serializable;
 
+import com.adso.attributeConverters.RaceConverter;
 import com.adso.attributeConverters.RarityConverter;
+import com.adso.enums.Race;
 import com.adso.enums.Rarity;
 
 import jakarta.persistence.Column;
@@ -23,56 +25,52 @@ public class Card implements Serializable {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "name", unique = true, nullable = false)
+	@Column(name = "code", unique = true, nullable = false)
+	private String code;
+	
+	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@Column(name = "phrase", nullable = false)
-	private String phrase;
-	
-	@Column(name = "description", nullable = false)
+	@Column(name = "description")
 	private String description;
-	
-	@Column(name = "type", nullable = false)
-	private String type;
 	
 	@Convert(converter = RarityConverter.class)
 	@Column(name = "rarity", nullable = false)
 	private Rarity rarity;
 	
-	@Column(name = "skill", nullable = false)
-	private String skill;
+	@Convert(converter = RaceConverter.class)
+	@Column(name = "race", nullable = false)
+	private Race race;
 	
 	@Column(name = "health", nullable = false)
 	private int health;
 	
-	@Column(name = "shield", nullable = false)
-	private int shield;
+	@Column(name = "cost", nullable = false)
+	private int cost;
 	
 	@Column(name = "attack", nullable = false)
 	private int attack;
 	
 	@Column(name = "src_path", nullable = false)
-	private String srcPath;
+	private String img;
 
 	public Card() {
 		super();
 	}
 
-	public Card(String name, String phrase, String description, String type, Rarity rarity, String skill, int health,
-			int shield, int attack, String srcPath) {
+	public Card(String code, String name, String description, Rarity rarity, Race race, int health, int cost, int attack,
+			String img) {
 		super();
+		this.code = code;
 		this.name = name;
-		this.phrase = phrase;
 		this.description = description;
-		this.type = type;
 		this.rarity = rarity;
-		this.skill = skill;
+		this.race = race;
 		this.health = health;
-		this.shield = shield;
+		this.cost = cost;
 		this.attack = attack;
-		this.srcPath = srcPath;
+		this.img = img;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -80,6 +78,14 @@ public class Card implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getName() {
@@ -90,28 +96,12 @@ public class Card implements Serializable {
 		this.name = name;
 	}
 
-	public String getPhrase() {
-		return phrase;
-	}
-
-	public void setPhrase(String phrase) {
-		this.phrase = phrase;
-	}
-
 	public String getDescription() {
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public Rarity getRarity() {
@@ -122,12 +112,12 @@ public class Card implements Serializable {
 		this.rarity = rarity;
 	}
 
-	public String getSkill() {
-		return skill;
+	public Race getRace() {
+		return race;
 	}
 
-	public void setSkill(String skill) {
-		this.skill = skill;
+	public void setRace(Race race) {
+		this.race = race;
 	}
 
 	public int getHealth() {
@@ -138,12 +128,12 @@ public class Card implements Serializable {
 		this.health = health;
 	}
 
-	public int getShield() {
-		return shield;
+	public int getCost() {
+		return cost;
 	}
 
-	public void setShield(int shield) {
-		this.shield = shield;
+	public void setCost(int cost) {
+		this.cost = cost;
 	}
 
 	public int getAttack() {
@@ -154,19 +144,18 @@ public class Card implements Serializable {
 		this.attack = attack;
 	}
 
-	public String getSrcPath() {
-		return srcPath;
+	public String getImg() {
+		return img;
 	}
 
-	public void setSrcPath(String srcPath) {
-		this.srcPath = srcPath;
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 	@Override
 	public String toString() {
-		return "Card [id=" + id + ", name=" + name + ", phrase=" + phrase + ", description=" + description + ", type="
-				+ type + ", rarity=" + rarity + ", skill=" + skill + ", health=" + health + ", shield=" + shield
-				+ ", attack=" + attack + ", srcPath=" + srcPath + "]";
+		return "Card [id=" + id + ", name=" + name + ", description=" + description + ", rarity=" + rarity + ", race="
+				+ race + ", health=" + health + ", cost=" + cost + ", attack=" + attack + ", img=" + img + "]";
 	}
 
 }
