@@ -4,6 +4,7 @@
 :root {
 	--color-text-Primary: #ffd277;
 	--btn-height: 60px;
+	--swiper-theme-color: brown;
 }
 
 ::-webkit-scrollbar{
