@@ -4,6 +4,7 @@
 :root {
 	--color-text-Primary: #ffd277;
 	--btn-height: 60px;
+	--swiper-theme-color: brown;
 }
 
 ::-webkit-scrollbar{
@@ -61,7 +62,6 @@ html,
 
 .BtnComponent {
 	width: 100%;
-	height: 60px;
 	border: none;
 	border-radius: 9px;
 	background: linear-gradient(to right, #77530a, #ffd277, #77530a, #77530a, #ffd277, #77530a);

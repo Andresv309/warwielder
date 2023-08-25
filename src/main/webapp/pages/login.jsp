@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="styles/style.css">
 <link rel="stylesheet" href="styles/loginStyles.css">
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/paralax.js" defer></script>
+<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/js/paralax.js" defer></script> --%>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/login.js" defer></script>
 
 <meta charset="UTF-8">
@@ -45,7 +45,7 @@
 							</div>
 							
 							<div class="btnaddContainer">
-								<button class="BtnAdd"></button>
+								<button class="BtnComponent" id="submitForm" data-text="Iniciar Sesion" style="height: 60px;"></button>
 							</div>
 							
 							<div class="registerInfo">

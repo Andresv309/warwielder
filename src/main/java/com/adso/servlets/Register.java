@@ -15,7 +15,7 @@ public class Register extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Estoy en el RegisterPage\n");
 
-		getServletContext().getRequestDispatcher("/pages/register.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/pages/register2.jsp").forward(request, response);
 	}
 
 }
