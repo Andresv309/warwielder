@@ -32,11 +32,11 @@ public class Main {
 
 	public static void main(String[] args) {
 //		createDB();
+//		generateCards();
 		
-		generateCards();
-//		seedDB();
-//		createDeckCards();
-//		createUserCards();
+		seedDB();
+		createDeckCards();
+		createUserCards();
 
 	}
 	
@@ -75,52 +75,10 @@ public class Main {
 			
 			User user = new User("Carl", PasswordHashing.hashPassword("123456"));
 			user.setSelectedPet(pet);
-//			Card card1 = new Card(
-//					"Charles",
-//					"A la victoria",
-//					"Porta un martillo",
-//					"Warrior",
-//					Rarity.RARE,
-//					"Golpe Fuerte",
-//					85,
-//					59,
-//					148,
-//					""
-//					);
-//			Card card2 = new Card(
-//					"Merlin",
-//					"Books for the win",
-//					"Has a Castle",
-//					"Mage",
-//					Rarity.EPIC,
-//					"Frezzing Ice",
-//					85,
-//					59,
-//					148,
-//					""
-//					);
-//			Card card3 = new Card(
-//					"Thor",
-//					"Lives in azargth",
-//					"Has a Hammer",
-//					"Nordic",
-//					Rarity.ADVANCED,
-//					"Launches Hammer",
-//					85,
-//					59,
-//					148,
-//					""
-//					);
-			
-//			
-//			em.persist(card1);
-//			em.persist(card2);
-//			em.persist(card3);
 			
 			em.persist(pet);
 			em.persist(user);
 
-			
 			Pet pet1 = new Pet("Gato", "Agilidad", 3, Rarity.COMMON, "");
 			User user1 = new User("Carlos", PasswordHashing.hashPassword("123456"));
 			user1.setSelectedPet(pet1);
@@ -255,6 +213,7 @@ public class Main {
 	            	em.getTransaction().begin();
 	    
 	                for (Card card : cards) {
+	                	System.out.println("Current ---->>" + card.getCode());
 	                	
 	                	Card newCard = new Card(
 	                			card.getCode(),
