@@ -44,5 +44,6 @@ public enum Race {
     TROLL,
     UNDEAD,
     VULPERA,
-    WORGEN
+    WORGEN,
+    ALL
 }
