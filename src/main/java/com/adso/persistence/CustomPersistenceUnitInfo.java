@@ -93,7 +93,8 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
 				"com.adso.entities.Card",
 				"com.adso.entities.Deck",
 				"com.adso.entities.DeckCard",
-				"com.adso.entities.RedemptionCode"
+				"com.adso.entities.RedemptionCode",
+				"com.adso.entities.StoreItems"
 		);
 	}
 
