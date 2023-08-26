@@ -8,7 +8,6 @@ import com.adso.entities.Pet;
 import com.adso.entities.StoreItems;
 import com.adso.enums.Rarity;
 import com.adso.exceptions.app.NotResultsToShowException;
-import com.adso.exceptions.codeRedemption.NoCardsAvailableException;
 import com.adso.persistence.AppEntityManager;
 import com.adso.utils.Randomness;
 
@@ -21,27 +20,28 @@ public class StoreRefreshItemsService {
     public static void main (String[] args) {
     	try {
 			refreshItems();
-		} catch (NotResultsToShowException | NoCardsAvailableException e) {
+		} catch (NotResultsToShowException e) {
 			e.printStackTrace();
 		}
     }
 
     
-    static private void refreshItems () throws NoCardsAvailableException, NotResultsToShowException {
+    static private void refreshItems () throws NotResultsToShowException {
     	EntityManager em = emf.createEntityManager();
 
-    	
     	StoreItems storeItems = new StoreItems();
     	Set<Card> cards = new HashSet<>();
     	Set<Pet> pets  = new HashSet<>();
     	
-    	for (int i = 0; i < 7; i++) {
-    		Rarity randomRarity = Randomness.pickRandomRarity();
-    		Card card = Randomness.getRandomCardBasedOnRarity(randomRarity);
-    		cards.add(card);
-    	}
     	
-    	for (int i = 0; i < 1; i++) {
+    	// Use while to avoid missing cards because duplicate items.
+        while (cards.size() <= 7) {
+            Rarity randomRarity = Randomness.pickRandomRarity();
+            Card card = Randomness.getRandomCardBasedOnRarity(randomRarity);
+            cards.add(card);
+        }
+    	
+    	while (pets.size() <= 1) {
     		Rarity randomRarity = Randomness.pickRandomRarity();
     		Pet pet = Randomness.getRandomPetBasedOnRarity(randomRarity);
     		pets.add(pet);
