@@ -1,12 +1,15 @@
 package com.adso.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.adso.dao.interfaces.AppDAO;
 import com.adso.entities.Card;
 import com.adso.entities.Pet;
+import com.adso.entities.StoreItems;
 import com.adso.enums.Race;
 import com.adso.enums.Rarity;
 import com.adso.exceptions.cards.NotFoundCardException;
@@ -25,6 +28,23 @@ public class AppDAOImp implements AppDAO {
 
     public AppDAOImp(EntityManagerFactory emf) {
         this.emf = emf;
+    }
+    
+    public Map<String, Object> getStoreItems() {
+    	EntityManager em = emf.createEntityManager();
+    	TypedQuery<StoreItems> countQuery  = em.createQuery("FROM StoreItems ORDER BY createdAt DESC", StoreItems.class)
+    			.setMaxResults(1);
+    	StoreItems storeItems = countQuery.getSingleResult();
+    
+    	Map<String, Object> items = new HashMap<>();
+    	
+    	
+    	items.put("cards", storeItems.getCards());
+    	items.put("pets", storeItems.getPets());
+    	
+    	em.close();
+    	
+    	return items;
     }
     
     

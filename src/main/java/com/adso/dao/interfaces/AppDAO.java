@@ -2,6 +2,7 @@ package com.adso.dao.interfaces;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.adso.entities.Card;
 import com.adso.entities.Pet;
@@ -12,4 +13,5 @@ public interface AppDAO {
 	Card getAppCard(Long id) throws NotFoundCardException;
 	List<Pet> getAppPets();
 	Long getTotalNumberOfCards();
+	Map<String, Object> getStoreItems();
 }
