@@ -14,6 +14,7 @@ import com.adso.exceptions.codeRedemption.InvalidCodeException;
 import com.adso.exceptions.codeRedemption.NoCardsAvailableException;
 import com.adso.exceptions.user.UserNotFoundException;
 import com.adso.persistence.AppEntityManager;
+import com.adso.utils.Randomness;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -60,8 +61,8 @@ public class CodeRedemptionService {
     		throw new CodeAlreadyRedeemedException(code);
     	}
     	
-        Rarity randomRarity = pickRandomRarity();
-        Card redeemCard = getRandomCardBasedOnRarity(randomRarity);
+        Rarity randomRarity = Randomness.pickRandomRarity();
+        Card redeemCard = Randomness.getRandomCardBasedOnRarity(randomRarity);
         
     	User user = em.find(User.class, userId);
     	
@@ -111,21 +112,21 @@ public class CodeRedemptionService {
     	return redeemCardInfo;
     }
 
-    private Card getRandomCardBasedOnRarity(Rarity randomRarity) throws NoCardsAvailableException {   	
-		try {
-			System.out.println(randomRarity);
-			
-	        TypedQuery<Card> query = em.createQuery("FROM Card WHERE rarity = :randomRarity ORDER BY RAND()", Card.class)
-	    	.setParameter("randomRarity", randomRarity)
-	    	.setMaxResults(1);
-	        
-	        Card reedemCard = query.getSingleResult();
-	        return reedemCard;
-	        
-		} catch (NoResultException e) {
-			throw new NoCardsAvailableException();
-		}
-	}
+//    private Card getRandomCardBasedOnRarity(Rarity randomRarity) throws NoCardsAvailableException {   	
+//		try {
+//			System.out.println(randomRarity);
+//			
+//	        TypedQuery<Card> query = em.createQuery("FROM Card WHERE rarity = :randomRarity ORDER BY RAND()", Card.class)
+//	    	.setParameter("randomRarity", randomRarity)
+//	    	.setMaxResults(1);
+//	        
+//	        Card reedemCard = query.getSingleResult();
+//	        return reedemCard;
+//	        
+//		} catch (NoResultException e) {
+//			throw new NoCardsAvailableException();
+//		}
+//	}
     
     private boolean isCardAlreadyUnlocked(Card redeemCard, Set<Card> unlockedCards) {
     	Long redeemCardId = redeemCard.getId();
@@ -159,22 +160,22 @@ public class CodeRedemptionService {
     	
     }
     
-    private Rarity pickRandomRarity() {
-    	Random random = new Random();
-        int randomNumber = random.nextInt(100); // Generate a random number between 0 and 99
-        
-        if (randomNumber < 30) {
-            return Rarity.FREE;				// 30% Probability
-        } else if (randomNumber < 55) {
-            return Rarity.COMMON;					// 25% Probability
-        } else if (randomNumber < 75) {
-        	return Rarity.RARE;				// 20% Probability
-        } else if (randomNumber < 90) {
-        	return Rarity.EPIC;					// 15% Probability
-        } else {
-            return Rarity.LEGENDARY;			// 10% Probability
-        }
-    }
+//    private Rarity pickRandomRarity() {
+//    	Random random = new Random();
+//        int randomNumber = random.nextInt(100); // Generate a random number between 0 and 99
+//        
+//        if (randomNumber < 30) {
+//            return Rarity.FREE;				// 30% Probability
+//        } else if (randomNumber < 55) {
+//            return Rarity.COMMON;					// 25% Probability
+//        } else if (randomNumber < 75) {
+//        	return Rarity.RARE;				// 20% Probability
+//        } else if (randomNumber < 90) {
+//        	return Rarity.EPIC;					// 15% Probability
+//        } else {
+//            return Rarity.LEGENDARY;			// 10% Probability
+//        }
+//    }
 
 }
 
