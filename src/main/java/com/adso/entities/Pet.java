@@ -29,29 +29,23 @@ public class Pet implements Serializable {
 	@Column(name = "bonus", nullable = false)
 	private String bonus;
 	
-	@Column(name = "level", nullable = false)
-	private int level;
-	
 	@Convert(converter = RarityConverter.class)
 	@Column(name = "rarity", nullable = false)
 	private Rarity rarity;
 	
-	@Column(name = "src_path", nullable = false)
-	private String srcPath;
+	@Column(name = "img", nullable = false)
+	private String img;
 
 	public Pet() {
 	}
 	
-	
-	public Pet(String name, String bonus, int level, Rarity rarity, String srcPath) {
+	public Pet(String name, String bonus, Rarity rarity, String img) {
 		super();
 		this.name = name;
 		this.bonus = bonus;
-		this.level = level;
 		this.rarity = rarity;
-		this.srcPath = srcPath;
+		this.img = img;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -77,14 +71,6 @@ public class Pet implements Serializable {
 		this.bonus = bonus;
 	}
 
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
-
 	public Rarity getRarity() {
 		return rarity;
 	}
@@ -93,20 +79,17 @@ public class Pet implements Serializable {
 		this.rarity = rarity;
 	}
 
-	public String getSrcPath() {
-		return srcPath;
+	public String getImg() {
+		return img;
 	}
 
-
-	public void setSrcPath(String srcPath) {
-		this.srcPath = srcPath;
+	public void setImg(String img) {
+		this.img = img;
 	}
-
 
 	@Override
 	public String toString() {
-		return "Pet [id=" + id + ", name=" + name + ", bonus=" + bonus + ", level=" + level + ", rarity=" + rarity
-				+ ", srcPath=" + srcPath + "]";
+		return "Pet [id=" + id + ", name=" + name + ", bonus=" + bonus + ", rarity=" + rarity + ", img=" + img + "]";
 	}
 
 }
