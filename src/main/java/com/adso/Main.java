@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -70,25 +71,39 @@ public class Main {
 		
 		try {
 			em.getTransaction().begin();		
-			Pet pet = new Pet("Perro", "Velocidad", 2, Rarity.COMMON, "");
+			Pet pet1 = new Pet("Rocket", "Velocidad", Rarity.FREE, "");
+			Pet pet2 = new Pet("Frostbloom", "Agilidad", Rarity.FREE, "");
+			Pet pet3 = new Pet("Hashiko", "Salto", Rarity.FREE, "");
+			Pet pet4 = new Pet("Ragnar", "Salto", Rarity.FREE, "");
+			Pet pet5 = new Pet("Metacho", "Salto", Rarity.COMMON, "");
+			Pet pet6 = new Pet("Stardustfury", "Salto", Rarity.COMMON, "");
+			Pet pet7 = new Pet("Thalia", "Salto", Rarity.COMMON, "");
+			Pet pet8 = new Pet("Spike", "Salto", Rarity.RARE, "");
+			Pet pet9 = new Pet("Zephyrgrin", "Salto", Rarity.RARE, "");
+			Pet pet10 = new Pet("Titanclaw", "Salto", Rarity.EPIC, "");
+			Pet pet11 = new Pet("SerpentSpark", "Salto", Rarity.EPIC, "");
+			Pet pet12 = new Pet("EmberBite", "Salto", Rarity.LEGENDARY, "");
 			
+		
+		    List<Pet> pets = Arrays.asList(pet1, pet2, pet3, pet4, pet5, pet6, pet7, pet8, pet9, pet10, pet11, pet12);
+
+		    for (Pet pet : pets) {
+		        em.persist(pet);
+		    }
+
 			
 			User user = new User("Carl", PasswordHashing.hashPassword("123456"));
-			user.setSelectedPet(pet);
+			user.setSelectedPet(pet1);
 			
-			em.persist(pet);
 			em.persist(user);
 
-			Pet pet1 = new Pet("Gato", "Agilidad", 3, Rarity.COMMON, "");
 			User user1 = new User("Carlos", PasswordHashing.hashPassword("123456"));
-			user1.setSelectedPet(pet1);
+			user1.setSelectedPet(pet2);
 			
-			Pet pet2 = new Pet("Conejo", "Salto", 1, Rarity.COMMON, "");
 			User user2 = new User("Anna", PasswordHashing.hashPassword("123456"));
-			user2.setSelectedPet(pet2);
-			em.persist(pet1);
+			user2.setSelectedPet(pet3);
+		
 			em.persist(user1);
-			em.persist(pet2);
 			em.persist(user2);
 			
 	
