@@ -3,12 +3,11 @@ package com.adso.apiServlets;
 import java.io.IOException;
 
 import com.adso.entities.Pet;
-import com.adso.exceptions.app.AlreadyUnlockedItemException;
-import com.adso.exceptions.app.NotEnoughCoinsException;
 import com.adso.exceptions.app.NotFoundException;
 import com.adso.exceptions.app.RequiredPayloadException;
-import com.adso.exceptions.auth.NotFoundAuthToken;
-import com.adso.exceptions.auth.NotValidAuthToken;
+import com.adso.exceptions.app.items.AlreadyUnlockedItemException;
+import com.adso.exceptions.auth.NotAuthorizedException;
+import com.adso.exceptions.purchases.NotEnoughCoinsException;
 import com.adso.services.PetsAcquisitionService;
 import com.adso.utils.JsonResponseBuilder;
 import com.adso.utils.Utils;
@@ -54,28 +53,22 @@ public class PurchasePetServlet extends HttpServlet {
         	Pet petPurchased = petAcquisitionService.purchasePet(pet, userId);
         	jsonBuilder.addField("data", petPurchased);
         	
-		} catch (
-				NotFoundAuthToken |
-				NotValidAuthToken
-				e
-			) {
-				jsonBuilder.addField("error", e.getMessage());
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-	        } catch (NotFoundException e) {
-				jsonBuilder.addField("error", e.getCustomError());
-				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-	        } catch (
-				NotEnoughCoinsException |
-				AlreadyUnlockedItemException |
-				RequiredPayloadException
-				e
-	        ) {
-				jsonBuilder.addField("error", e.getCustomError());
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-	        } catch (NumberFormatException e) {
-				jsonBuilder.addField("error", "Invalid payload values.");
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-	        }
+        } catch (
+			NotEnoughCoinsException |
+			AlreadyUnlockedItemException |
+			RequiredPayloadException |
+			NotFoundException
+			e
+        ) {
+			jsonBuilder.addField("error", e.getCustomError());
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        } catch (NumberFormatException e) {
+			jsonBuilder.addField("error", "Invalid payload values.");
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        } catch (NotAuthorizedException e) {
+			jsonBuilder.addField("error", e.getCustomError());
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		}
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

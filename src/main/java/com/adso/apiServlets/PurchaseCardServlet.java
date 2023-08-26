@@ -3,12 +3,11 @@ package com.adso.apiServlets;
 import java.io.IOException;
 
 import com.adso.entities.Card;
-import com.adso.exceptions.app.AlreadyUnlockedItemException;
-import com.adso.exceptions.app.NotEnoughCoinsException;
 import com.adso.exceptions.app.NotFoundException;
 import com.adso.exceptions.app.RequiredPayloadException;
-import com.adso.exceptions.auth.NotFoundAuthToken;
-import com.adso.exceptions.auth.NotValidAuthToken;
+import com.adso.exceptions.app.items.AlreadyUnlockedItemException;
+import com.adso.exceptions.auth.NotAuthorizedException;
+import com.adso.exceptions.purchases.NotEnoughCoinsException;
 import com.adso.services.CardAcquisitionService;
 import com.adso.utils.JsonResponseBuilder;
 import com.adso.utils.Utils;
@@ -54,13 +53,6 @@ public class PurchaseCardServlet extends HttpServlet {
         	Card cardPurchased = cardAcquisitionService.purchaseCard(card, userId);
         	jsonBuilder.addField("data", cardPurchased);
         	
-        } catch (
-			NotFoundAuthToken |
-			NotValidAuthToken
-			e
-		) {
-			jsonBuilder.addField("error", e.getMessage());
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } catch (NotFoundException e) {
 			jsonBuilder.addField("error", e.getCustomError());
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -75,7 +67,10 @@ public class PurchaseCardServlet extends HttpServlet {
         } catch (NumberFormatException e) {
 			jsonBuilder.addField("error", "Invalid payload values.");
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        }
+        } catch (NotAuthorizedException e) {
+			jsonBuilder.addField("error", e.getCustomError());
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		}
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

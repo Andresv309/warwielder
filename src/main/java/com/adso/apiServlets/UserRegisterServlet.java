@@ -13,7 +13,7 @@ import java.io.IOException;
 import com.adso.dao.DAOManagerImp;
 import com.adso.dao.interfaces.UserDAO;
 import com.adso.entities.User;
-import com.adso.exceptions.auth.NotValidAuthParams;
+import com.adso.exceptions.app.RequiredPayloadException;
 import com.adso.exceptions.user.UserAlreadyExistsException;
 import com.adso.utils.AuthCookieGenerator;
 import com.adso.utils.JsonResponseBuilder;
@@ -40,7 +40,7 @@ public class UserRegisterServlet extends HttpServlet {
 	        JsonObject jsonObject = JsonParser.parseString(jsonBody).getAsJsonObject();
 	        
 	        if (!jsonObject.has("username") || !jsonObject.has("password")) {
-	        	throw new NotValidAuthParams();
+	        	throw new RequiredPayloadException("username and password");
 	        }
 	        
 			String username = jsonObject.get("username").getAsString();
@@ -55,8 +55,8 @@ public class UserRegisterServlet extends HttpServlet {
         } catch (UserAlreadyExistsException e) {
 			jsonBuilder.addField("error", e.getMessage());
 			response.setStatus(HttpServletResponse.SC_CONFLICT);
-        } catch (NotValidAuthParams e) {
-			jsonBuilder.addField("error", e.getMessage());
+        } catch (RequiredPayloadException e) {
+			jsonBuilder.addField("error", e.getCustomError());
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 		

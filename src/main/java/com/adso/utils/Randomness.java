@@ -1,13 +1,11 @@
 package com.adso.utils;
 
-import java.util.List;
 import java.util.Random;
 
 import com.adso.entities.Card;
 import com.adso.entities.Pet;
 import com.adso.enums.Rarity;
 import com.adso.exceptions.app.NotResultsToShowException;
-import com.adso.exceptions.codeRedemption.NoCardsAvailableException;
 import com.adso.persistence.AppEntityManager;
 
 import jakarta.persistence.EntityManager;
@@ -34,7 +32,7 @@ public class Randomness {
         }
     }
     
-	static public Card getRandomCardBasedOnRarity(Rarity randomRarity) throws NoCardsAvailableException {
+	static public Card getRandomCardBasedOnRarity(Rarity randomRarity) throws NotResultsToShowException {
     	EntityManagerFactory emf = AppEntityManager.getInstance().getEntityManagerFactory();
     	EntityManager em = emf.createEntityManager();
 		try {			
@@ -46,7 +44,7 @@ public class Randomness {
 	        return reedemCard;
 	        
 		} catch (NoResultException e) {
-			throw new NoCardsAvailableException();
+			throw new NotResultsToShowException("Card");
 		}
 	}
 	

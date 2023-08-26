@@ -1,9 +1,14 @@
 package com.adso.exceptions.codeRedemption;
 
-public class InvalidCodeException extends Exception {
-	private static final long serialVersionUID = -2804835098345311079L;
+import com.adso.exceptions.app.CustomResponseException;
+import com.adso.utils.CustomResponseError;
 
-	public InvalidCodeException (String code) {
-		super("The code: (" + code + ") is not valid.");
+public class InvalidCodeException extends CustomResponseException {
+	private static final long serialVersionUID = -2804835098345311079L;
+	private static final int ERROR_CODE = 9647;
+
+	public InvalidCodeException (String cause) {
+		 super(new CustomResponseError("Invalid code.", ERROR_CODE, cause));
 	}
+	
 }

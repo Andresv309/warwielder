@@ -1,7 +1,7 @@
 package com.adso.services;
 
 import com.adso.entities.User;
-import com.adso.exceptions.auth.NotValidCredentials;
+import com.adso.exceptions.auth.NotValidCredentialsException;
 import com.adso.persistence.AppEntityManager;
 import com.adso.utils.PasswordHashing;
 
@@ -17,7 +17,7 @@ public class UserAuthenticationService {
     	
     }
 
-    public User validateUser(String username, String password) throws NotValidCredentials {
+    public User validateUser(String username, String password) throws NotValidCredentialsException {
     	EntityManager em = emf.createEntityManager();
     	
         try {
@@ -33,10 +33,10 @@ public class UserAuthenticationService {
             	System.out.println("valido");
             	return user;
             } else {
-            	throw new NotValidCredentials();
+            	throw new NotValidCredentialsException("Incorrect username or password.");
             }
         } catch (NoResultException e) {
-        	throw new NotValidCredentials();
+        	throw new NotValidCredentialsException("Incorrect username or password.");
         } finally {
             if (em != null && em.isOpen()) {
                 em.close();

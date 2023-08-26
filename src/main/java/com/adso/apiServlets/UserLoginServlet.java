@@ -11,8 +11,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import com.adso.entities.User;
-import com.adso.exceptions.auth.NotValidAuthParams;
-import com.adso.exceptions.auth.NotValidCredentials;
+import com.adso.exceptions.app.RequiredPayloadException;
+import com.adso.exceptions.auth.NotValidCredentialsException;
 import com.adso.services.UserAuthenticationService;
 import com.adso.utils.AuthCookieGenerator;
 import com.adso.utils.JsonResponseBuilder;
@@ -40,7 +40,7 @@ public class UserLoginServlet extends HttpServlet {
 			
 			JsonObject jsonObject = JsonParser.parseString(jsonBody).getAsJsonObject();
 	        if (!jsonObject.has("username") || !jsonObject.has("password")) {
-	        	throw new NotValidAuthParams();
+	        	throw new RequiredPayloadException("username and password");
 	        }
 	        
 			String username = jsonObject.get("username").getAsString();
@@ -52,11 +52,11 @@ public class UserLoginServlet extends HttpServlet {
             response.addCookie(cookie);
 			response.sendRedirect(request.getContextPath() + "/account");
 
-		} catch (NotValidCredentials e) {
-			jsonBuilder.addField("error", e.getMessage());
+		} catch (NotValidCredentialsException e) {
+			jsonBuilder.addField("error", e.getCustomError());
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		} catch (NotValidAuthParams e) {
-			jsonBuilder.addField("error", e.getMessage());
+		} catch (RequiredPayloadException e) {
+			jsonBuilder.addField("error", e.getCustomError());
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 

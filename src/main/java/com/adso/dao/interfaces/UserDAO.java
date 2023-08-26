@@ -7,18 +7,15 @@ import com.adso.entities.Card;
 import com.adso.entities.DeckCard;
 import com.adso.entities.Pet;
 import com.adso.entities.User;
-import com.adso.exceptions.decks.CardAlreadyInDeckException;
-import com.adso.exceptions.decks.NotValidPositionValue;
-import com.adso.exceptions.pets.NotFoundPetException;
+import com.adso.exceptions.app.NotFoundException;
+import com.adso.exceptions.auth.NotAuthorizedException;
+import com.adso.exceptions.decks.InvalidDeckException;
 import com.adso.exceptions.user.UserAlreadyExistsException;
-import com.adso.exceptions.user.UserNotFoundException;
-import com.adso.exceptions.user.UserUnauthorizedForOperationException;
-import com.adso.exceptions.user.UsesNotOwnPetException;
 
 public interface UserDAO {
 	Set<Card> getUserUnlockedCards(Long id);
-	DeckCard updateDeck(DeckCard updateDeckCard, Long userId) throws NotValidPositionValue, UserUnauthorizedForOperationException, CardAlreadyInDeckException;
+	DeckCard updateDeck(DeckCard updateDeckCard, Long userId) throws NotAuthorizedException, InvalidDeckException;
 	User addNewUser(String username, String password) throws UserAlreadyExistsException;
 	List<Object> getUserDecksCards(Long userId);
-	User updateUserInfo(Pet pet, Long userId) throws UserNotFoundException, NotFoundPetException, UsesNotOwnPetException;
+	User updateUserInfo(Pet pet, Long userId) throws NotAuthorizedException, NotFoundException;
 }

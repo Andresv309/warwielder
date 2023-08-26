@@ -1,15 +1,10 @@
 package com.adso.apiServlets;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.adso.dao.DAOManagerImp;
 import com.adso.dao.interfaces.AppDAO;
-import com.adso.entities.Card;
-import com.adso.enums.Race;
-import com.adso.enums.Rarity;
 import com.adso.exceptions.app.NotResultsToShowException;
 import com.adso.utils.JsonResponseBuilder;
 
@@ -41,6 +36,9 @@ public class AppStoreItemsServlet extends HttpServlet {
 
 		} catch (IllegalArgumentException e) {
 			jsonBuilder.addField("error", "Invalid query params format.");
+		} catch (NotResultsToShowException e) {
+			jsonBuilder.addField("error", e.getCustomError());
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 
 		response.setContentType("application/json");

@@ -1,9 +1,13 @@
 package com.adso.exceptions.user;
 
-public class UserAlreadyExistsException extends Exception {
-	private static final long serialVersionUID = -9007204291289724576L;
+import com.adso.exceptions.app.CustomResponseException;
+import com.adso.utils.CustomResponseError;
 
-	public UserAlreadyExistsException (String username) {
-		super("Username (" + username + ") already exists.");
+public class UserAlreadyExistsException extends CustomResponseException {
+	private static final long serialVersionUID = -9007204291289724576L;
+	private static final int ERROR_CODE = 2584;
+	
+	public UserAlreadyExistsException (String cause) {
+		 super(new CustomResponseError("Username already exists.", ERROR_CODE, cause));
 	}
 }

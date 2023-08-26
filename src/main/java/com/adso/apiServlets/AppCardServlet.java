@@ -11,8 +11,8 @@ import java.io.IOException;
 import com.adso.dao.DAOManagerImp;
 import com.adso.dao.interfaces.AppDAO;
 import com.adso.entities.Card;
-import com.adso.exceptions.cards.NotFoundCardException;
-import com.adso.exceptions.validations.NotValidPathPatternException;
+import com.adso.exceptions.app.NotFoundException;
+import com.adso.exceptions.app.NotValidPathPatternException;
 import com.adso.utils.JsonResponseBuilder;
 import com.adso.utils.Utils;
 
@@ -40,8 +40,8 @@ public class AppCardServlet extends HttpServlet {
 		} catch (NumberFormatException e) {
 			jsonBuilder.addField("error", "Invalid card ID format.");
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		} catch (NotFoundCardException e) {
-			jsonBuilder.addField("error", e.getMessage());
+		} catch (NotFoundException e) {
+			jsonBuilder.addField("error", e.getCustomError());
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		} catch (NotValidPathPatternException e) {
 			jsonBuilder.addField("error", e.getMessage());

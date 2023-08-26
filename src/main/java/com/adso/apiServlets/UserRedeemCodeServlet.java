@@ -15,13 +15,11 @@ import com.google.gson.JsonObject;
 
 import com.adso.utils.JsonResponseBuilder;
 import com.adso.utils.Utils;
-import com.adso.exceptions.auth.NotFoundAuthToken;
-import com.adso.exceptions.auth.NotValidAuthToken;
-import com.adso.exceptions.codeRedemption.CodeAlreadyRedeemedException;
+import com.adso.exceptions.app.NotFoundException;
+import com.adso.exceptions.app.NotResultsToShowException;
+import com.adso.exceptions.app.RequiredPayloadException;
+import com.adso.exceptions.auth.NotAuthorizedException;
 import com.adso.exceptions.codeRedemption.InvalidCodeException;
-import com.adso.exceptions.codeRedemption.NoCardsAvailableException;
-import com.adso.exceptions.codeRedemption.NotValidCodeRedemptionParams;
-import com.adso.exceptions.user.UserNotFoundException;
 import com.adso.services.CodeRedemptionService;
 
 @WebServlet(name = "userRedeemCodeServlet", urlPatterns = "/api/v1/user/redeem") 
@@ -47,7 +45,7 @@ public class UserRedeemCodeServlet extends HttpServlet {
 	        JsonObject jsonObject = JsonParser.parseString(jsonBody).getAsJsonObject();
 	        
 	        if (!jsonObject.has("code")) {
-	        	throw new NotValidCodeRedemptionParams();
+	        	throw new RequiredPayloadException("code");
 	        }
 
         	String code = jsonObject.get("code").getAsString();
@@ -58,20 +56,18 @@ public class UserRedeemCodeServlet extends HttpServlet {
 			jsonBuilder.addField("data", cardRedemptionInfo.get("unlockedCard"));
 			jsonBuilder.addField("messages", cardRedemptionInfo.get("messages"));
 
-
         } catch (
-			InvalidCodeException |
-			UserNotFoundException |
-			NotFoundAuthToken |
-			NotValidAuthToken |
-			NotValidCodeRedemptionParams
-			e
-		) {
-			jsonBuilder.addField("error", e.getMessage());
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        } catch (NoCardsAvailableException | CodeAlreadyRedeemedException e) {
-        	jsonBuilder.addField("error", e.getMessage());
-        	response.setStatus(HttpServletResponse.SC_CONFLICT);
+    		NotResultsToShowException |
+    		NotFoundException |
+    		RequiredPayloadException |
+    		InvalidCodeException
+    		e
+    	) {
+        	jsonBuilder.addField("error", e.getCustomError());
+        	response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        } catch (NotAuthorizedException e) {
+        	jsonBuilder.addField("error", e.getCustomError());
+        	response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
 
         response.setContentType("application/json");

@@ -1,10 +1,14 @@
 package com.adso.exceptions.purchases;
 
-public class NotEnoughCoinsException extends Exception {
-	private static final long serialVersionUID = -5754025853420060155L;
+import com.adso.exceptions.app.CustomResponseException;
+import com.adso.utils.CustomResponseError;
 
-	public NotEnoughCoinsException (String item) {
-		super("User doesn't have enough coins for (" + item + ").");
+public class NotEnoughCoinsException extends CustomResponseException {
+	private static final long serialVersionUID = 6102674465644620789L;
+	private static final int ERROR_CODE = 1234;
 
+	public NotEnoughCoinsException (String cause) {
+		 super(new CustomResponseError("Not enough coins for operation.", ERROR_CODE, cause));
 	}
+	
 }

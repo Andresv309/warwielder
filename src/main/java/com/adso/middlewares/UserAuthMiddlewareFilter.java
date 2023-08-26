@@ -5,7 +5,7 @@ import java.security.InvalidParameterException;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.adso.exceptions.auth.NotFoundAuthToken;
+import com.adso.exceptions.auth.NotAuthorizedException;
 import com.adso.utils.JwtValidator;
 import com.adso.utils.Utils;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -83,7 +83,7 @@ public class UserAuthMiddlewareFilter implements Filter {
 			System.out.println(decodedToken);
 			isAuth = true;
 			
-		} catch (NotFoundAuthToken e) {
+		} catch (NotAuthorizedException e) {
 			System.out.println(e.getMessage());
 		} catch (InvalidParameterException e) {
 			System.out.println("Jwt is invalid");

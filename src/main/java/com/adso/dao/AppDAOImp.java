@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.adso.dao.interfaces.AppDAO;
 import com.adso.entities.Card;
@@ -12,10 +11,12 @@ import com.adso.entities.Pet;
 import com.adso.entities.StoreItems;
 import com.adso.enums.Race;
 import com.adso.enums.Rarity;
-import com.adso.exceptions.cards.NotFoundCardException;
+import com.adso.exceptions.app.NotFoundException;
+import com.adso.exceptions.app.NotResultsToShowException;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -30,21 +31,28 @@ public class AppDAOImp implements AppDAO {
         this.emf = emf;
     }
     
-    public Map<String, Object> getStoreItems() {
+    public Map<String, Object> getStoreItems() throws NotResultsToShowException {
     	EntityManager em = emf.createEntityManager();
-    	TypedQuery<StoreItems> countQuery  = em.createQuery("FROM StoreItems ORDER BY createdAt DESC", StoreItems.class)
-    			.setMaxResults(1);
-    	StoreItems storeItems = countQuery.getSingleResult();
-    
-    	Map<String, Object> items = new HashMap<>();
     	
-    	
-    	items.put("cards", storeItems.getCards());
-    	items.put("pets", storeItems.getPets());
-    	
-    	em.close();
-    	
-    	return items;
+    	try {
+        	TypedQuery<StoreItems> countQuery  = em.createQuery("FROM StoreItems ORDER BY createdAt DESC", StoreItems.class)
+        			.setMaxResults(1);
+        	StoreItems storeItems = countQuery.getSingleResult();
+        
+        	Map<String, Object> items = new HashMap<>();
+        	
+        	
+        	items.put("cards", storeItems.getCards());
+        	items.put("pets", storeItems.getPets());
+        	
+        	em.close();
+        	
+        	return items;
+        	
+    	} catch (NoResultException e) {
+    		throw new NotResultsToShowException("Items");
+    	}
+   
     }
     
     
@@ -112,13 +120,13 @@ public class AppDAOImp implements AppDAO {
 	}
 
 	@Override
-	public Card getAppCard(Long id) throws NotFoundCardException {
+	public Card getAppCard(Long id) throws NotFoundException {
 		EntityManager em = emf.createEntityManager();
 		Card appCard = em.find(Card.class, id);
 		em.close();
 		
 		if (appCard == null) {
-			throw new NotFoundCardException(id);
+			throw new NotFoundException("Card with id: " + id);
 		}
 		return appCard;
 	}

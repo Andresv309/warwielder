@@ -2,24 +2,21 @@ package com.adso.services;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 import com.adso.entities.Card;
 import com.adso.entities.RedemptionCode;
 import com.adso.entities.User;
 import com.adso.enums.Rarity;
-import com.adso.exceptions.codeRedemption.CodeAlreadyRedeemedException;
+import com.adso.exceptions.app.NotFoundException;
+import com.adso.exceptions.app.NotResultsToShowException;
 import com.adso.exceptions.codeRedemption.InvalidCodeException;
-import com.adso.exceptions.codeRedemption.NoCardsAvailableException;
-import com.adso.exceptions.user.UserNotFoundException;
 import com.adso.persistence.AppEntityManager;
 import com.adso.utils.Randomness;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
 
 public class CodeRedemptionService {    
     private EntityManager em = null;
@@ -39,7 +36,7 @@ public class CodeRedemptionService {
             isRedeem = redemptionCode.getIsRedeemed();
             
 	    } catch (NoResultException e) {
-	    	throw new InvalidCodeException(code);
+	    	throw new InvalidCodeException("code: " + code);
 	    }
     	
     	return isRedeem;
@@ -49,16 +46,16 @@ public class CodeRedemptionService {
     public Map<String, Object> redeemCardFromCode(String code, Long userId)
     	throws
     	InvalidCodeException,
-    	CodeAlreadyRedeemedException,
-    	NoCardsAvailableException,
-    	UserNotFoundException
+    	InvalidCodeException,
+    	NotFoundException,
+    	NotResultsToShowException
     {
     	Map<String, Object> redeemCardInfo = new HashMap<>();
     	Map<String, Object> redeemCardMessages = new HashMap<>();
     	
     	
     	if (hasBeenAlreadyRedeem(code)) {
-    		throw new CodeAlreadyRedeemedException(code);
+    		throw new InvalidCodeException("The code: " + code + "has already been redeem.");
     	}
     	
         Rarity randomRarity = Randomness.pickRandomRarity();
@@ -67,7 +64,7 @@ public class CodeRedemptionService {
     	User user = em.find(User.class, userId);
     	
     	if (user == null) {
-    		throw new UserNotFoundException();
+    		throw new NotFoundException("User");
     	}
     	
     	boolean isCardAlreadyUnlocked = isCardAlreadyUnlocked(redeemCard, user.getCards());
@@ -103,7 +100,7 @@ public class CodeRedemptionService {
  
             em.getTransaction().commit();
 	    } catch (NoResultException e) {
-	    	throw new InvalidCodeException(code);
+	    	throw new InvalidCodeException("code: " + code);
 	    } finally {
 	        em.close();
 	    }

@@ -14,13 +14,10 @@ import com.adso.entities.Deck;
 import com.adso.entities.DeckCard;
 import com.adso.entities.Pet;
 import com.adso.entities.User;
-import com.adso.exceptions.decks.CardAlreadyInDeckException;
-import com.adso.exceptions.decks.NotValidPositionValue;
-import com.adso.exceptions.pets.NotFoundPetException;
+import com.adso.exceptions.app.NotFoundException;
+import com.adso.exceptions.auth.NotAuthorizedException;
+import com.adso.exceptions.decks.InvalidDeckException;
 import com.adso.exceptions.user.UserAlreadyExistsException;
-import com.adso.exceptions.user.UserNotFoundException;
-import com.adso.exceptions.user.UserUnauthorizedForOperationException;
-import com.adso.exceptions.user.UsesNotOwnPetException;
 import com.adso.utils.PasswordHashing;
 
 import jakarta.persistence.EntityExistsException;
@@ -38,7 +35,7 @@ public class UserDAOImp implements UserDAO {
     }
     
 	@Override
-	public User updateUserInfo(Pet pet, Long userId) throws UserNotFoundException, NotFoundPetException, UsesNotOwnPetException {
+	public User updateUserInfo(Pet pet, Long userId) throws NotAuthorizedException, NotFoundException {
 		EntityManager em = emf.createEntityManager();
 		Long petId = pet.getId();
 		
@@ -48,17 +45,17 @@ public class UserDAOImp implements UserDAO {
 		User user = em.find(User.class, userId);
 		
 		if (petFound == null) {
-			throw new NotFoundPetException(petId);
+			throw new NotFoundException("Pet with id: " + petId);
 		}
 		
 		if (user == null) {
-			throw new UserNotFoundException();
+			throw new NotFoundException("User");
 		}
 		
 		Set<Pet> userPets = user.getPets();
 		
 		if (!userPets.contains(petFound)) {
-			throw new UsesNotOwnPetException();
+			throw new NotAuthorizedException("User don't own the pet.");
 		}
 		
 		user.setSelectedPet(petFound);
@@ -141,7 +138,7 @@ public class UserDAOImp implements UserDAO {
 	}
 
 	@Override
-	public DeckCard updateDeck(DeckCard updateDeckCard, Long userId) throws NotValidPositionValue, UserUnauthorizedForOperationException, CardAlreadyInDeckException {
+	public DeckCard updateDeck(DeckCard updateDeckCard, Long userId) throws NotAuthorizedException, InvalidDeckException {
 		EntityManager em = emf.createEntityManager();
 		
         int position = updateDeckCard.getPosition();
@@ -149,14 +146,14 @@ public class UserDAOImp implements UserDAO {
         Long cardId = updateDeckCard.getCard().getId();
         
     	if (!(1 <= position && position <=8)) {
-    		throw new NotValidPositionValue(position);
+    		throw new InvalidDeckException("Position: (" + position + ") for deck is not valid.");
     	}
     	
 		// Verify the user owns the deck
 		Deck askedDeck = em.find(Deck.class, deckId);
 		Long askedUserId = askedDeck.getUser().getId();
 		if (!askedUserId.equals(userId)) {
-            throw new UserUnauthorizedForOperationException("Changing Deck");
+            throw new NotAuthorizedException("Changing Deck");
 		}
 
 		// Check if cardId is passed
@@ -172,7 +169,7 @@ public class UserDAOImp implements UserDAO {
 		        }
 		    }
 			if (!userOwnsCard) {
-	            throw new UserUnauthorizedForOperationException("Adding Card");
+	            throw new NotAuthorizedException("Adding Card");
 			}
 		}
 
@@ -208,7 +205,7 @@ public class UserDAOImp implements UserDAO {
 			
 		} catch (ConstraintViolationException e) {
 			// If trying to add an already existing card in the deck.
-			throw new CardAlreadyInDeckException();
+			throw new InvalidDeckException("The card is already in the deck.");
 		}
 	
 	}

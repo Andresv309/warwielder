@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 
-import com.adso.exceptions.validations.NotValidPathPatternException;
+import com.adso.exceptions.app.NotValidPathPatternException;
 import com.adso.utils.JsonResponseBuilder;
 import com.adso.utils.Utils;
 

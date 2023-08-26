@@ -17,12 +17,9 @@ import com.adso.dao.interfaces.UserDAO;
 import com.adso.entities.Card;
 import com.adso.entities.Deck;
 import com.adso.entities.DeckCard;
-import com.adso.exceptions.auth.NotFoundAuthToken;
-import com.adso.exceptions.auth.NotValidAuthToken;
-import com.adso.exceptions.decks.CardAlreadyInDeckException;
-import com.adso.exceptions.decks.NotValidDeckUpdateParams;
-import com.adso.exceptions.decks.NotValidPositionValue;
-import com.adso.exceptions.user.UserUnauthorizedForOperationException;
+import com.adso.exceptions.app.RequiredPayloadException;
+import com.adso.exceptions.auth.NotAuthorizedException;
+import com.adso.exceptions.decks.InvalidDeckException;
 import com.adso.utils.JsonResponseBuilder;
 import com.adso.utils.Utils;
 import com.google.gson.JsonObject;
@@ -48,9 +45,9 @@ public class UserDecksCardsServlet extends HttpServlet {
 			
 			jsonBuilder.addField("data", userDecksCards);
 			
-		} catch (NotFoundAuthToken | NotValidAuthToken e) {
-			jsonBuilder.addField("error", e.getMessage());
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		} catch (NotAuthorizedException e) {
+			jsonBuilder.addField("error", e.getCustomError());
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		}
 		
         response.setContentType("application/json");
@@ -73,7 +70,7 @@ public class UserDecksCardsServlet extends HttpServlet {
 	        
 			// Check if required parameters are passed.
 	        if (!jsonObject.has("position") || !jsonObject.has("deckId")) {
-	        	throw new NotValidDeckUpdateParams();
+	        	throw new RequiredPayloadException("position and deckId");
 	        }
 	        
 	        // Required Parameters
@@ -100,24 +97,21 @@ public class UserDecksCardsServlet extends HttpServlet {
 			
 			jsonBuilder.addField("data", deckCardMap);
 
-		} catch (
-			NotFoundAuthToken |
-			NotValidAuthToken |
-			NotValidDeckUpdateParams |
-			NotValidPositionValue |
-			CardAlreadyInDeckException
-			e
-		) {
-			jsonBuilder.addField("error", e.getMessage());
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		} catch (NumberFormatException | UnsupportedOperationException e) {
 			jsonBuilder.addField("error", "Invalid parameters values.");
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		} catch (UserUnauthorizedForOperationException e) {
-			jsonBuilder.addField("error", e.getMessage());
+		} catch (NotAuthorizedException e) {
+			jsonBuilder.addField("error", e.getCustomError());
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		} catch (
+			RequiredPayloadException |
+			InvalidDeckException
+			e
+		) {
+			jsonBuilder.addField("error", e.getCustomError());
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
-
+		
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonBuilder.build());

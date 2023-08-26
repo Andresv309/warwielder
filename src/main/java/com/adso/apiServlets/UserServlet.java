@@ -6,12 +6,9 @@ import com.adso.dao.DAOManagerImp;
 import com.adso.dao.interfaces.UserDAO;
 import com.adso.entities.Pet;
 import com.adso.entities.User;
-import com.adso.exceptions.auth.NotFoundAuthToken;
-import com.adso.exceptions.auth.NotValidAuthToken;
-import com.adso.exceptions.pets.NotFoundPetException;
-import com.adso.exceptions.user.NotValidUserParamsException;
-import com.adso.exceptions.user.UserNotFoundException;
-import com.adso.exceptions.user.UsesNotOwnPetException;
+import com.adso.exceptions.app.NotFoundException;
+import com.adso.exceptions.app.RequiredPayloadException;
+import com.adso.exceptions.auth.NotAuthorizedException;
 import com.adso.utils.JsonResponseBuilder;
 import com.adso.utils.Utils;
 import com.google.gson.JsonObject;
@@ -46,7 +43,7 @@ public class UserServlet extends HttpServlet {
 	        JsonObject jsonObject = JsonParser.parseString(jsonBody).getAsJsonObject();
 	        
 	        if (!jsonObject.has("petId")) {
-	        	throw new NotValidUserParamsException();
+	        	throw new RequiredPayloadException("petId");
 	        }
 
         	Long petId = jsonObject.get("petId").getAsLong();
@@ -62,20 +59,19 @@ public class UserServlet extends HttpServlet {
 
 			jsonBuilder.addField("data", userToSend);
 
-        } catch (
-			UserNotFoundException |
-			NotFoundAuthToken |
-			NotValidAuthToken |
-			NotValidUserParamsException |
-			NotFoundPetException |
-			UsesNotOwnPetException
-			e
-		) {
-			jsonBuilder.addField("error", e.getMessage());
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } catch (NumberFormatException e) {
         	jsonBuilder.addField("error", "Invalid pet ID format.");
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        } catch (
+    		RequiredPayloadException |
+    		NotFoundException    		
+    		e
+		) {
+        	jsonBuilder.addField("error", e.getCustomError());
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        } catch (NotAuthorizedException e) {
+        	jsonBuilder.addField("error", e.getCustomError());
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
 
         response.setContentType("application/json");

@@ -12,8 +12,7 @@ import java.util.Set;
 import com.adso.dao.DAOManagerImp;
 import com.adso.dao.interfaces.UserDAO;
 import com.adso.entities.Card;
-import com.adso.exceptions.auth.NotFoundAuthToken;
-import com.adso.exceptions.auth.NotValidAuthToken;
+import com.adso.exceptions.auth.NotAuthorizedException;
 import com.adso.utils.JsonResponseBuilder;
 import com.adso.utils.Utils;
 
@@ -37,9 +36,9 @@ public class UserUnlockedCardsServlet extends HttpServlet {
 			Set<Card> unlockedCards = userDao.getUserUnlockedCards(userId);
 			jsonBuilder.addField("data", unlockedCards);
 
-		} catch (NotFoundAuthToken | NotValidAuthToken e) {
-			jsonBuilder.addField("error", e.getMessage());
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		} catch (NotAuthorizedException e) {
+			jsonBuilder.addField("error", e.getCustomError());
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		}
 		
 

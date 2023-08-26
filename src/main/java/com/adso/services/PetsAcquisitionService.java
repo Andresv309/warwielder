@@ -6,9 +6,9 @@ import com.adso.constants.AppItemsPrices;
 import com.adso.entities.Pet;
 import com.adso.entities.User;
 import com.adso.enums.Rarity;
-import com.adso.exceptions.app.AlreadyUnlockedItemException;
 import com.adso.exceptions.app.NotFoundException;
-import com.adso.exceptions.app.NotEnoughCoinsException;
+import com.adso.exceptions.app.items.AlreadyUnlockedItemException;
+import com.adso.exceptions.purchases.NotEnoughCoinsException;
 import com.adso.persistence.AppEntityManager;
 
 import jakarta.persistence.EntityManager;
