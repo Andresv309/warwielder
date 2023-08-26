@@ -138,33 +138,115 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+}
+
+.sliderContent{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	margin-top: 2rem;
 }
 
 .left-slider {
-	width: 40%;
-	display: flex;
-	justify-content: center;
-	align-items: center;	
-}
-
-.right-slider{
-	width: 60%;
+	width: 50%;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
-	gap: 1rem;
+	gap: 2rem;
+	
+}
+
+/*.left-slider img {*/
+/*	filter: drop-shadow(0px 4px 30px #2ef8a0)	*/
+/*}*/
+
+.right-slider{
+	width: 50%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 0.7rem;
+}
+
+
+.info-pet{
+	width: 240px;
+	height: 60px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	background-image: url(../public/PieceOfWood.jpg) ;
+	background-size: cover;
+	border-radius: 16px;
+	border:4px solid #aa7a36;
+	margin-bottom: 1rem; 
+	position: relative;
+}
+
+.hex-container{
+	position: absolute;
+	left: 20px;
+}
+
+
+.hex-nut {
+  width: 20px;
+  height: 20px;
+  background-color: #aa7a36;
+  position: relative;
+  /* clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); */
+  clip-path: polygon(0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%, 25% 0%);
+}
+
+.inner-circle {
+  width: 15px;
+  height: 15px;
+  background-color: #e8d4a8;
+  position: relative;
+  /* clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); */
+  clip-path: polygon(0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%, 25% 0%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+
+
+
+
+
+.name-pet h2{
+	text-align: center;
+	color:white;
+    text-shadow: rgb(97, 67, 38) 2px 0px 0px, rgb(97, 67, 38) 1.75517px 0.95885px 0px, rgb(97, 67, 38) 1.0806px 1.68294px 0px, rgb(97, 67, 38) 0.14147px 1.99499px 0px, rgb(97, 67, 38) -0.83229px 1.81859px 0px, rgb(97, 67, 38) -1.60229px 1.19694px 0px, rgb(97, 67, 38) -1.97998px 0.28224px 0px, rgb(97, 67, 38) -1.87291px -0.70157px 0px, rgb(97, 67, 38) -1.30729px -1.5136px 0px, rgb(97, 67, 38) -0.42159px -1.95506px 0px, rgb(97, 67, 38) 0.56732px -1.91785px 0px, rgb(97, 67, 38) 1.41734px -1.41108px 0px, rgb(97, 67, 38) 1.92034px -0.55883px 0px;
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+}
+
+.badges-pet {
+ 	display: flex;
+ 	justify-content: center;
+ 	gap: 1rem;
+}
+
+.badges-pet .rarity-pet {
+	background-color: gray;
+	padding: 1px 6px 1px 6px;
+	border-radius: 16px;
+	font-size: 15px; 
+	text-align: center;
 }
 
 .progressBarConteiner{
 	display: flex;
-	justify-content: center;
 	align-items: center;
 }
 
 .progressBarConteiner .progress-bar{
-	width: 140px;
+	width: 200px;
 	height: 12px;
 	background-color: #c9b68b;
 	border-radius: 16px;
