@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.adso.constants.AppItemsPrices;
 import com.adso.dao.interfaces.AppDAO;
 import com.adso.entities.Card;
 import com.adso.entities.Pet;
@@ -44,6 +45,7 @@ public class AppDAOImp implements AppDAO {
         	
         	items.put("cards", storeItems.getCards());
         	items.put("pets", storeItems.getPets());
+        	items.put("prices", AppItemsPrices.getAllPrices());
         	
         	em.close();
         	
