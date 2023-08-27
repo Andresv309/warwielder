@@ -118,6 +118,7 @@ public class UserDAOImp implements UserDAO {
 		User newUser = new User();
 		newUser.setUsername(username);
 		newUser.setPassword(hashedPassword);
+		newUser.setCoins(10000);
 		
 		EntityManager em = emf.createEntityManager();
 		
