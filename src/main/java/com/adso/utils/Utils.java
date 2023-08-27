@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.adso.exceptions.app.NotFoundException;
 import com.adso.exceptions.app.NotValidPathPatternException;
 import com.adso.exceptions.auth.NotAuthorizedException;
 import com.auth0.jwt.JWT;
