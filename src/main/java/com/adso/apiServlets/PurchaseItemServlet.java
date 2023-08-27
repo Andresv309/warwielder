@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "purchasePetServlet", urlPatterns = "/api/v1/user/purchase/pet") 
+@WebServlet(name = "purchaseItemServlet", urlPatterns = "/api/v1/user/purchase") 
 public class PurchaseItemServlet extends HttpServlet {
 	private static final long serialVersionUID = -2700672559692607306L;
 	private PetsAcquisitionService petAcquisitionService;

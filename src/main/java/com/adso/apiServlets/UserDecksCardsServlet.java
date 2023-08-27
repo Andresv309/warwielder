@@ -25,7 +25,7 @@ import com.adso.utils.Utils;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-@WebServlet(name = "userDecksCardsServlet", urlPatterns = "/api/v1/user/deckCards") 
+@WebServlet(name = "userDecksCardsServlet", urlPatterns = "/api/v1/user/deck") 
 public class UserDecksCardsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1957667027674850287L;
 	private UserDAO userDao;

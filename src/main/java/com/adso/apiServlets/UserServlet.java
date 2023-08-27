@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "userServlet", urlPatterns = "/api/v1/users")
+@WebServlet(name = "userServlet", urlPatterns = "/api/v1/user/pet")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 4981069403773795626L;
 	private UserDAO userDao;

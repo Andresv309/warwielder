@@ -16,7 +16,7 @@ import com.adso.exceptions.auth.NotAuthorizedException;
 import com.adso.utils.JsonResponseBuilder;
 import com.adso.utils.Utils;
 
-@WebServlet(name = "userUnlockedCardsServlet", urlPatterns = "/api/v1/user/unlockedCards") 
+@WebServlet(name = "userUnlockedCardsServlet", urlPatterns = "/api/v1/user/cards") 
 public class UserUnlockedCardsServlet extends HttpServlet {
 	private static final long serialVersionUID = -3284280078992764211L;
 	private UserDAO userDao;
