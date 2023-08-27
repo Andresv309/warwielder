@@ -142,15 +142,15 @@ public class CodeRedemptionService {
     private int pickRedeemValueForRarity(Rarity randomRarity) {
     	switch (randomRarity) {
 		case FREE:
-			return 25;
+			return 500;
 		case COMMON:
-			return 50;
+			return 4000;
 		case RARE:
-			return 100;
+			return 8000;
 		case EPIC:
-			return 200;
+			return 16000;
 		case LEGENDARY:
-			return 400;
+			return 36000;
 		default:
 			return 0;
 		}

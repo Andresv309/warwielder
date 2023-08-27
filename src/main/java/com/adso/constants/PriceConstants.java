@@ -10,16 +10,16 @@ public class PriceConstants {
     public static final Map<Rarity, Integer> CARD_PRICES = new HashMap<>();
 
     static {
-        PET_PRICES.put(Rarity.FREE, 800);
-        PET_PRICES.put(Rarity.COMMON, 4000);
-        PET_PRICES.put(Rarity.RARE, 8000);
-        PET_PRICES.put(Rarity.EPIC, 16000);
-        PET_PRICES.put(Rarity.LEGENDARY, 40000);
+        PET_PRICES.put(Rarity.FREE, 15000);
+        PET_PRICES.put(Rarity.COMMON, 30000);
+        PET_PRICES.put(Rarity.RARE, 60000);
+        PET_PRICES.put(Rarity.EPIC, 120000);
+        PET_PRICES.put(Rarity.LEGENDARY, 240000);
 
         CARD_PRICES.put(Rarity.FREE, 1000);
-        CARD_PRICES.put(Rarity.COMMON, 5000);
-        CARD_PRICES.put(Rarity.RARE, 10000);
-        CARD_PRICES.put(Rarity.EPIC, 20000);
-        CARD_PRICES.put(Rarity.LEGENDARY, 50000);
+        CARD_PRICES.put(Rarity.COMMON, 8000);
+        CARD_PRICES.put(Rarity.RARE, 16000);
+        CARD_PRICES.put(Rarity.EPIC, 32000);
+        CARD_PRICES.put(Rarity.LEGENDARY, 72000);
     }
 }
