@@ -42,9 +42,9 @@ public class AppDAOImp implements AppDAO {
         
         	Map<String, Object> items = new HashMap<>();
         	
-        	
         	items.put("cards", storeItems.getCards());
         	items.put("pets", storeItems.getPets());
+        	items.put("createdAt", storeItems.getCreatedAt().toString());
         	items.put("prices", AppItemsPrices.getAllPrices());
         	
         	em.close();

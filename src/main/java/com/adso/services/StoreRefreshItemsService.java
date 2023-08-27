@@ -35,13 +35,13 @@ public class StoreRefreshItemsService {
     	
     	
     	// Use while to avoid missing cards because duplicate items.
-        while (cards.size() <= 7) {
+        while (cards.size() < 7) {
             Rarity randomRarity = Randomness.pickRandomRarity();
             Card card = Randomness.getRandomCardBasedOnRarity(randomRarity);
             cards.add(card);
         }
     	
-    	while (pets.size() <= 1) {
+    	while (pets.size() < 1) {
     		Rarity randomRarity = Randomness.pickRandomRarity();
     		Pet pet = Randomness.getRandomPetBasedOnRarity(randomRarity);
     		pets.add(pet);
