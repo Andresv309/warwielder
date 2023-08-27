@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,7 +32,7 @@ public class StoreItems implements Serializable {
     @CreationTimestamp
     private LocalDateTime createdAt;
 	
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name = "store_cards", 
 	  joinColumns = {
 			  @JoinColumn(name = "store_id", referencedColumnName = "id")
@@ -41,7 +42,7 @@ public class StoreItems implements Serializable {
 	  })
 	private Set<Card> cards;
 	
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name = "store_pets", 
 	  joinColumns = {
 			  @JoinColumn(name = "store_id", referencedColumnName = "id")
