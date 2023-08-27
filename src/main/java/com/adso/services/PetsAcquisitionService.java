@@ -4,15 +4,20 @@ import java.util.Set;
 
 import com.adso.constants.AppItemsPrices;
 import com.adso.entities.Pet;
+import com.adso.entities.StoreItems;
 import com.adso.entities.User;
 import com.adso.enums.Rarity;
 import com.adso.exceptions.app.NotFoundException;
+import com.adso.exceptions.app.NotResultsToShowException;
 import com.adso.exceptions.app.items.AlreadyUnlockedItemException;
+import com.adso.exceptions.purchases.NotAllowedPurchaseException;
 import com.adso.exceptions.purchases.NotEnoughCoinsException;
 import com.adso.persistence.AppEntityManager;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 
 public class PetsAcquisitionService {
     private EntityManagerFactory emf = null;
@@ -22,11 +27,27 @@ public class PetsAcquisitionService {
 
     }
     
-    public Pet purchasePet (Pet petToAcquire, Long userId) throws NotEnoughCoinsException, NotFoundException, AlreadyUnlockedItemException {
+    public Pet purchasePet (Pet petToAcquire, Long userId) throws NotEnoughCoinsException, NotFoundException, AlreadyUnlockedItemException, NotResultsToShowException, NotAllowedPurchaseException {
     	EntityManager em = emf.createEntityManager();
     	Long petId = petToAcquire.getId();
     	
     	Pet pet = em.find(Pet.class, petId);
+    	
+    	// Check if pet is allowed for sell in store
+    	try {
+        	TypedQuery<StoreItems> countQuery  = em.createQuery("FROM StoreItems ORDER BY createdAt DESC", StoreItems.class)
+        			.setMaxResults(1);
+        	StoreItems storeItems = countQuery.getSingleResult();
+        
+        	Set<Pet> storePets = storeItems.getPets();
+
+        	if (!storePets.contains(pet)) {
+        		throw new NotAllowedPurchaseException("Pet");
+        	}
+        	
+    	} catch (NoResultException e) {
+    		throw new NotResultsToShowException("Items");
+    	}
     	
     	if (pet == null) {
     		throw new NotFoundException("Pet with the id: " + petId);
