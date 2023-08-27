@@ -17,9 +17,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "cardImagesServlet", urlPatterns = "/api/v1/assets/cards/*") 
-public class CardImagesServlet extends HttpServlet {
-	private static final long serialVersionUID = -3930102508911518495L;
+@WebServlet(name = "petImagesServlet", urlPatterns = "/api/v1/assets/pets/*") 
+public class PetImagesServlet extends HttpServlet {
+	private static final long serialVersionUID = 8368780052767414825L;
 	// List of allowed image extensions
 	List<String> allowedExtensions = Arrays.asList("jpg", "jpeg", "png", "gif", "webp");
 
@@ -30,7 +30,7 @@ public class CardImagesServlet extends HttpServlet {
 			String pathInfo = Utils.extractPathInfoFromRequest(request);
 			
 		    // Get the real path of the image using the ServletContext, it converts a web application-relative path to a filesystem path.
-		    String imagePath = getServletContext().getRealPath("/assets/cards/") + pathInfo;
+		    String imagePath = getServletContext().getRealPath("/assets/pets/") + pathInfo;
 		    System.out.println(imagePath);
 		    
 		    // Extract the extension from the pathInfo
@@ -84,6 +84,4 @@ public class CardImagesServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonBuilder.build());
 	}
-
 }
-
