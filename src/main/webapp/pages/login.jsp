@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="styles/style.css">
 <link rel="stylesheet" href="styles/loginStyles.css">
 
-<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/js/paralax.js" defer></script> --%>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/paralax.js" defer></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/login.js" defer></script>
 
 <meta charset="UTF-8">
@@ -24,7 +24,7 @@
 		<div class="mainContainer">
 			<div class="contentContainer">
 				<div class="leftContainer">
-					<img id="skin"   alt="addskin" src="public/addskin.avif"> 
+					<img id="skin"  class="card"  alt="addskin" src="public/addskin.avif"> 
 				</div>
 				<div class="rightContainer">
 					<div class="frameForm">
