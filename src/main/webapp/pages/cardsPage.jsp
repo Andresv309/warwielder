@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="styles/cardsPageStyles.css">
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/cardsPage.js" defer></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/paralax.js" defer></script>
 
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
