@@ -13,7 +13,7 @@ public class CardsPage extends HttpServlet {
        
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher("/pages/cardsPage.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/pages/cards-page/cardsPage.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
