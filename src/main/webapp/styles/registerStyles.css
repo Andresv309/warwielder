@@ -109,7 +109,6 @@
 	display: flex;
 	width: 100%;
 	flex-grow: 1;
-/*	visibility: hidden;*/
 }
 
 .stepContainer{
@@ -157,10 +156,6 @@
 	
 }
 
-/*.left-slider img {*/
-/*	filter: drop-shadow(0px 4px 30px #2ef8a0)	*/
-/*}*/
-
 .right-slider{
 	width: 50%;
 	height: 100%;
@@ -189,23 +184,26 @@
 	left: 20px;
 }
 
+.hex-container-two{
+	position: absolute;
+	right: 20px;
+}
+
 
 .hex-nut {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   background-color: #aa7a36;
   position: relative;
-  /* clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); */
-  clip-path: polygon(0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%, 25% 0%);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); 
 }
 
 .inner-circle {
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 14px;
   background-color: #e8d4a8;
   position: relative;
-  /* clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); */
-  clip-path: polygon(0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%, 25% 0%);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); 
   position: absolute;
   top: 50%;
   left: 50%;
@@ -300,6 +298,58 @@
 	color:brown; 
 	text-decoration: none;
 }
+
+.PhraseContainer{
+	text-align: left;
+	font-size: 14px;
+}
+
+.buttonContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	margin-top: 3rem;
+	width: 100%;
+	height: 40px;
+	border-radius: 10px;
+	cursor: pointer;
+	background-color: #c9b68b;
+	border:3px solid #aa7a36;
+}
+
+.button-heart{
+	position: relative;
+	width: 80%;
+	background: none;
+	border: none;
+	cursor: pointer;
+	text-align: center;
+	color: #4e2709;
+}
+
+ .heart {
+    display: block;
+    position: absolute;
+    left: 2;
+    transform: translate(-50%, -50%) scale(0.7);
+    top: 50%;
+    pointer-events: none;
+    width: 100px;
+    height: 100px;
+    background: url("https://res.cloudinary.com/muhammederdem/image/upload/v1536405215/starwars/heart.png") no-repeat;
+    background-position: 0 0;
+    cursor: pointer;
+    transition: background-position 1s steps(28);
+    transition-duration: 0s;
+
+    &.is-active {
+      transition-duration: 1s;
+      background-position: -2800px 0;
+    }
+}
+
+
 
 
 

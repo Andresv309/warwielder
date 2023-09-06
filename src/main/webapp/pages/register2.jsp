@@ -81,18 +81,14 @@
 																<div class="name-pet">
 																	<h2>Rocket</h2>
 																</div>
-<!-- 																<div class="badges-pet"> -->
-<!-- 																	<div class="rarity-pet"> -->
-<!-- 																		<span>Gratis</span> -->
-<!-- 																	</div> -->
-																	
-<!-- 																	<div class="type-pet"> -->
-<!-- 																		<span>Mascota</span> -->
-<!-- 																	</div> -->
-																
-<!-- 																</div> -->
 
 																<div class="hex-container">
+																	<div class="hex-nut">
+	    																<div class="inner-circle"></div>
+	  																</div>
+																</div>
+																
+																<div class="hex-container-two">
 																	<div class="hex-nut">
 	    																<div class="inner-circle"></div>
 	  																</div>
@@ -114,6 +110,13 @@
 																	<div class="bar"></div>
 																</div>	
 															</div>
+																														
+															
+															<div class="buttonContainer">
+																<button class="button-heart"><span class="heart"></span>ESCOGER MASCOTA</button>
+															</div>
+														
+															
 														</div>
 													</div>
 												</div>
