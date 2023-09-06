@@ -7,8 +7,9 @@
 <link rel="stylesheet" href="styles/style.css">
 <link rel="stylesheet" href="styles/cardsPageStyles.css">
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/cardsPage.js" defer></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/paralax.js" defer></script>
+<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/js/cardsPage.js" defer></script> --%>
+<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/js/paralax.js" defer></script> --%>
+<script type="module" src="${pageContext.request.contextPath}/pages/cards-page/main.js"></script>
 
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +21,7 @@
 
 	<header class="root">
 		<div class="headerContainer">
-			<%@ include file="../components/NavBar.jsp"%>
+			<%@ include file="../../components/NavBar.jsp"%>
 		</div>
 	</header>
 
@@ -69,7 +70,7 @@
 		<div>
 			<img width="100%" class="" alt="PieceOfWood" src="public/piePage.png">
 		</div>
-		<%@include file="../components/Footer.jsp"%>
+		<%@include file="../../components/Footer.jsp"%>
 	</footer>
 </body>
 </html>
