@@ -1,55 +1,30 @@
-const imagesEndpoint = "/api/v1/assets/cards" 
-const basePath = "http://localhost:8080/warwielder"
-const imagePath = basePath + imagesEndpoint
+import { fetchWrapper } from "./utils/fetchWrapper.js"
+import { htmlRenderer } from "./utils/renderer.js"
+import { paralaxEffect } from "./paralax.js"
+import { cardImagesEndpoint, cardsEndpoint } from "../constants/endpoints.js"
 
-//let imagesArray = []
 const cardsContainer = document.getElementById("cardsContainer")
-//
-//for(let i = 1; i <= 32; i++ ){
-//  const imageRoute = imagesPath + `card_${i}.png`
-//  imagesArray.push(imageRoute)
-//}
+const CARD_CLASS = "card"
 
-
-function htmlRenderer (htmlElement, htmlChildrenArray, htmlComponent) {
-  htmlElement.innerHTML = htmlChildrenArray.reduce((accumulator, currentValue) => accumulator + htmlComponent(currentValue), "")
-}
-
-
-function cardTemplateComponent(imgPath) {
+function cardTemplateComponent(card) {
+	const { img } = card 
+	const imgPath = cardImagesEndpoint + "/" + img;
 	
-  return `<img class="card" width="240px" alt="bang" src=${imgPath}>`
+	return `<img class="${CARD_CLASS}" width="240px" alt="card" src=${imgPath}>`
 }
-
-
-// cardsContainer.innerHTML = imagesArray.reduce((accumulator, currentValue) => accumulator + cardTemplateComponent(currentValue), "")
-
-
 
 function renderCards(cards) {
-	const cardsImages =  cards.map(card => imagePath + "/" + card.img)
-	htmlRenderer(cardsContainer, cardsImages, cardTemplateComponent)
+	htmlRenderer(cardsContainer, cards, cardTemplateComponent)
 }
 
-
-
 async function fetchCards(){
-	const cardsPath = basePath + "/api/v1/cards?offset=0&limit=20"
-
-	
-//	const res = await fetch(cardsPath)
-//	const cardsData = await res.json()
-	const cardsData = await fetchWrapper(cardsPath)
-
-	console.log(cardsData) 
+	const cardsData = await fetchWrapper(cardsEndpoint)
 	return cardsData.data	
-} 
+}
 
+function addParalaxEffectToCards() {
+	const htmlCardElements = document.querySelectorAll(`.${CARD_CLASS}`);
+	setTimeout(() => {htmlCardElements.forEach(paralaxEffect)}, 500)
+}
 
-async function main() {
-	const cards =  await fetchCards()
-    renderCards(cards)
-} 
-
-
-main();
+export { fetchCards, renderCards, addParalaxEffectToCards }
