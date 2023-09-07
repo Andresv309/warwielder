@@ -3,6 +3,9 @@ const submitButton = document.getElementById('submitForm');
 const step1Section = document.getElementById('step1');
 const step2Section = document.getElementById('step2');
 
+
+const heart = document.querySelectorAll('.button-heart')
+
 console.log(step2Section)
 step1Section.style.display = 'none';
 step2Section.style.display = 'block';
@@ -32,3 +35,28 @@ let swiper = new Swiper(".mySwiper", {
     dynamicBullets: true,
   },
 });
+
+
+const heartButton  = document.querySelector('.button-heart')
+const heartElement = heartButton.querySelector('.heart')
+
+
+heartButton.addEventListener('click', (e) => {	
+	e.preventDefault()
+
+    if (heartElement.classList.contains("is-active")) {
+	    heartElement.classList.remove("is-active");
+	} else {
+	    heartElement.classList.add("is-active");
+	}
+})
+
+
+
+
+
+
+
+
+
+
