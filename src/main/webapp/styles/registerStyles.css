@@ -320,7 +320,8 @@
 
 .button-heart{
 	position: relative;
-	width: 80%;
+	width: 100%;
+	height: 100%;
 	background: none;
 	border: none;
 	cursor: pointer;
@@ -331,7 +332,7 @@
  .heart {
     display: block;
     position: absolute;
-    left: 2;
+    left: 10%;
     transform: translate(-50%, -50%) scale(0.7);
     top: 50%;
     pointer-events: none;
@@ -348,6 +349,11 @@
       background-position: -2800px 0;
     }
 }
+
+/*.is-active {*/
+/*  transition-duration: 1s;*/
+/*  background-position: -2800px 0;*/
+/*}*/
 
 
 
