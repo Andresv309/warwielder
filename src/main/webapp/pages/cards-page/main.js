@@ -1,9 +1,8 @@
-import { fetchCards, renderCards, addParalaxEffectToCards } from '../../js/cardsPage.js';
+import { renderCards } from '../../js/cardsPage/cardsRendering.js';
 
 async function main() {
-	const cards =  await fetchCards()
-    renderCards(cards)
-    addParalaxEffectToCards()
+    renderCards()
+
 }
 
 main()
