@@ -10,7 +10,7 @@
 	
 	
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js" defer></script>	
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/register.js" defer></script>
+<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/js/register.js" defer></script> --%>
 
 <script type="module" src="${pageContext.request.contextPath}/pages/register-page/main.js"></script>
 	
