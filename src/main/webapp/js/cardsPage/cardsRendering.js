@@ -1,7 +1,8 @@
-import { fetchWrapper } from "./utils/fetchWrapper.js"
-import { htmlRenderer } from "./utils/renderer.js"
-import { paralaxEffect } from "./paralax.js"
-import { cardImagesEndpoint, cardsEndpoint } from "../constants/endpoints.js"
+import { htmlRenderer } from "../utils/renderer.js"
+import { paralaxEffect } from "../paralax.js"
+import { cardImagesEndpoint } from "../constants/endpoints.js"
+import { getAllCards } from "../data/cards.js"
+
 
 const cardsContainer = document.getElementById("cardsContainer")
 const CARD_CLASS = "card"
@@ -13,18 +14,16 @@ function cardTemplateComponent(card) {
 	return `<img class="${CARD_CLASS}" width="240px" alt="card" src=${imgPath}>`
 }
 
-function renderCards(cards) {
-	htmlRenderer(cardsContainer, cards, cardTemplateComponent)
-}
-
-async function fetchCards(){
-	const cardsData = await fetchWrapper(cardsEndpoint)
-	return cardsData.data	
-}
-
 function addParalaxEffectToCards() {
 	const htmlCardElements = document.querySelectorAll(`.${CARD_CLASS}`);
 	setTimeout(() => {htmlCardElements.forEach(paralaxEffect)}, 500)
 }
 
-export { fetchCards, renderCards, addParalaxEffectToCards }
+async function renderCards() {
+	const cards = await getAllCards()
+	htmlRenderer(cardsContainer, cards, cardTemplateComponent)
+	addParalaxEffectToCards()
+}
+
+
+export { renderCards }
