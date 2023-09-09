@@ -1,54 +1,75 @@
-const nextStepButton = document.getElementById('nextStep');
-const submitButton = document.getElementById('submitForm');
-const step1Section = document.getElementById('step1');
-const step2Section = document.getElementById('step2');
+import { htmlRenderer } from "../utils/renderer.js"
+import { getAllPets } from "../data/pets.js";
+import { petsImagesEndpoint } from "../constants/endpoints.js";
 
-const heart = document.querySelectorAll('.button-heart')
-
-step2Section.style.display = 'none';
-
-nextStepButton.addEventListener('click', function(event) {
-	event.preventDefault();
-	// Aquí podrías realizar validaciones y procesar los datos del primer paso
-
-	// Oculta el primer paso y muestra el segundo paso
-	step1Section.style.display = 'none';
-	step2Section.style.display = 'block';
-	step2Section.style.visibility = 'visible';
-});
-
-submitButton.addEventListener('click', function(event) {
-	event.preventDefault();
-
-	// Aquí podrías realizar validaciones y enviar los datos del segundo paso
-	
-	
-	// Simplemente para este ejemplo, podrías redirigir al usuario a una página de éxito
-	window.location.href = 'registro_exitoso.jsp';
-});
+const petsContainer = document.getElementById("petsContainer")
 
 
-let swiper = new Swiper(".mySwiper", {
-  pagination: {
-    el: ".swiper-pagination",
-    dynamicBullets: true,
-  },
-});
+function petsTemplateComponent(pet) {
+	const { img, name  } = pet
+ 	const imgPath = petsImagesEndpoint + "/" + img;
+ 
+		 
+ 	return `<div class="swiper-slide">
+				<div class="sliderContent">
+					<div class="left-slider">
+						<img width= "150px" height= "250px" class="petImage" alt="" src="${imgPath}">
+					</div>
+				
+					<div class="right-slider">
+					
+						<div class="info-pet" >
+							<div class="name-pet">
+								<h2>${name}</h2>
+							</div>
+		
+							<div class="hex-container">
+								<div class="hex-nut">
+									<div class="inner-circle"></div>
+								</div>
+							</div>
+							
+							<div class="hex-container-two">
+								<div class="hex-nut">
+									<div class="inner-circle"></div>
+								</div>
+							</div>
+		
+		
+						</div>
+					
+						<div class="progressBarConteiner">
+							<img width="32px" height="32px" class="petImage" alt="" src="public/icons/battle.png">
+							<div class="progress-bar">
+								<div class="bar"></div>
+							</div>	
+						</div>
+						
+						<div class="progressBarConteiner">
+							<img width="32px" height="32px" class="petImage" alt="" src="public/icons/shield.png">
+							<div class="progress-bar">
+								<div class="bar"></div>
+							</div>	
+						</div>
+																					
+						
+						<div class="buttonContainer">
+							<button class="button-heart"><span class="heart"></span>ESCOGER MASCOTA</button>
+						</div>
+					</div>
+				</div>
+			</div>`
+}
 
 
-const heartButton  = document.querySelector('.button-heart')
-const heartElement = heartButton.querySelector('.heart')
+async function renderPets() {
+	const pets = await getAllPets()
+	const freePets = pets.filter(pet => pet.rarity === "FREE");
+	htmlRenderer(petsContainer, freePets, petsTemplateComponent)
+}
 
 
-heartButton.addEventListener('click', (e) => {	
-	e.preventDefault()
-
-    if (heartElement.classList.contains("is-active")) {
-	    heartElement.classList.remove("is-active");
-	} else {
-	    heartElement.classList.add("is-active");
-	}
-})
+export { renderPets }
 
 
 
