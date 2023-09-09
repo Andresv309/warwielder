@@ -6,13 +6,10 @@ const step1Section = document.getElementById('step1');
 const step2Section = document.getElementById('step2');
 
 const heartButton  = document.querySelector('.button-heart')
-const heartElement = heartButton.querySelector('.heart')
-
-
+//const heartElement = heartButton.querySelector('.heart')
 
 
 function init() {
-	
 	createSwiper({ 
 		swiperHtmlElement:'.mySwiper', 
 		swiperPaginationHtmlElement:'.swiper-pagination'
@@ -52,10 +49,6 @@ function init() {
 		}
 	})
 
-	
 } 
-
-
-
 
 export {init}
