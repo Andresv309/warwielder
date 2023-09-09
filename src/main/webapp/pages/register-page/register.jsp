@@ -69,63 +69,63 @@
 								
 									<div class="swiperContainer">
 										<div class="swiper mySwiper">
-											<div class="swiper-wrapper">
+											<div id="petsContainer" class="swiper-wrapper">
 											
-												<div class="swiper-slide">
-													<div class="sliderContent">
-														<div class="left-slider">
-															<img width= "150px" height= "250px" class="petImage" alt="" src="public/petOne.png">
-														</div>
+<!-- 												<div  class="swiper-slide"> -->
+<!-- 													<div class="sliderContent"> -->
+<!-- 														<div class="left-slider"> -->
+<!-- 															<img width= "150px" height= "250px" class="petImage" alt="" src="public/petOne.png"> -->
+<!-- 														</div> -->
 													
-														<div class="right-slider">
+<!-- 														<div class="right-slider"> -->
 														
-															<div class="info-pet" >
-																<div class="name-pet">
-																	<h2>Rocket</h2>
-																</div>
+<!-- 															<div class="info-pet" > -->
+<!-- 																<div class="name-pet"> -->
+<!-- 																	<h2>Rocket</h2> -->
+<!-- 																</div> -->
 
-																<div class="hex-container">
-																	<div class="hex-nut">
-	    																<div class="inner-circle"></div>
-	  																</div>
-																</div>
+<!-- 																<div class="hex-container"> -->
+<!-- 																	<div class="hex-nut"> -->
+<!-- 	    																<div class="inner-circle"></div> -->
+<!-- 	  																</div> -->
+<!-- 																</div> -->
 																
-																<div class="hex-container-two">
-																	<div class="hex-nut">
-	    																<div class="inner-circle"></div>
-	  																</div>
-																</div>
+<!-- 																<div class="hex-container-two"> -->
+<!-- 																	<div class="hex-nut"> -->
+<!-- 	    																<div class="inner-circle"></div> -->
+<!-- 	  																</div> -->
+<!-- 																</div> -->
 
 
-															</div>
+<!-- 															</div> -->
 														
-															<div class="progressBarConteiner">
-																<img width="32px" height="32px" class="petImage" alt="" src="public/icons/battle.png">
-																<div class="progress-bar">
-																	<div class="bar"></div>
-																</div>	
-															</div>
+<!-- 															<div class="progressBarConteiner"> -->
+<!-- 																<img width="32px" height="32px" class="petImage" alt="" src="public/icons/battle.png"> -->
+<!-- 																<div class="progress-bar"> -->
+<!-- 																	<div class="bar"></div> -->
+<!-- 																</div>	 -->
+<!-- 															</div> -->
 															
-															<div class="progressBarConteiner">
-																<img width="32px" height="32px" class="petImage" alt="" src="public/icons/shield.png">
-																<div class="progress-bar">
-																	<div class="bar"></div>
-																</div>	
-															</div>
+<!-- 															<div class="progressBarConteiner"> -->
+<!-- 																<img width="32px" height="32px" class="petImage" alt="" src="public/icons/shield.png"> -->
+<!-- 																<div class="progress-bar"> -->
+<!-- 																	<div class="bar"></div> -->
+<!-- 																</div>	 -->
+<!-- 															</div> -->
 																														
 															
-															<div class="buttonContainer">
-																<button class="button-heart"><span class="heart"></span>ESCOGER MASCOTA</button>
-															</div>
+<!-- 															<div class="buttonContainer"> -->
+<!-- 																<button class="button-heart"><span class="heart"></span>ESCOGER MASCOTA</button> -->
+<!-- 															</div> -->
 														
 															
-														</div>
-													</div>
-												</div>
+<!-- 														</div> -->
+<!-- 													</div> -->
+<!-- 												</div> -->
 												
-												<div class="swiper-slide">Slide 2</div>
-												<div class="swiper-slide">Slide 3</div>	
-												<div class="swiper-slide">Slide 4</div>
+<!-- 												<div class="swiper-slide">Slide 2</div> -->
+<!-- 												<div class="swiper-slide">Slide 3</div>	 -->
+<!-- 												<div class="swiper-slide">Slide 4</div> -->
 											</div>
 											<div class="swiper-pagination"></div>
 										</div>

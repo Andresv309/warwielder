@@ -75,7 +75,7 @@ body {
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
-	gap: 2rem;
+	gap: 3rem;
 	margin: 5rem  0 8rem 0;
 }
 
@@ -85,6 +85,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	width: 240px;
+	margin-bottom: 3rem;
 }
 
 .petFrame{
@@ -104,7 +105,7 @@ body {
 /*	filter: drop-shadow(0px 4px 30px #ee4cdB) -Epico;*/
 /*	filter: drop-shadow(0px 4px 30px #01c4e7); -Raro */
 /*	filter: drop-shadow(0px 4px 30px #2ef8a0) -Comun;*/
-	filter: drop-shadow(0px 4px 30px #ee4cdB);
+/*	filter: drop-shadow(0px 4px 30px #ee4cdB);*/
 	z-index: -10;
 	border-radius: 100%;
 }
