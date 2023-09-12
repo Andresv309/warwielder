@@ -1,4 +1,5 @@
 import { createSwiper } from "../libs/swiper.js";
+import { getPetId } from "./register.js"
 
 const nextStepButton = document.getElementById('nextStep');
 const submitButton = document.getElementById('submitForm');
@@ -35,20 +36,10 @@ function init() {
 		
 		
 		// Simplemente para este ejemplo, podrías redirigir al usuario a una página de éxito
-		window.location.href = 'registro_exitoso.jsp';
+//		window.location.href = 'registro_exitoso.jsp';
+		console.log(getPetId())
+		
 	});
-	
-	
-	heartButton.addEventListener('click', (e) => {	
-		e.preventDefault()
-	
-	    if (heartElement.classList.contains("is-active")) {
-		    heartElement.classList.remove("is-active");
-		} else {
-		    heartElement.classList.add("is-active");
-		}
-	})
-
 } 
 
 export {init}
