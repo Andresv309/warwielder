@@ -14,6 +14,7 @@ import com.adso.entities.Deck;
 import com.adso.entities.DeckCard;
 import com.adso.entities.Pet;
 import com.adso.entities.User;
+import com.adso.enums.Rarity;
 import com.adso.exceptions.app.NotFoundException;
 import com.adso.exceptions.auth.NotAuthorizedException;
 import com.adso.exceptions.decks.InvalidDeckException;
@@ -55,7 +56,9 @@ public class UserDAOImp implements UserDAO {
 		Set<Pet> userPets = user.getPets();
 		
 		if (!userPets.contains(petFound)) {
-			throw new NotAuthorizedException("User don't own the pet.");
+			if (!userPets.isEmpty() || !(petFound.getRarity() ==  Rarity.FREE)){
+				throw new NotAuthorizedException("User doesn't own the pet.");				
+			}
 		}
 		
 		user.setSelectedPet(petFound);
