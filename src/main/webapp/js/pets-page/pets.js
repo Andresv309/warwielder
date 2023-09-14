@@ -19,17 +19,17 @@ function petsTemplateComponent(pet) {
 	    case "EPIC":
 	      rarityColor = "#ff0534";
 	      break;
-	    case "FREE":
-	      rarityColor = "#ee4cdb";
-	      break;
 	    case "RARE":
-	      rarityColor = "#01c4e7";
+	      rarityColor = "#ee4cdb ";
 	      break;
 	    case "COMMON":
+	      rarityColor = "#01c4e7";
+	      break;
+	    case "FREE":
 	      rarityColor = "#2ef8a0";
 	      break;
 	    default:
-	      rarityColor = "#ee4cdb";
+	      rarityColor = "#2ef8a0";
 	  }
  
 	 
