@@ -34,17 +34,17 @@ It allows users to explore, discover, and collect their favorite cards from the 
 
 <table align="center">
 <tr>
-  <td><video src="https://github.com/Andresv309/warwielder/assets/92413890/db624a87-b6dd-4c8a-a826-501dcab4beb3"></video></td>
+  <video src="https://github.com/Andresv309/warwielder/assets/92413890/db624a87-b6dd-4c8a-a826-501dcab4beb3"></video>
 </tr>
 </table>
 <table align="center">
 <tr>
-  <td><video src="https://github.com/Andresv309/warwielder/assets/92413890/99ac1c55-d6da-41f1-82b9-fdbbadb24878"></video></td>
+  <video src="https://github.com/Andresv309/warwielder/assets/92413890/99ac1c55-d6da-41f1-82b9-fdbbadb24878"></video>
 </tr>
 </table>
 <table align="center">
 <tr>
-  <td><video src="https://github.com/Andresv309/warwielder/assets/92413890/f65f969a-da98-43a3-a088-85ab1b485700"></video></td>
+  <video src="https://github.com/Andresv309/warwielder/assets/92413890/f65f969a-da98-43a3-a088-85ab1b485700"></video>
 </tr>
 </table>
 
