@@ -1,4 +1,4 @@
-# :card_index: :trophy: Card Collection Game - Warwielder <img src="https://phenomenal-figolla-ec963e.netlify.app/Logo.png" width="36" alt="Logo"/>
+# :card_index: :trophy: Card Collection Game - Warwielder 
 
 Warwielder is a website designed for collecting cards from a famous cards game.
 It allows users to explore, discover, and collect their favorite cards from the Hearthstone universe. - Built using `Java`.
@@ -34,22 +34,23 @@ It allows users to explore, discover, and collect their favorite cards from the 
 
 <table align="center">
 <tr>
-  <td><img src="https://github.com/Andresv309/warwielder/assets/116861909/6b9c14db-6f3f-40da-9b82-71f494cef5bf" width="700" alt="Cards Preview"/></td>
+  <td><video src="https://github.com/Andresv309/warwielder/assets/92413890/db624a87-b6dd-4c8a-a826-501dcab4beb3"></video></td>
 </tr>
 </table>
 <table align="center">
 <tr>
-  <td><img src="https://github.com/Andresv309/warwielder/assets/116861909/48035a00-51db-4c30-9a76-2a9c8c1f3657" width="700" alt="Pets Preview"/></td>
+  <td><video src="https://github.com/Andresv309/warwielder/assets/92413890/99ac1c55-d6da-41f1-82b9-fdbbadb24878"></video></td>
 </tr>
 </table>
 <table align="center">
 <tr>
-  <td><img src="https://github.com/Andresv309/warwielder/assets/116861909/d5e52cad-e210-48c0-91da-dd9ccf4f56db" width="700" alt="Register Preview"/></td>
+  <td><video src="https://github.com/Andresv309/warwielder/assets/92413890/f65f969a-da98-43a3-a088-85ab1b485700"></video></td>
 </tr>
 </table>
 
 
 <br>
+
 
 
 ## Core Team
