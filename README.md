@@ -1,4 +1,4 @@
-# :card_index: :trophy: Card Collection Game - Warwielder 
+# :card_index: :trophy: Card Collection Game - Warwielder <img src="https://phenomenal-figolla-ec963e.netlify.app/Logo.png" width="36" alt=" AVC Logo"/>
 
 Warwielder is a website designed for collecting cards from a famous cards game.
 It allows users to explore, discover, and collect their favorite cards from the Hearthstone universe. - Built using `Java`.
